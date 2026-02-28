@@ -1,0 +1,59 @@
+{
+  "algorithm": "MobileNetV2 Transfer Learning",
+  "backbone": "MobileNetV2 (ImageNet pre-trained, backbone frozen)",
+  "optimizer": "Adam (lr=5e-4, weight_decay=1e-4)",
+  "lr_scheduler": "CosineAnnealingLR",
+  "epochs_trained": 5,
+  "augmentations": "RandomCrop, HFlip, VFlip, ColorJitter, Rotation",
+  "n_train": 120,
+  "n_val": 30,
+  "class_distribution": {
+    "grade_a": 50,
+    "grade_b": 50,
+    "grade_c": 50
+  },
+  "best_val_accuracy": 100.0,
+  "per_class_accuracy": {
+    "grade_a": 100.0,
+    "grade_b": 100.0,
+    "grade_c": 100.0
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.1166,
+      "val_loss": 1.11,
+      "train_acc": 0.3667,
+      "val_acc": 0.3333
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8932,
+      "val_loss": 0.9336,
+      "train_acc": 0.675,
+      "val_acc": 0.6333
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.8395,
+      "val_loss": 0.8122,
+      "train_acc": 0.7333,
+      "val_acc": 0.9667
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.7404,
+      "val_loss": 0.7451,
+      "train_acc": 0.875,
+      "val_acc": 1.0
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.7008,
+      "val_loss": 0.7202,
+      "train_acc": 0.8583,
+      "val_acc": 1.0
+    }
+  ],
+  "device_used": "cuda:0"
+}
