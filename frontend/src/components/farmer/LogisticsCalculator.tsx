@@ -10,39 +10,104 @@ const popularCrops = ['Wheat', 'Rice (Basmati)', 'Tomato', 'Onion', 'Potato', 'C
 const majorMarkets = [
     { district: 'Delhi', state: 'Delhi', pincode: '110001' },
     { district: 'Mumbai', state: 'Maharashtra', pincode: '400001' },
-    { district: 'Kolkata', state: 'West Bengal', pincode: '700001' },
-    { district: 'Chennai', state: 'Tamil Nadu', pincode: '600001' },
-    { district: 'Bangalore', state: 'Karnataka', pincode: '560001' },
-    { district: 'Hyderabad', state: 'Telangana', pincode: '500001' },
-    { district: 'Ahmedabad', state: 'Gujarat', pincode: '380001' },
+    { district: 'Pune', state: 'Maharashtra', pincode: '411001' },
+    { district: 'Nashik', state: 'Maharashtra', pincode: '422001' },
+    { district: 'Nagpur', state: 'Maharashtra', pincode: '440001' },
+    { district: 'Sirsa', state: 'Haryana', pincode: '125055' },
+    { district: 'Karnal', state: 'Haryana', pincode: '132001' },
+    { district: 'Ludhiana', state: 'Punjab', pincode: '141001' },
+    { district: 'Amritsar', state: 'Punjab', pincode: '143001' },
+    { district: 'Indore', state: 'Madhya Pradesh', pincode: '452001' },
+    { district: 'Bhopal', state: 'Madhya Pradesh', pincode: '462001' },
+    { district: 'Lucknow', state: 'Uttar Pradesh', pincode: '226001' },
+    { district: 'Kanpur', state: 'Uttar Pradesh', pincode: '208001' },
     { district: 'Jaipur', state: 'Rajasthan', pincode: '302001' },
+    { district: 'Kota', state: 'Rajasthan', pincode: '324001' },
+    { district: 'Ahmedabad', state: 'Gujarat', pincode: '380001' },
+    { district: 'Surat', state: 'Gujarat', pincode: '395001' },
+    { district: 'Hyderabad', state: 'Telangana', pincode: '500001' },
+    { district: 'Bangalore', state: 'Karnataka', pincode: '560001' },
 ];
 
 export default function LogisticsCalculator({ cropName, pickupDistrict, pickupState }: LogisticsCalculatorProps) {
-    const [selectedCrop, setSelectedCrop] = useState(cropName);
+    const [selectedCrop, setSelectedCrop] = useState('');
     const [quantity, setQuantity] = useState('50');
     const [pricePerQuintal, setPricePerQuintal] = useState('2250');
-    const [deliveryDistrict, setDeliveryDistrict] = useState('Delhi');
+    const [selectedPickupDistrict, setSelectedPickupDistrict] = useState('');
+    const [selectedPickupState, setSelectedPickupState] = useState('');
+    const [deliveryDistrict, setDeliveryDistrict] = useState('');
     const [logistics, setLogistics] = useState<LogisticsInfo | null>(null);
     const [loading, setLoading] = useState(false);
 
     const fetchLogistics = async () => {
+        if (!selectedCrop || !selectedPickupDistrict || !deliveryDistrict) {
+            return;
+        }
+
         setLoading(true);
         try {
-            const market = majorMarkets.find(m => m.district === deliveryDistrict);
-            const params = new URLSearchParams({
-                cropName: selectedCrop, quantity, pricePerQuintal,
-                pickupDistrict, pickupState, pickupPincode: '125055',
-                deliveryDistrict, deliveryState: market?.state || 'Delhi', deliveryPincode: market?.pincode || '110001'
+            // Updated to call the real-time Node.js backend
+            const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+            const response = await fetch(`${backendUrl}/api/logistics/manual-calculate`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cropName: selectedCrop,
+                    quantity: parseFloat(quantity),
+                    pickupCity: selectedPickupDistrict,
+                    deliveryCity: deliveryDistrict,
+                    pricePerQuintal: parseFloat(pricePerQuintal)
+                })
             });
-            const response = await fetch(`/api/farmer/logistics?${params}`);
-            const data: ApiResponse<LogisticsInfo> = await response.json();
-            if (data.success && data.data) setLogistics(data.data);
-        } catch (error) { console.error('Error:', error); }
-        finally { setLoading(false); }
+
+            const result: ApiResponse<any> = await response.json();
+            if (result.success && result.data) {
+                // Map the Node backend response to the frontend type structure
+                const data = result.data;
+                const formattedData: LogisticsInfo = {
+                    ...data,
+                    id: `log_${Date.now()}`,
+                    transportOptions: [
+                        {
+                            id: 'truck_1',
+                            type: 'truck',
+                            name: 'Standard Truck',
+                            capacity: 100,
+                            costPerKm: 8,
+                            totalCost: data.netProfitCalculation.transportCost,
+                            estimatedTime: data.estimatedTime,
+                            provider: 'Verified Agri-Carrier',
+                            rating: 4.8,
+                            available: true
+                        }
+                    ],
+                    recommendedOption: {
+                        id: 'truck_1',
+                        type: 'truck',
+                        name: 'Standard Truck',
+                        capacity: 100,
+                        costPerKm: 8,
+                        totalCost: data.netProfitCalculation.transportCost,
+                        estimatedTime: data.estimatedTime,
+                        provider: 'Verified Agri-Carrier',
+                        rating: 4.8,
+                        available: true
+                    }
+                };
+                setLogistics(formattedData);
+            }
+        } catch (error) {
+            console.error('Logistics Fetch Error:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    useEffect(() => { fetchLogistics(); }, [selectedCrop, deliveryDistrict]);
+    useEffect(() => {
+        if (selectedCrop && selectedPickupDistrict && deliveryDistrict) {
+            fetchLogistics();
+        }
+    }, [selectedCrop, deliveryDistrict, selectedPickupDistrict]);
 
     const getTransportIcon = (type: string) => {
         switch (type) { case 'truck': return '🚛'; case 'tempo': return '🚐'; case 'tractor': return '🚜'; case 'custom': return '🧊'; default: return '🚚'; }
@@ -52,13 +117,38 @@ export default function LogisticsCalculator({ cropName, pickupDistrict, pickupSt
         <div className="space-y-6">
             {/* Input */}
             <div className="card p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="space-y-1.5"><label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Crop</label><select value={selectedCrop} onChange={(e) => setSelectedCrop(e.target.value)} className="select-field w-full">{popularCrops.map(c => <option key={c} value={c}>{c}</option>)}</select></div>
-                    <div className="space-y-1.5"><label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Quantity (Qtl)</label><input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="input-field" /></div>
-                    <div className="space-y-1.5"><label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Price/Quintal (₹)</label><input type="number" value={pricePerQuintal} onChange={(e) => setPricePerQuintal(e.target.value)} className="input-field" /></div>
-                    <div className="space-y-1.5"><label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Delivery Market</label><select value={deliveryDistrict} onChange={(e) => setDeliveryDistrict(e.target.value)} className="select-field w-full">{majorMarkets.map(m => <option key={m.district} value={m.district}>{m.district}, {m.state}</option>)}</select></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Crop</label>
+                        <select value={selectedCrop} onChange={(e) => setSelectedCrop(e.target.value)} className="select-field w-full">
+                            <option value="">Select Crop...</option>
+                            {popularCrops.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Quantity (Qtl)</label>
+                        <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="input-field" />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Price/Quintal (₹)</label>
+                        <input type="number" value={pricePerQuintal} onChange={(e) => setPricePerQuintal(e.target.value)} className="input-field" />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider text-green-600">Crop City (Origin)</label>
+                        <select value={selectedPickupDistrict} onChange={(e) => setSelectedPickupDistrict(e.target.value)} className="select-field w-full border-green-200 focus:border-green-500">
+                            <option value="">Select Pickup City...</option>
+                            {majorMarkets.map(m => <option key={`pickup-${m.district}`} value={m.district}>{m.district}, {m.state}</option>)}
+                        </select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider text-red-600">Delivery Market</label>
+                        <select value={deliveryDistrict} onChange={(e) => setDeliveryDistrict(e.target.value)} className="select-field w-full border-red-200 focus:border-red-500">
+                            <option value="">Select Delivery City...</option>
+                            {majorMarkets.map(m => <option key={`delivery-${m.district}`} value={m.district}>{m.district}, {m.state}</option>)}
+                        </select>
+                    </div>
                 </div>
-                <button onClick={fetchLogistics} disabled={loading} className="btn-secondary mt-4">
+                <button onClick={fetchLogistics} disabled={loading || !selectedCrop || !selectedPickupDistrict || !deliveryDistrict} className="btn-secondary mt-4">
                     {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Calculator className="w-4 h-4" />} Calculate
                 </button>
             </div>

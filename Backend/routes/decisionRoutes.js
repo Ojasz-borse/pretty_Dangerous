@@ -1,15 +1,16 @@
+// routes/decisionRoute.js
+
 const express = require("express");
 const router = express.Router();
+const { getDecision } = require("../services/decisionService");
 
-const decisionController = require("../controllers/decisionController");
-const authMiddleware = require("../middlewares/authMiddleware");
-const roleMiddleware = require("../middlewares/roleMiddleware");
-
-router.get(
-  "/recommendation",
-  authMiddleware,
-  roleMiddleware("farmer"),
-  decisionController.getRecommendation
-);
+router.get("/:cropId", async (req, res) => {
+  try {
+    const result = await getDecision(req.params.cropId);
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 module.exports = router;

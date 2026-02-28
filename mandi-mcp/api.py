@@ -595,30 +595,8 @@ async def get_unified_data(
     lat, lon = DISTRICT_COORDS.get(district, (19.0760, 72.8777))
     weather_data = await get_weather(lat, lon)
     
-    # 3. Generate AI advice based on price and weather
+    # 3. Generate AI advice based on price and weather (Fallback handled within service)
     advice_text = await generate_advice(current_price, weather_data, GEMINI_API_KEY)
-    
-    # 4. If no advice was generated, create a fallback advice in Marathi
-    crop_marathi = COMMODITY_TRANSLATIONS.get(crop, crop)
-    district_marathi = DISTRICT_TRANSLATIONS.get(district, district)
-    
-    if not advice_text or "उपलब्ध नाही" in advice_text or len(advice_text) < 20:
-        modal_price = current_price.get('modal_price_kg', 0)
-        rain_warning = weather_data.get('rain_next_3_days', False)
-        
-        advice_text = f"शेतकरी मित्रांनो, {district_marathi} मधील {crop_marathi} पिकाची सध्याची बाजारभाव माहिती. "
-        
-        if modal_price > 0:
-            advice_text += f"सध्याचा भाव प्रति किलो {modal_price} रुपये आहे. "
-        else:
-            advice_text += "आज बाजारात भाव स्थिर आहे. "
-        
-        if rain_warning:
-            advice_text += "पुढील तीन दिवसांत पावसाची शक्यता आहे, त्यामुळे पीक सुरक्षित ठेवा. "
-        else:
-            advice_text += "हवामान चांगले आहे. "
-        
-        advice_text += "बाजारभाव तपासून योग्य वेळी विक्री करा. शेतकरी मित्र सदैव तुमच्या सोबत आहे."
     
     # 5. Generate voice audio
     audio_base64 = await generate_marathi_speech(advice_text, GEMINI_API_KEY)

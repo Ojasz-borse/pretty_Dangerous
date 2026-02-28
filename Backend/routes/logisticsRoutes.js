@@ -10,4 +10,9 @@ router.get(
   logisticsController.calculate
 );
 
+router.post(
+  "/manual-calculate",
+  logisticsController.calculateManual
+);
+
 module.exports = router;

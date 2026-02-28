@@ -7,6 +7,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { ApiResponse, SellRecommendation, SellAnalysisInput } from '@/types/farmer';
 
+// Simple deterministic random based on crop name
+function getSeededValue(seed: string): number {
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+        hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+        hash |= 0;
+    }
+    const x = Math.sin(hash) * 10000;
+    return x - Math.floor(x);
+}
+
 // Rule-based recommendation engine
 function generateRecommendation(input: SellAnalysisInput): SellRecommendation {
     // Base prices for different crops
@@ -28,10 +39,13 @@ function generateRecommendation(input: SellAnalysisInput): SellRecommendation {
     };
 
     const currentPrice = basePrices[input.cropName] || 2000;
-    const storageCostPerDay = input.storageCostPerDay || currentPrice * 0.005; // 0.5% per day default
+    const storageCostPerDay = input.storageCostPerDay || currentPrice * 0.005;
 
-    // Simulate price prediction (would come from ML model)
-    const predictedChange = (Math.random() * 20 - 5); // -5% to +15%
+    // Use deterministic random based on cropName
+    const seed = getSeededValue(input.cropName);
+
+    // Simulate price prediction (deterministic per crop)
+    const predictedChange = (seed * 20 - 5); // -5% to +15%
     const predictedPrice = currentPrice * (1 + predictedChange / 100);
 
     // Calculate optimal wait days
@@ -39,35 +53,29 @@ function generateRecommendation(input: SellAnalysisInput): SellRecommendation {
     let expectedGain = 0;
 
     if (predictedChange > 5) {
-        // Price expected to rise significantly
         waitDays = Math.min(Math.round(predictedChange / 2), 7);
         expectedGain = predictedChange;
     } else if (predictedChange > 2) {
-        // Moderate rise
         waitDays = 3;
         expectedGain = predictedChange;
-    } else if (predictedChange < -3) {
-        // Price expected to fall - sell now
-        waitDays = 0;
-        expectedGain = 0;
     }
 
-    // Calculate demand index (0-100)
-    const demandIndex = Math.round(50 + Math.random() * 40);
+    // Deterministic demand index
+    const demandIndex = Math.round(50 + seed * 40);
 
     // Calculate net profit
     const grossAmount = currentPrice * input.quantity * (1 + expectedGain / 100);
     const storageCost = waitDays * storageCostPerDay * input.quantity;
     const netProfit = grossAmount - storageCost;
 
-    // Determine risk level
+    // Deterministic risk level
     let riskLevel: 'Low' | 'Medium' | 'High' = 'Medium';
-    if (predictedChange > 8) riskLevel = 'High'; // High potential but risky
+    if (predictedChange > 8) riskLevel = 'High';
     else if (predictedChange < 2) riskLevel = 'Low';
 
     // Generate recommendation
     const recommendation: SellRecommendation = {
-        id: `rec_${Date.now()}`,
+        id: `rec_${input.cropName.toLowerCase()}_${new Date().toISOString().split('T')[0]}`,
         cropName: input.cropName,
         currentPrice,
         predictedPrice: Math.round(predictedPrice),

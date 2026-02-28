@@ -5,6 +5,7 @@ import { Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 import { useLocation } from '@/context/LocationContext';
 
+
 export default function SellAdvicePage() {
     const { district } = useLocation();
     return (

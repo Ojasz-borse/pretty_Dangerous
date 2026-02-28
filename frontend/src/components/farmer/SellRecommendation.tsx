@@ -15,7 +15,8 @@ export default function SellRecommendation({ cropName, district }: SellRecommend
     const [recommendation, setRecommendation] = useState<SellRec | null>(null);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => { fetchRecommendation(); }, [selectedCrop]);
+    // Recommendation only on manual trigger
+    // useEffect(() => { fetchRecommendation(); }, [selectedCrop]);
 
     const fetchRecommendation = async () => {
         setLoading(true);
@@ -116,6 +117,55 @@ export default function SellRecommendation({ cropName, district }: SellRecommend
                     </div>
                 </>
             )}
+
+            {/* How it Works Section */}
+            <div className="card p-8 bg-gradient-to-br from-slate-50 to-white border-slate-200">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                        <Lightbulb className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold text-slate-800">How our Recommendation Engine Works</h3>
+                        <p className="text-sm text-slate-500 font-medium">Transparency in every decision</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                        {
+                            title: 'Market Intelligence',
+                            desc: 'We fetch real-time crop prices directly from Government of India (data.gov.in) open data portals to ensure accuracy.',
+                            icon: Package, color: 'text-emerald-500', bg: 'bg-emerald-50'
+                        },
+                        {
+                            title: 'ML Price Prediction',
+                            desc: 'Our Facebook Prophet models analyze historical seasonality and trends to forecast tomorrow\'s market value.',
+                            icon: TrendingUp, color: 'text-blue-500', bg: 'bg-blue-50'
+                        },
+                        {
+                            title: 'Demand Analysis',
+                            desc: 'We calculate a Demand Index (0-100) based on market arrival volumes, representing current buyer interest.',
+                            icon: TrendingDown, color: 'text-amber-500', bg: 'bg-amber-50'
+                        },
+                        {
+                            title: 'Economic Net Profit',
+                            desc: 'The final advice accounts for your storage costs and the "Wait Utility" vs immediate selling potential.',
+                            icon: IndianRupee, color: 'text-indigo-500', bg: 'bg-indigo-50'
+                        }
+                    ].map((item, i) => (
+                        <div key={i} className="flex gap-4 p-4 rounded-2xl border border-slate-100 bg-white/50 hover:shadow-md transition-shadow">
+                            <div className={`shrink-0 w-10 h-10 ${item.bg} rounded-xl flex items-center justify-center`}>
+                                <item.icon className={`w-5 h-5 ${item.color}`} />
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-slate-800 text-sm mb-1">{item.title}</h4>
+                                <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+            </div>
         </div>
     );
 }
