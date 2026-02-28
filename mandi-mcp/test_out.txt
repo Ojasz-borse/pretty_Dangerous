@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "D:\My Version\mandi-mcp\test_gemini.py", line 8, in <module>
+    import services.vision_service as vs
+  File "D:\My Version\mandi-mcp\services\vision_service.py", line 20, in <module>
+    import torch
+  File "D:\My Version\mandi-mcp\venv\Lib\site-packages\torch\__init__.py", line 280, in <module>
+    _load_dll_libraries()
+  File "D:\My Version\mandi-mcp\venv\Lib\site-packages\torch\__init__.py", line 263, in _load_dll_libraries
+    raise err
+OSError: [WinError 1114] A dynamic link library (DLL) initialization routine failed. Error loading "D:\My Version\mandi-mcp\venv\Lib\site-packages\torch\lib\c10.dll" or one of its dependencies.

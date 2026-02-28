@@ -1,0 +1,45 @@
+
+> frontend@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.8s
+  Running TypeScript ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/22) ...
+  Generating static pages using 15 workers (5/22) 
+  Generating static pages using 15 workers (10/22) 
+  Generating static pages using 15 workers (16/22) 
+✓ Generating static pages using 15 workers (22/22) in 408.5ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/farmer/crop-health
+├ ƒ /api/farmer/crops
+├ ƒ /api/farmer/demand
+├ ƒ /api/farmer/detect-crop
+├ ƒ /api/farmer/logistics
+├ ƒ /api/farmer/prediction
+├ ƒ /api/farmer/price
+├ ƒ /api/farmer/sell-recommendation
+├ ƒ /api/farmer/trust-score
+├ ƒ /api/filters
+├ ○ /buyer
+├ ○ /crop-detect
+├ ○ /demand
+├ ○ /login
+├ ○ /logistics
+├ ○ /prediction
+├ ○ /prices
+├ ○ /sell-advice
+└ ○ /trust-score
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

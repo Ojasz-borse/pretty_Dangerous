@@ -1,0 +1,1309 @@
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\pandas\core\computation\expressions.py:22: UserWarning: Pandas requires version '2.10.2' or newer of 'numexpr' (version '2.8.4' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\pandas\core\arrays\masked.py:56: UserWarning: Pandas requires version '1.4.2' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+D:\My Version\mandi-mcp\api.py:230: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [25724]
+INFO:     Waiting for application startup.
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\torch\_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+Starting Mandi API with LIVE data.gov.in connection...
+Loading base filters from CSV dataset...
+Loading comprehensive filters from CSV: D:\My Version\data\Dataset.csv
+Fetching fresh live data from data.gov.in...
+Merging 10 live records...
+Total: 4 states loaded
+[PricePrediction] Found 36 saved models in D:\My Version\mandi-mcp\data\prophet_models. Loading...
+[PricePrediction] Loaded 36 models from disk. Done.
+[DemandForecast] Loading saved model from D:\My Version\mandi-mcp\data\demand_model.pkl...
+[DemandForecast] Model loaded.
+[Vision] Loading Quality CNN model from D:\My Version\mandi-mcp\data\quality_vision_model.pth on cuda:0...
+[Vision] Quality model ready.
+[Vision] Loading Crop CNN model from D:\My Version\mandi-mcp\data\crop_vision_model.pth on cuda:0...
+[Vision] Crop Type model ready.
+INFO:     127.0.0.1:59078 - "GET /filters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59080 - "GET /filters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59086 - "GET /filters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61850 - "GET /filters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61855 - "GET /prices?state=Maharashtra HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61703 - "GET /history?crop=Wheat&mandi=Sirsa&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:61706 - "GET /predict?crop=Wheat&district=Sirsa&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61708 - "GET /history?crop=Wheat&mandi=Sirsa&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:61706 - "GET /predict?crop=Wheat&district=Sirsa&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61714 - "GET /history?crop=Wheat&mandi=Sirsa&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:61706 - "GET /predict?crop=Wheat&district=Sirsa&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61717 - "GET /history?crop=Wheat&mandi=Sirsa&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:61706 - "GET /predict?crop=Wheat&district=Sirsa&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /prices?district=Dhule&state=Maharashtra&market=Dhule HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65229 - "GET /history?crop=Wheat&mandi=Dhule&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:65232 - "GET /predict?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53585 - "GET /predict?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53586 - "GET /demand?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53585 - "GET /predict?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53586 - "GET /demand?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53585 - "GET /predict?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53586 - "GET /demand?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64863 - "GET /prices?district=Dhule&state=Maharashtra&market=Dhule HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61236 - "GET /prices?district=Jalgaon&state=Maharashtra&market=Amalner HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61242 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61252 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:61255 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61258 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:61255 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53890 - "GET /prices?district=Pune&state=Maharashtra&market=Indapur+APMC HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53898 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:53901 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53904 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:53901 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53908 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:53901 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53912 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:53901 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53916 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:53901 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65223 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:65226 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65229 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:65226 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65233 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:65226 - "GET /predict?crop=Wheat&district=Pune&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65238 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:64202 - "GET /history?crop=Wheat&mandi=Dhule&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:64205 - "GET /predict?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64207 - "GET /history?crop=Wheat&mandi=Dhule&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:64210 - "GET /predict?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54401 - "GET /history?crop=Wheat&mandi=Dhule&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:54404 - "GET /predict?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54409 - "GET /history?crop=Wheat&mandi=Dhule&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+    csv_data = get_history_from_csv(crop, mandi, state, district, days * 2)  # Get more data
+                                                 ^^^^^
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:54413 - "GET /predict?crop=Wheat&district=Dhule&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64418 - "GET /history?crop=Banana%20-%20Green&mandi=Jalgaon&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:64421 - "GET /predict?crop=Banana%20-%20Green&district=Jalgaon&days=7 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64424 - "GET /history?crop=Wheat&mandi=Pune&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:64671 - "GET /history?crop=Banana%20-%20Green&mandi=Jalgaon&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:64674 - "GET /predict?crop=Banana%20-%20Green&district=Jalgaon&days=7 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64676 - "GET /history?crop=Banana%20-%20Green&mandi=Jalgaon&days=7 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1139, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 385, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 284, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\My Version\mandi-mcp\api.py", line 417, in get_historical_data
+NameError: name 'state' is not defined
+INFO:     127.0.0.1:64679 - "GET /predict?crop=Banana%20-%20Green&district=Jalgaon&days=7 HTTP/1.1" 404 Not Found

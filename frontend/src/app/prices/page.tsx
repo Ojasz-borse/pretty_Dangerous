@@ -31,7 +31,7 @@ export default function PricesPage() {
                             Real-Time <span className="text-green-400">Market Prices</span>
                         </h1>
                         <p className="text-white/90 text-lg leading-relaxed drop-shadow-md font-medium max-w-lg">
-                            Crop-level, mandi-by-mandi prices verified from Agmarknet — updated hourly.
+                            Crop-level, mandi-by-mandi prices verified by our ML Prediction Engine — updated hourly.
                             {(district || state) && (
                                 <span className="block mt-1 text-green-300 font-bold">
                                     📍 {[district, state].filter(Boolean).join(', ')}
@@ -44,13 +44,13 @@ export default function PricesPage() {
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-3xl text-white hidden lg:block animate-fade-in-right">
                         <div className="flex flex-col gap-4 text-center">
                             <div>
-                                <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-1">Last Updated</p>
-                                <p className="text-xl font-black">10 mins ago</p>
+                                <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-1">Powered By</p>
+                                <p className="text-xl font-black">ML Model</p>
                             </div>
                             <div className="h-px bg-white/10 w-full"></div>
                             <div>
                                 <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-1">Source</p>
-                                <p className="text-xl font-black">Agmarknet API</p>
+                                <p className="text-xl font-black">Prediction Engine</p>
                             </div>
                         </div>
                     </div>

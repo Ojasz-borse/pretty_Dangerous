@@ -1,0 +1,12 @@
+{
+  "classes": [
+    "pepper__bell",
+    "potato"
+  ],
+  "class_distribution": {
+    "pepper__bell": 200,
+    "potato": 300
+  },
+  "best_val_accuracy": 96.0,
+  "epochs_trained": 5
+}
