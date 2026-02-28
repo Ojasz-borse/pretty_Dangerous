@@ -19,6 +19,7 @@ async def generate_advice(price_data: Dict[str, Any], weather_data: Dict[str, An
             f"\n\nData:\n"
             f"Crop: {price_data.get('crop')}\n"
             f"Current Price: ₹{price_data.get('modal_price_kg')}/kg\n"
+            +
             f"Price Trend: Stable (Assumed)\n"
             f"Weather Forecast: {weather_data.get('forecast_text')}\n"
             f"Rain Warning: {'Yes' if weather_data.get('rain_next_3_days') else 'No'}\n"

@@ -1,60 +1,41 @@
-# Dependencies
-node_modules/
-.pnp/
-.pnp.js
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Build outputs
-dist/
-build/
-.next/
-out/
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Environment variables
-.env
-.env.local
-.env.*.local
-mandi-mcp/.env
+# testing
+/coverage
 
-# IDE and editor
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# next.js
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-.venv/
-pip-log.txt
+/out/
 
-# OS generated
+# production
+/build
+
+# misc
 .DS_Store
-Thumbs.db
-*.log
-
-# Debug files
-debug*.txt
-output.txt
-*.log
-
-# Temporary files
-*.tmp
-*.temp
-
-# Firebase
-.firebase/
-firebase-debug.log
-
-# Gemini brain artifacts (local only)
-.gemini/
-
-# Security
-*.key
 *.pem
-secrets.yaml
-*.env
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

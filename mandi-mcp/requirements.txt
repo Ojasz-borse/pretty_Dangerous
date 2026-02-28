@@ -7,3 +7,9 @@ gTTS
 fastapi
 uvicorn
 python-multipart
+pandas
+prophet
+scikit-learn
+torch
+torchvision
+Pillow
