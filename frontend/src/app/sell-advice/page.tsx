@@ -3,8 +3,10 @@ import Navbar from '@/components/Navbar';
 import SellRecommendation from '@/components/farmer/SellRecommendation';
 import { Lightbulb } from 'lucide-react';
 import Link from 'next/link';
+import { useLocation } from '@/context/LocationContext';
 
 export default function SellAdvicePage() {
+    const { district } = useLocation();
     return (
         <>
             <Navbar />
@@ -49,7 +51,7 @@ export default function SellAdvicePage() {
                     <span>/</span>
                     <span>Sell Advice</span>
                 </div>
-                <SellRecommendation cropName="Wheat" district="Sirsa" />
+                <SellRecommendation cropName="Wheat" district={district || 'Sirsa'} />
             </div>
         </>
     );

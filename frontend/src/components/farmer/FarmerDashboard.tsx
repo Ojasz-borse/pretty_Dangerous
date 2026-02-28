@@ -15,6 +15,7 @@ import {
     Clock,
     Zap
 } from 'lucide-react';
+import { useLocation } from '@/context/LocationContext';
 import RealTimePrice from './RealTimePrice';
 import PricePrediction from './PricePrediction';
 import SellRecommendation from './SellRecommendation';
@@ -35,8 +36,10 @@ const modules = [
 
 export default function FarmerDashboard() {
     const [selectedCrop, setSelectedCrop] = useState('Wheat');
-    const [district] = useState('Sirsa');
-    const [state] = useState('Haryana');
+    const { district: ctxDistrict, state: ctxState } = useLocation();
+    // Fall back to 'Sirsa'/'Haryana' if user has not set a location yet
+    const district = ctxDistrict || 'Sirsa';
+    const state = ctxState || 'Haryana';
     const [activeTab, setActiveTab] = useState('price');
     const [currentTime, setCurrentTime] = useState('');
 

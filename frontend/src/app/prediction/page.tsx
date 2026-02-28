@@ -3,8 +3,10 @@ import Navbar from '@/components/Navbar';
 import PricePrediction from '@/components/farmer/PricePrediction';
 import { TrendingUp } from 'lucide-react';
 import Link from 'next/link';
+import { useLocation } from '@/context/LocationContext';
 
 export default function PredictionPage() {
+    const { district } = useLocation();
     return (
         <>
             <Navbar />
@@ -49,7 +51,7 @@ export default function PredictionPage() {
                     <span>/</span>
                     <span>Price Forecast</span>
                 </div>
-                <PricePrediction cropName="Wheat" district="Sirsa" />
+                <PricePrediction cropName="Wheat" district={district || 'Sirsa'} />
             </div>
         </>
     );

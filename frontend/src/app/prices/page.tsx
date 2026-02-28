@@ -3,8 +3,13 @@ import Navbar from '@/components/Navbar';
 import RealTimePrice from '@/components/farmer/RealTimePrice';
 import { DollarSign } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useLocation } from '@/context/LocationContext';
 
 export default function PricesPage() {
+    const [selectedCrop, setSelectedCrop] = useState('Wheat');
+    const { district, state } = useLocation();
+
     return (
         <>
             <Navbar />
@@ -22,8 +27,17 @@ export default function PricesPage() {
                             </div>
                             <span className="text-green-400 font-black tracking-widest text-xs uppercase drop-shadow-md">Live Market Data</span>
                         </div>
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-2xl mb-4">Real-Time <span className="text-green-400">Market Prices</span></h1>
-                        <p className="text-white/90 text-lg leading-relaxed drop-shadow-md font-medium max-w-lg">Access verified, hourly-updated mandi prices from 2,500+ markets nationwide.</p>
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-2xl mb-4">
+                            Real-Time <span className="text-green-400">Market Prices</span>
+                        </h1>
+                        <p className="text-white/90 text-lg leading-relaxed drop-shadow-md font-medium max-w-lg">
+                            Crop-level, mandi-by-mandi prices verified from Agmarknet — updated hourly.
+                            {(district || state) && (
+                                <span className="block mt-1 text-green-300 font-bold">
+                                    📍 {[district, state].filter(Boolean).join(', ')}
+                                </span>
+                            )}
+                        </p>
                     </div>
 
                     {/* Side Badge Stats */}
@@ -35,8 +49,8 @@ export default function PricesPage() {
                             </div>
                             <div className="h-px bg-white/10 w-full"></div>
                             <div>
-                                <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-1">Verified Sources</p>
-                                <p className="text-xl font-black">2,500+ Mandis</p>
+                                <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-1">Source</p>
+                                <p className="text-xl font-black">Agmarknet API</p>
                             </div>
                         </div>
                     </div>
@@ -49,7 +63,7 @@ export default function PricesPage() {
                     <span>/</span>
                     <span>Market Prices</span>
                 </div>
-                <RealTimePrice selectedCrop="Wheat" setSelectedCrop={() => { }} district="Sirsa" />
+                <RealTimePrice selectedCrop={selectedCrop} setSelectedCrop={setSelectedCrop} />
             </div>
         </>
     );

@@ -97,26 +97,6 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* ===== QUICK STATS ===== */}
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                        {[
-                            { label: 'Active Markets', value: '2,500+', icon: DollarSign, color: 'text-green-600', bg: 'bg-green-50 shadow-green-100' },
-                            { label: 'Crops Tracked', value: '150+', icon: Leaf, color: 'text-blue-600', bg: 'bg-blue-50 shadow-blue-100' },
-                            { label: 'Farmers Served', value: '50,000+', icon: Users, color: 'text-purple-600', bg: 'bg-purple-50 shadow-purple-100' },
-                            { label: 'States Covered', value: '28', icon: Shield, color: 'text-amber-600', bg: 'bg-amber-50 shadow-amber-100' },
-                        ].map((stat, i) => (
-                            <div key={i} className="group flex flex-col items-center text-center animate-fade-in-up">
-                                <div className={`w-20 h-20 ${stat.bg.split(' ')[0]} rounded-3xl flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform duration-500`}>
-                                    <stat.icon className={`w-10 h-10 ${stat.color}`} />
-                                </div>
-                                <p className="text-4xl font-black text-slate-900 tracking-tight mb-2">{stat.value}</p>
-                                <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">{stat.label}</p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
                 {/* ===== FEATURE GRID ===== */}
                 <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20 bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 my-10 border border-slate-100">
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">

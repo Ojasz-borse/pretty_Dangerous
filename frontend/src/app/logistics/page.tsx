@@ -3,8 +3,10 @@ import Navbar from '@/components/Navbar';
 import LogisticsCalculator from '@/components/farmer/LogisticsCalculator';
 import { Truck } from 'lucide-react';
 import Link from 'next/link';
+import { useLocation } from '@/context/LocationContext';
 
 export default function LogisticsPage() {
+    const { district, state } = useLocation();
     return (
         <>
             <Navbar />
@@ -49,7 +51,7 @@ export default function LogisticsPage() {
                     <span>/</span>
                     <span>Logistics Calculator</span>
                 </div>
-                <LogisticsCalculator cropName="Wheat" pickupDistrict="Sirsa" pickupState="Haryana" />
+                <LogisticsCalculator cropName="Wheat" pickupDistrict={district || 'Sirsa'} pickupState={state || 'Haryana'} />
             </div>
         </>
     );

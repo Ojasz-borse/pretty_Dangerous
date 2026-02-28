@@ -3,8 +3,10 @@ import Navbar from '@/components/Navbar';
 import DemandForecast from '@/components/farmer/DemandForecast';
 import { BarChart3 } from 'lucide-react';
 import Link from 'next/link';
+import { useLocation } from '@/context/LocationContext';
 
 export default function DemandPage() {
+    const { district, state } = useLocation();
     return (
         <>
             <Navbar />
@@ -49,7 +51,7 @@ export default function DemandPage() {
                     <span>/</span>
                     <span>Demand Insights</span>
                 </div>
-                <DemandForecast district="Sirsa" state="Haryana" />
+                <DemandForecast district={district || 'Sirsa'} state={state || 'Haryana'} />
             </div>
         </>
     );

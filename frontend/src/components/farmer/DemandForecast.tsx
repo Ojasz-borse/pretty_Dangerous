@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart3, TrendingUp, TrendingDown, Minus, Calendar, MapPin, Loader2, Info } from 'lucide-react';
 import type { DemandForecast, ApiResponse } from '@/types/farmer';
+import CropHealthPanel from './CropHealthPanel';
+import DemandHeatmap from './DemandHeatmap';
 
 interface DemandForecastProps { district: string; state: string; }
 
@@ -142,6 +144,12 @@ export default function DemandForecast({ district, state }: DemandForecastProps)
                     </div>
                 </div>
             </div>
+
+            {/* ===== SATELLITE CROP HEALTH (Agromonitoring API) ===== */}
+            <CropHealthPanel />
+
+            {/* ===== DEMAND HEATMAP ===== */}
+            <DemandHeatmap />
         </div>
     );
 }
