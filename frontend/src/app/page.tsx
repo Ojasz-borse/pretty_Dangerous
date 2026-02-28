@@ -155,49 +155,6 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* ===== SID-BY-SIDE STORY SECTION ===== */}
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-32">
-                    <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-                        <div className="flex-1 relative order-2 lg:order-1">
-                            <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
-                                <img src="/347052-field-77087361280.avif" alt="Agricultural fields" className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            {/* Floating stat card */}
-                            <div className="absolute -bottom-8 -right-8 z-20 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 animate-bounce-slow">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center">
-                                        <TrendingUp className="w-6 h-6 text-amber-600" />
-                                    </div>
-                                    <div>
-                                        <p className="text-2xl font-black text-slate-900">+15%</p>
-                                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Average Income Boost</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex-1 order-1 lg:order-2">
-                            <span className="text-green-600 font-black tracking-widest uppercase text-xs mb-4 block">Our Impact</span>
-                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-8 leading-[1.2]">Empowering Rural Communities <span className="text-green-600">Since 2024</span></h2>
-                            <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                                We believe that technology can bridge the gap between hard-working farmers and fair market rewards. By providing transparency, we ensure every harvest gets its true value.
-                            </p>
-
-                            <div className="grid gap-6">
-                                {[
-                                    { title: 'Transparency', desc: 'Real-time data from 2,500+ mandis directly to your phone.', color: 'border-l-4 border-green-500' },
-                                    { title: 'Intelligence', desc: 'AI-driven insights to help you decide what to grow and when to sell.', color: 'border-l-4 border-blue-500' },
-                                    { title: 'Prosperity', desc: 'Optimizing logistics to reduce waste and maximize profits.', color: 'border-l-4 border-amber-500' }
-                                ].map((item, i) => (
-                                    <div key={i} className={`p-5 rounded-2xl bg-white shadow-sm border border-slate-100 ${item.color}`}>
-                                        <h4 className="font-bold text-slate-800 mb-1">{item.title}</h4>
-                                        <p className="text-sm text-slate-500">{item.desc}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
                 {/* ===== HOW IT WORKS ===== */}
                 <section className="bg-white border-y border-slate-200 py-12 sm:py-16">

@@ -25,12 +25,12 @@ interface SmartSearchProps {
 }
 
 const mockListings: Listing[] = [
-    { id: '1', crop: 'Wheat', variety: 'Sharbati', quantity: '500 Quintals', price: '₹2,450/qtl', location: 'Sirsa, Haryana', state: 'Haryana', district: 'Sirsa', farmer: 'Rajesh Kumar', trustScore: 92, image: '/1.jpeg' },
-    { id: '2', crop: 'Basmati Rice', variety: '1121', quantity: '250 Quintals', price: '₹4,800/qtl', location: 'Karnal, Punjab', state: 'Punjab', district: 'Karnal', farmer: 'Gurpreet Singh', trustScore: 88, image: '/2.jpg' },
-    { id: '3', crop: 'Cotton', variety: 'Bt Cotton', quantity: '120 Quintals', price: '₹7,200/qtl', location: 'Bhatinda, Punjab', state: 'Punjab', district: 'Bhatinda', farmer: 'Amit Sharma', trustScore: 95, image: '/4.jpg' },
-    { id: '4', crop: 'Onion', variety: 'Nasik Red', quantity: '300 Quintals', price: '₹1,200/qtl', location: 'Nashik, Maharashtra', state: 'Maharashtra', district: 'Nashik', farmer: 'Suresh Patil', trustScore: 87, image: '/1.jpeg' },
-    { id: '5', crop: 'Mustard', variety: 'Yellow Sarson', quantity: '180 Quintals', price: '₹5,400/qtl', location: 'Hisar, Haryana', state: 'Haryana', district: 'Hisar', farmer: 'Ramesh Yadav', trustScore: 91, image: '/2.jpg' },
-    { id: '6', crop: 'Maize', variety: 'Yellow Hybrid', quantity: '400 Quintals', price: '₹1,800/qtl', location: 'Ludhiana, Punjab', state: 'Punjab', district: 'Ludhiana', farmer: 'Harjinder Singh', trustScore: 89, image: '/4.jpg' },
+    { id: '1', crop: 'Wheat', variety: 'Sharbati', quantity: '500 Quintals', price: '₹2,450/qtl', location: 'Sirsa, Haryana', state: 'Haryana', district: 'Sirsa', farmer: 'Rajesh Kumar', trustScore: 92, image: '/wheat.jpg' },
+    { id: '2', crop: 'Basmati Rice', variety: '1121', quantity: '250 Quintals', price: '₹4,800/qtl', location: 'Karnal, Punjab', state: 'Punjab', district: 'Karnal', farmer: 'Gurpreet Singh', trustScore: 88, image: '/rice.jpg' },
+    { id: '3', crop: 'Cotton', variety: 'Bt Cotton', quantity: '120 Quintals', price: '₹7,200/qtl', location: 'Bhatinda, Punjab', state: 'Punjab', district: 'Bhatinda', farmer: 'Amit Sharma', trustScore: 95, image: '/cotton.jpg' },
+    { id: '4', crop: 'Onion', variety: 'Nasik Red', quantity: '300 Quintals', price: '₹1,200/qtl', location: 'Nashik, Maharashtra', state: 'Maharashtra', district: 'Nashik', farmer: 'Suresh Patil', trustScore: 87, image: '/onion.avif' },
+    { id: '5', crop: 'Mustard', variety: 'Yellow Sarson', quantity: '180 Quintals', price: '₹5,400/qtl', location: 'Hisar, Haryana', state: 'Haryana', district: 'Hisar', farmer: 'Ramesh Yadav', trustScore: 91, image: '/mustard.jpg' },
+    { id: '6', crop: 'Maize', variety: 'Yellow Hybrid', quantity: '400 Quintals', price: '₹1,800/qtl', location: 'Ludhiana, Punjab', state: 'Punjab', district: 'Ludhiana', farmer: 'Harjinder Singh', trustScore: 89, image: '/maize.jpeg' },
 ];
 
 export default function SmartSearch({ onSelectListing, selectedListing }: SmartSearchProps) {
