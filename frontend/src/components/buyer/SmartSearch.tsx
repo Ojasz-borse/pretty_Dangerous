@@ -1,148 +1,300 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Search, MapPin, Tag, Filter, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-
-interface Listing {
-    id: string;
-    crop: string;
-    variety: string;
-    quantity: string;
-    price: string;
-    location: string;
-    farmer: string;
-    trustScore: number;
-    image: string;
-}
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Progress } from '@/components/ui/progress';
+import {
+    Search,
+    MapPin,
+    Star,
+    TrendingUp,
+    Filter,
+    SortAsc,
+    Phone,
+    Package,
+    Shield,
+    Clock,
+    ChevronRight,
+    CheckCircle
+} from 'lucide-react';
+import type { FarmerListing, ApiResponse } from '@/types/buyer';
 
 interface SmartSearchProps {
-    onSelectListing: (id: string) => void;
+    onSelectListing: (id: string | null) => void;
     selectedListing: string | null;
 }
 
-export default function SmartSearch({ onSelectListing, selectedListing }: SmartSearchProps) {
-    const [searchTerm, setSearchTerm] = useState('');
+const popularCrops = [
+    'All Crops', 'Wheat', 'Rice (Basmati)', 'Tomato', 'Onion', 'Potato',
+    'Cotton', 'Sugarcane', 'Maize', 'Soybean', 'Groundnut'
+];
 
-    const mockListings: Listing[] = [
-        {
-            id: '1',
-            crop: 'Wheat',
-            variety: 'Sharbati',
-            quantity: '500 Quintals',
-            price: '₹2,450/qtl',
-            location: 'Sirsa, Haryana',
-            farmer: 'Rajesh Kumar',
-            trustScore: 92,
-            image: '/1.jpeg'
-        },
-        {
-            id: '2',
-            crop: 'Basmati Rice',
-            variety: '1121',
-            quantity: '250 Quintals',
-            price: '₹4,800/qtl',
-            location: 'Karnal, Punjab',
-            farmer: 'Gurpreet Singh',
-            trustScore: 88,
-            image: '/2.jpg'
-        },
-        {
-            id: '3',
-            crop: 'Cotton',
-            variety: 'Bt Cotton',
-            quantity: '120 Quintals',
-            price: '₹7,200/qtl',
-            location: 'Bhatinda, Punjab',
-            farmer: 'Amit Sharma',
-            trustScore: 95,
-            image: '/4.jpg'
+export default function SmartSearch({ onSelectListing, selectedListing }: SmartSearchProps) {
+    const [listings, setListings] = useState<FarmerListing[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchCrop, setSearchCrop] = useState('All Crops');
+    const [sortBy, setSortBy] = useState<'price' | 'distance' | 'trustScore' | 'rating'>('trustScore');
+    const [minTrust, setMinTrust] = useState('0');
+    const [maxDistance, setMaxDistance] = useState('2000');
+
+    useEffect(() => {
+        fetchListings();
+    }, [searchCrop, sortBy]);
+
+    const fetchListings = async () => {
+        setLoading(true);
+        try {
+            const params = new URLSearchParams();
+            if (searchCrop !== 'All Crops') params.append('cropName', searchCrop);
+            params.append('sortBy', sortBy);
+            params.append('sortOrder', 'desc');
+            params.append('minTrustScore', minTrust);
+            params.append('maxDistance', maxDistance);
+
+            const response = await fetch(`/api/buyer/search?${params.toString()}`);
+            const data: ApiResponse<{ listings: FarmerListing[]; total: number }> = await response.json();
+
+            if (data.success && data.data) {
+                setListings(data.data.listings);
+            }
+        } catch (error) {
+            console.error('Error fetching listings:', error);
+        } finally {
+            setLoading(false);
         }
-    ];
+    };
+
+    const getTrustColor = (score: number) => {
+        if (score >= 85) return 'text-green-600';
+        if (score >= 70) return 'text-blue-600';
+        if (score >= 50) return 'text-amber-600';
+        return 'text-red-600';
+    };
+
+    const getGradeBadge = (grade: string) => {
+        const colors: Record<string, string> = {
+            'A': 'bg-green-100 text-green-700 border-green-300',
+            'B': 'bg-blue-100 text-blue-700 border-blue-300',
+            'C': 'bg-amber-100 text-amber-700 border-amber-300',
+            'D': 'bg-red-100 text-red-700 border-red-300'
+        };
+        return colors[grade] || 'bg-gray-100 text-gray-700';
+    };
 
     return (
-        <div className="space-y-6 animate-fade-in">
-            <Card className="border-blue-100 shadow-xl overflow-hidden">
-                <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-white">
-                    <h2 className="text-3xl font-black mb-2 italic">Smart Buyer Search</h2>
-                    <p className="text-blue-100 opacity-90 max-w-2xl">Find verified produce directly from farmers using our AI-powered discovery engine.</p>
-                </div>
-                <CardContent className="p-6">
-                    <div className="flex flex-col md:flex-row gap-4 mb-8">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <div className="space-y-6">
+            {/* Search Filters */}
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <Search className="w-5 h-5 text-blue-600" />
+                        Smart Search & Matching
+                    </CardTitle>
+                    <CardDescription>
+                        Find verified farmers sorted by price, distance, and trust score
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+                        <div className="space-y-2">
+                            <Label>Crop</Label>
+                            <Select value={searchCrop} onValueChange={setSearchCrop}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select crop" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {popularCrops.map((crop) => (
+                                        <SelectItem key={crop} value={crop}>
+                                            {crop}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Sort By</Label>
+                            <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="trustScore">Trust Score</SelectItem>
+                                    <SelectItem value="price">Price</SelectItem>
+                                    <SelectItem value="distance">Distance</SelectItem>
+                                    <SelectItem value="rating">Rating</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Min Trust Score</Label>
                             <Input
-                                placeholder="Search by crop, variety, or location..."
-                                className="pl-10 h-12 border-blue-100 focus:ring-blue-500 rounded-xl"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                type="number"
+                                value={minTrust}
+                                onChange={(e) => setMinTrust(e.target.value)}
+                                min="0" max="100"
                             />
                         </div>
-                        <Button className="h-12 px-8 bg-blue-600 hover:bg-blue-700 rounded-xl shadow-lg shadow-blue-200 transition-all font-bold">
-                            <Search className="w-4 h-4 mr-2" />
-                            Search Markets
-                        </Button>
-                        <Button variant="outline" className="h-12 border-blue-200 rounded-xl">
+                        <div className="space-y-2">
+                            <Label>Max Distance (km)</Label>
+                            <Input
+                                type="number"
+                                value={maxDistance}
+                                onChange={(e) => setMaxDistance(e.target.value)}
+                                min="1"
+                            />
+                        </div>
+                        <Button onClick={fetchListings} className="bg-blue-600 hover:bg-blue-700">
                             <Filter className="w-4 h-4 mr-2" />
-                            Filters
+                            Apply Filters
                         </Button>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {mockListings.map((listing) => (
-                            <Card
-                                key={listing.id}
-                                className={`group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border-blue-50 ${selectedListing === listing.id ? 'ring-2 ring-blue-500 border-transparent shadow-blue-100' : ''}`}
-                                onClick={() => onSelectListing(listing.id)}
-                            >
-                                <div className="relative h-48 overflow-hidden">
-                                    <img src={listing.image} alt={listing.crop} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                    <div className="absolute top-3 right-3">
-                                        <Badge className="bg-white/90 text-blue-700 backdrop-blur-sm shadow-sm">
-                                            Trust: {listing.trustScore}%
-                                        </Badge>
-                                    </div>
-                                    <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent text-white">
-                                        <div className="flex items-center gap-1 text-xs opacity-90">
-                                            <MapPin className="w-3 h-3" />
-                                            {listing.location}
-                                        </div>
-                                    </div>
-                                </div>
-                                <CardContent className="p-5">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h3 className="text-xl font-black text-gray-800">{listing.crop}</h3>
-                                            <p className="text-xs text-blue-600 font-bold uppercase tracking-wider">{listing.variety}</p>
-                                        </div>
-                                        <p className="text-xl font-black text-green-600 italic">{listing.price}</p>
-                                    </div>
-                                    <div className="flex items-center justify-between mt-4 py-3 border-t border-gray-100">
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">
-                                                {listing.farmer[0]}
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <span className="text-sm font-bold text-gray-700 flex items-center gap-1">
-                                                    {listing.farmer}
-                                                    <CheckCircle2 className="w-3 h-3 text-blue-500 fill-blue-500" />
-                                                </span>
-                                                <span className="text-[10px] text-gray-400">Verified Seller</span>
-                                            </div>
-                                        </div>
-                                        <div className="text-right text-xs font-bold text-gray-500">
-                                            {listing.quantity}
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
                     </div>
                 </CardContent>
             </Card>
+
+            {/* Results Count */}
+            <div className="flex items-center justify-between">
+                <p className="text-gray-600">
+                    Found <span className="font-bold text-blue-600">{listings.length}</span> matching listings
+                </p>
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <SortAsc className="w-4 h-4" />
+                    Sorted by: <span className="font-medium capitalize">{sortBy.replace(/([A-Z])/g, ' $1')}</span>
+                </div>
+            </div>
+
+            {/* Listing Cards */}
+            {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[1, 2, 3, 4].map((i) => (
+                        <Card key={i}>
+                            <CardContent className="p-4">
+                                <Skeleton className="h-4 w-3/4 mb-2" />
+                                <Skeleton className="h-8 w-1/2 mb-4" />
+                                <Skeleton className="h-4 w-full" />
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {listings.map((listing) => (
+                        <Card
+                            key={listing.id}
+                            className={`overflow-hidden transition-all hover:shadow-lg cursor-pointer ${selectedListing === listing.id ? 'ring-2 ring-blue-500' : ''
+                                }`}
+                            onClick={() => onSelectListing(listing.id)}
+                        >
+                            {/* Header */}
+                            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-4 text-white">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h3 className="font-bold text-lg">{listing.cropName}</h3>
+                                        {listing.cropNameHindi && (
+                                            <p className="text-sm opacity-80">{listing.cropNameHindi}</p>
+                                        )}
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Badge className={`${getGradeBadge(listing.qualityGrade)} border`}>
+                                            Grade {listing.qualityGrade}
+                                        </Badge>
+                                        {listing.verified && (
+                                            <Badge className="bg-white/20 text-white border-0">
+                                                <Shield className="w-3 h-3 mr-1" />
+                                                Verified
+                                            </Badge>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <CardContent className="p-4">
+                                {/* Farmer Info */}
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                                        <span className="text-lg font-bold text-gray-600">
+                                            {listing.farmerName.charAt(0)}
+                                        </span>
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="font-medium">{listing.farmerName}</p>
+                                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                                            <MapPin className="w-3 h-3" />
+                                            <span>{listing.location.district}, {listing.location.state}</span>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <div className={`flex items-center gap-1 ${getTrustColor(listing.trustScore)}`}>
+                                            <Star className="w-5 h-5 fill-current" />
+                                            <span className="font-bold">{listing.trustScore}</span>
+                                        </div>
+                                        <p className="text-xs text-gray-500">Trust Score</p>
+                                    </div>
+                                </div>
+
+                                {/* Stats Grid */}
+                                <div className="grid grid-cols-4 gap-2 mb-4">
+                                    <div className="text-center p-2 bg-gray-50 rounded-lg">
+                                        <p className="text-lg font-bold text-green-600">₹{listing.pricePerQuintal.toLocaleString()}</p>
+                                        <p className="text-xs text-gray-500">Per Quintal</p>
+                                    </div>
+                                    <div className="text-center p-2 bg-gray-50 rounded-lg">
+                                        <p className="text-lg font-bold text-blue-600">{listing.quantity}</p>
+                                        <p className="text-xs text-gray-500">Quintals</p>
+                                    </div>
+                                    <div className="text-center p-2 bg-gray-50 rounded-lg">
+                                        <p className="text-lg font-bold text-purple-600">{listing.distance} km</p>
+                                        <p className="text-xs text-gray-500">Distance</p>
+                                    </div>
+                                    <div className="text-center p-2 bg-gray-50 rounded-lg">
+                                        <p className="text-lg font-bold text-amber-600">{listing.rating}★</p>
+                                        <p className="text-xs text-gray-500">Rating</p>
+                                    </div>
+                                </div>
+
+                                {/* Trust Progress */}
+                                <div className="mb-4">
+                                    <div className="flex justify-between text-sm mb-1">
+                                        <span className="text-gray-500">Trust Level</span>
+                                        <span className={`font-medium ${getTrustColor(listing.trustScore)}`}>
+                                            {listing.reliabilityLevel}
+                                        </span>
+                                    </div>
+                                    <Progress value={listing.trustScore} className="h-2" />
+                                </div>
+
+                                {/* Actions */}
+                                <div className="flex gap-2">
+                                    <Button className="flex-1 bg-green-600 hover:bg-green-700">
+                                        <Phone className="w-4 h-4 mr-2" />
+                                        Contact
+                                    </Button>
+                                    <Button variant="outline" className="flex-1">
+                                        <Package className="w-4 h-4 mr-2" />
+                                        Place Bid
+                                    </Button>
+                                </div>
+
+                                {/* Additional Info */}
+                                <div className="flex items-center justify-between mt-4 pt-4 border-t text-sm text-gray-500">
+                                    <div className="flex items-center gap-1">
+                                        <Clock className="w-4 h-4" />
+                                        <span>Listed {new Date(listing.listedAt).toLocaleDateString()}</span>
+                                    </div>
+                                    <Badge variant="outline" className="text-xs">
+                                        {listing.totalSales} sales
+                                    </Badge>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
