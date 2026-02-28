@@ -1,0 +1,92 @@
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\pandas\core\computation\expressions.py:22: UserWarning: Pandas requires version '2.10.2' or newer of 'numexpr' (version '2.8.4' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\pandas\core\arrays\masked.py:56: UserWarning: Pandas requires version '1.4.2' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\torch\_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+
+[1m============================================================
+  KrishiSetu AI — Model Evaluation Report
+  Run at: 2026-02-28 22:13:43
+============================================================[0m
+  Project root : D:\My Version\IntelliReviewAI1.0
+  Device       : CUDA (GPU)
+
+[1m[96m============================================================[0m
+[1m[96m  1. PRICE PREDICTION MODEL (Facebook Prophet)[0m
+[1m[96m============================================================[0m
+  Loading / training Prophet models...
+[PricePrediction] Found 36 saved models in D:\My Version\IntelliReviewAI1.0\mandi-mcp\data\prophet_models. Loading...
+[PricePrediction] Loaded 36 models from disk. Done.
+  [92m✓ Models loaded in 0.7s[0m
+
+  --- Functional Prediction Tests ---
+  [92m✓ Tomato     / Sirsa      → 7-day prices: [1414.24, 1420.85, 1432.27, 1442.25, 1451.3, 1464.46, 1460.93]  [FALLBACK][0m
+  [92m✓ Onion      / Nashik     → 7-day prices: [1992.78, 2006.91, 2035.91, 2022.67, 2056.38, 2062.28, 2099.36]  [PRECISE][0m
+  [92m✓ Wheat      / Pune       → 7-day prices: [2138.84, 2160.61, 2177.47, 2174.7, 2188.24, 2189.57, 2205.05]  [PRECISE][0m
+  [92m✓ Potato     / Agra       → 7-day prices: [1358.71, 1363.39, 1370.69, 1375.45, 1386.41, 1394.23, 1394.49]  [FALLBACK][0m
+
+  --- Sell Advice Tests ---
+  [92m✓ Tomato: "Sell Now. Prices are expected to remain stable over the next 7 days."[0m
+  [92m✓ Onion: "Sell Now. Prices are expected to remain stable over the next 7 days."[0m
+
+  --- Walk-Forward Validation Metrics (last 30 days holdout) ---
+  [96mmaize          [0m  MAE=  27.41  RMSE=  33.62  MAPE=1.6%
+  [96monion          [0m  MAE=  26.68  RMSE=  32.65  MAPE=1.4%
+  [96mpotato         [0m  MAE=  20.65  RMSE=  24.35  MAPE=1.6%
+  [96mrice           [0m  MAE=  35.19  RMSE=  42.16  MAPE=1.3%
+  [96mtomato         [0m  MAE=  18.98  RMSE=  24.05  MAPE=1.5%
+  [96mwheat          [0m  MAE=  26.10  RMSE=  34.39  MAPE=1.3%
+
+  [1mOverall averages across 6 commodities:[0m
+  [92m✓ Avg MAPE  = 1.45%[0m
+  [92m✓ Avg MAE   = ₹25.83/quintal[0m
+
+[1m[96m============================================================[0m
+[1m[96m  2. DEMAND FORECAST MODEL (GradientBoostingRegressor)[0m
+[1m[96m============================================================[0m
+  Loading / training Demand model...
+[DemandForecast] Loading saved model from D:\My Version\IntelliReviewAI1.0\mandi-mcp\data\demand_model.pkl...
+[DemandForecast] Model loaded.
+  [92m✓ Model ready in 0.2s[0m
+  [93m⚠ Model loaded from disk — no training metrics available (model was pre-trained).[0m
+  [93m⚠ Run with force_retrain=True to generate fresh metrics.[0m
+
+  --- Functional Demand Prediction Tests ---
+  [92m✓ Tomato   / Pune     → Medium | Trend: Increasing  | Quintals: [156, 312, 256, 220, 240, 236, 301][0m
+  [92m✓ Wheat    / Sirsa    → Medium | Trend: Increasing  | Quintals: [205, 255, 174, 228, 259, 252, 225][0m
+  [92m✓ Onion    / Nashik   → Medium | Trend: Increasing  | Quintals: [169, 213, 202, 259, 318, 168, 275][0m
+
+[1m[96m============================================================[0m
+[1m[96m  3. CROP GRADING — VISION MODEL (MobileNetV2 Transfer Learning)[0m
+[1m[96m============================================================[0m
+  Dataset: {'grade_a': 50, 'grade_b': 50, 'grade_c': 50}  (Total: 150 images)
+  [92m✓ Saved model found at D:\My Version\IntelliReviewAI1.0\mandi-mcp\data\quality_vision_model.pth[0m
+[Vision] Loading CNN model from D:\My Version\IntelliReviewAI1.0\mandi-mcp\data\quality_vision_model.pth on cuda:0...
+[Vision] CNN Vision model ready.
+
+  --- Functional Inference Tests (grading images from dataset) ---
+  [92m✓ [grade_a] synthetic_grade_a_24.jpg       → Predicted: A  Conf: 98.1%  ✓ CORRECT[0m
+  [92m✓ [grade_a] synthetic_grade_a_16.jpg       → Predicted: A  Conf: 93.2%  ✓ CORRECT[0m
+  [92m✓ [grade_a] synthetic_grade_a_31.jpg       → Predicted: A  Conf: 90.5%  ✓ CORRECT[0m
+  [92m✓ [grade_a] synthetic_grade_a_7.jpg        → Predicted: A  Conf: 99.4%  ✓ CORRECT[0m
+  [92m✓ [grade_a] synthetic_grade_a_1.jpg        → Predicted: A  Conf: 96.6%  ✓ CORRECT[0m
+  [92m✓ [grade_b] synthetic_grade_b_43.jpg       → Predicted: B  Conf: 91.6%  ✓ CORRECT[0m
+  [92m✓ [grade_b] synthetic_grade_b_46.jpg       → Predicted: B  Conf: 73.0%  ✓ CORRECT[0m
+  [92m✓ [grade_b] synthetic_grade_b_1.jpg        → Predicted: B  Conf: 93.3%  ✓ CORRECT[0m
+  [92m✓ [grade_b] synthetic_grade_b_14.jpg       → Predicted: B  Conf: 96.5%  ✓ CORRECT[0m
+  [92m✓ [grade_b] synthetic_grade_b_42.jpg       → Predicted: B  Conf: 83.3%  ✓ CORRECT[0m
+  [92m✓ [grade_c] synthetic_grade_c_15.jpg       → Predicted: C  Conf: 99.4%  ✓ CORRECT[0m
+  [92m✓ [grade_c] synthetic_grade_c_12.jpg       → Predicted: C  Conf: 99.0%  ✓ CORRECT[0m
+  [92m✓ [grade_c] synthetic_grade_c_20.jpg       → Predicted: C  Conf: 99.1%  ✓ CORRECT[0m
+  [92m✓ [grade_c] synthetic_grade_c_3.jpg        → Predicted: C  Conf: 97.8%  ✓ CORRECT[0m
+  [92m✓ [grade_c] synthetic_grade_c_14.jpg       → Predicted: C  Conf: 98.2%  ✓ CORRECT[0m
+
+  [1mFunctional test accuracy on 15 random images: 100.0%[0m
+  [92m✓ Model is production-ready (100.0% accuracy)[0m
+
+[1m[96m============================================================[0m
+[1m[96m  EVALUATION COMPLETE — 8.8s[0m
+[1m[96m============================================================[0m
+  [92mAll models evaluated successfully.[0m
+

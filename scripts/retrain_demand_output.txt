@@ -1,0 +1,37 @@
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\pandas\core\computation\expressions.py:22: UserWarning: Pandas requires version '2.10.2' or newer of 'numexpr' (version '2.8.4' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\pandas\core\arrays\masked.py:56: UserWarning: Pandas requires version '1.4.2' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+
+[1m============================================================
+  KrishiSetu AI — Full Model Training Pipeline
+  Started: 2026-02-28 22:15:46
+============================================================[0m
+  Device: CUDA (GPU) — NVIDIA GeForce RTX 3050 Laptop GPU
+  Project root: D:\My Version\IntelliReviewAI1.0
+
+  [93m⚠ Skipping Price Prediction training.[0m
+
+[1m[96m────────────────────────────────────────────────────────────[0m
+[1m[96m  TRAINING: Demand Forecast (GradientBoostingRegressor)[0m
+[1m[96m────────────────────────────────────────────────────────────[0m
+[DemandForecast] Loading data from D:\My Version\IntelliReviewAI1.0\mandi-mcp\..\data\mandi_data_2025_2026.csv...
+[DemandForecast] Training GradientBoostingRegressor...
+[DemandForecast] Training complete.
+  MAE=108.86  RMSE=128.28  R²=0.1409  MAPE=68.93%
+[DemandForecast] Model saved to D:\My Version\IntelliReviewAI1.0\mandi-mcp\data\demand_model.pkl
+  [92m✓ Trained in 3.3s[0m
+    MAE   = 108.86 quintals
+    RMSE  = 128.28 quintals
+    R²    = 0.1409
+    MAPE  = 68.93%
+
+  [93m⚠ Skipping Vision model training.[0m
+
+[1m[96m────────────────────────────────────────────────────────────[0m
+[1m[96m  TRAINING COMPLETE — SUMMARY[0m
+[1m[96m────────────────────────────────────────────────────────────[0m
+  demand_forecast           → [92mPASSED[0m
+
+  Run 'python scripts/evaluate_all_models.py' to benchmark all models.
+

@@ -1,0 +1,102 @@
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\pandas\core\computation\expressions.py:22: UserWarning: Pandas requires version '2.10.2' or newer of 'numexpr' (version '2.8.4' currently installed).
+  from pandas.core.computation.check import NUMEXPR_INSTALLED
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\pandas\core\arrays\masked.py:56: UserWarning: Pandas requires version '1.4.2' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+INFO:     Started server process [3676]
+INFO:     Waiting for application startup.
+17:55:29 - cmdstanpy - INFO - Chain [1] start processing
+17:55:29 - cmdstanpy - INFO - Chain [1] done processing
+17:55:30 - cmdstanpy - INFO - Chain [1] start processing
+17:55:30 - cmdstanpy - INFO - Chain [1] done processing
+17:55:30 - cmdstanpy - INFO - Chain [1] start processing
+17:55:30 - cmdstanpy - INFO - Chain [1] done processing
+17:55:30 - cmdstanpy - INFO - Chain [1] start processing
+17:55:30 - cmdstanpy - INFO - Chain [1] done processing
+17:55:30 - cmdstanpy - INFO - Chain [1] start processing
+17:55:30 - cmdstanpy - INFO - Chain [1] done processing
+17:55:31 - cmdstanpy - INFO - Chain [1] start processing
+17:55:31 - cmdstanpy - INFO - Chain [1] done processing
+17:55:31 - cmdstanpy - INFO - Chain [1] start processing
+17:55:31 - cmdstanpy - INFO - Chain [1] done processing
+17:55:31 - cmdstanpy - INFO - Chain [1] start processing
+17:55:31 - cmdstanpy - INFO - Chain [1] done processing
+17:55:31 - cmdstanpy - INFO - Chain [1] start processing
+17:55:31 - cmdstanpy - INFO - Chain [1] done processing
+17:55:32 - cmdstanpy - INFO - Chain [1] start processing
+17:55:32 - cmdstanpy - INFO - Chain [1] done processing
+17:55:32 - cmdstanpy - INFO - Chain [1] start processing
+17:55:32 - cmdstanpy - INFO - Chain [1] done processing
+17:55:32 - cmdstanpy - INFO - Chain [1] start processing
+17:55:32 - cmdstanpy - INFO - Chain [1] done processing
+17:55:32 - cmdstanpy - INFO - Chain [1] start processing
+17:55:32 - cmdstanpy - INFO - Chain [1] done processing
+17:55:32 - cmdstanpy - INFO - Chain [1] start processing
+17:55:32 - cmdstanpy - INFO - Chain [1] done processing
+17:55:33 - cmdstanpy - INFO - Chain [1] start processing
+17:55:33 - cmdstanpy - INFO - Chain [1] done processing
+17:55:33 - cmdstanpy - INFO - Chain [1] start processing
+17:55:33 - cmdstanpy - INFO - Chain [1] done processing
+17:55:33 - cmdstanpy - INFO - Chain [1] start processing
+17:55:33 - cmdstanpy - INFO - Chain [1] done processing
+17:55:33 - cmdstanpy - INFO - Chain [1] start processing
+17:55:33 - cmdstanpy - INFO - Chain [1] done processing
+17:55:34 - cmdstanpy - INFO - Chain [1] start processing
+17:55:34 - cmdstanpy - INFO - Chain [1] done processing
+17:55:34 - cmdstanpy - INFO - Chain [1] start processing
+17:55:34 - cmdstanpy - INFO - Chain [1] done processing
+17:55:34 - cmdstanpy - INFO - Chain [1] start processing
+17:55:34 - cmdstanpy - INFO - Chain [1] done processing
+17:55:34 - cmdstanpy - INFO - Chain [1] start processing
+17:55:34 - cmdstanpy - INFO - Chain [1] done processing
+17:55:34 - cmdstanpy - INFO - Chain [1] start processing
+17:55:34 - cmdstanpy - INFO - Chain [1] done processing
+17:55:35 - cmdstanpy - INFO - Chain [1] start processing
+17:55:35 - cmdstanpy - INFO - Chain [1] done processing
+17:55:35 - cmdstanpy - INFO - Chain [1] start processing
+17:55:35 - cmdstanpy - INFO - Chain [1] done processing
+17:55:35 - cmdstanpy - INFO - Chain [1] start processing
+17:55:35 - cmdstanpy - INFO - Chain [1] done processing
+17:55:35 - cmdstanpy - INFO - Chain [1] start processing
+17:55:35 - cmdstanpy - INFO - Chain [1] done processing
+17:55:35 - cmdstanpy - INFO - Chain [1] start processing
+17:55:36 - cmdstanpy - INFO - Chain [1] done processing
+17:55:36 - cmdstanpy - INFO - Chain [1] start processing
+17:55:36 - cmdstanpy - INFO - Chain [1] done processing
+17:55:36 - cmdstanpy - INFO - Chain [1] start processing
+17:55:36 - cmdstanpy - INFO - Chain [1] done processing
+17:55:36 - cmdstanpy - INFO - Chain [1] start processing
+17:55:36 - cmdstanpy - INFO - Chain [1] done processing
+17:55:36 - cmdstanpy - INFO - Chain [1] start processing
+17:55:36 - cmdstanpy - INFO - Chain [1] done processing
+17:55:37 - cmdstanpy - INFO - Chain [1] start processing
+17:55:37 - cmdstanpy - INFO - Chain [1] done processing
+17:55:37 - cmdstanpy - INFO - Chain [1] start processing
+17:55:37 - cmdstanpy - INFO - Chain [1] done processing
+17:55:37 - cmdstanpy - INFO - Chain [1] start processing
+17:55:37 - cmdstanpy - INFO - Chain [1] done processing
+17:55:37 - cmdstanpy - INFO - Chain [1] start processing
+17:55:37 - cmdstanpy - INFO - Chain [1] done processing
+C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\torch\_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting Mandi API with LIVE data.gov.in connection...
+Loading base filters from CSV dataset...
+Loading comprehensive filters from CSV: D:\My Version\IntelliReviewAI1.0\data\Dataset.csv
+Loaded 6 districts from CSV with 119 markets
+Fetching fresh live data from data.gov.in...
+Merging 10 live records...
+Total: 9 districts with 122 markets
+[PricePrediction] Loading historical data from d:/My Version/IntelliReviewAI1.0/data/mandi_data_2025_2026.csv...
+[PricePrediction] Training models for specific Districts...
+[PricePrediction] Successfully trained 30 precise (Commodity, District) models.
+[PricePrediction] Training fallback models for Commodities globally...
+[PricePrediction] Successfully trained 6 global fallback models.
+[PricePrediction] All models loaded into memory.
+Loading data for Demand Forecast Model...
+Training Demand Forecast Model (RandomForestRegressor)...
+Demand Forecast Model Trained Successfully.
+Loading pre-trained CNN Vision Model (PyTorch) into memory...
+CNN Vision Model ready.
+INFO:     127.0.0.1:56236 - "POST /grade-crop HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49938 - "POST /grade-crop HTTP/1.1" 500 Internal Server Error

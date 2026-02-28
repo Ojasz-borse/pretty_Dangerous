@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<string>", line 6, in <module>
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\prophet\models.py", line 95, in __init__
+    import cmdstanpy
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\cmdstanpy\__init__.py", line 25, in <module>
+    from .compilation import compile_stan_file, format_stan_file
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\cmdstanpy\compilation.py", line 16, in <module>
+    from cmdstanpy.utils import get_logger
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\cmdstanpy\utils\__init__.py", line 23, in <module>
+    from .command import do_command
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\cmdstanpy\utils\command.py", line 10, in <module>
+    from .filesystem import pushd
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\cmdstanpy\utils\filesystem.py", line 17, in <module>
+    from .json import write_stan_json
+  File "C:\Users\Siddhesh.SIDDHESH\AppData\Roaming\Python\Python311\site-packages\cmdstanpy\utils\json.py", line 5, in <module>
+    from stanio import write_stan_json
+SyntaxError: source code string cannot contain null bytes

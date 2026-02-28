@@ -1,0 +1,43 @@
+
+[1m============================================================
+  KrishiSetu AI — Full Model Training Pipeline
+  Started: 2026-02-28 22:16:10
+============================================================[0m
+  Device: CUDA (GPU) — NVIDIA GeForce RTX 3050 Laptop GPU
+  Project root: D:\My Version\IntelliReviewAI1.0
+
+  [93m⚠ Skipping Price Prediction training.[0m
+
+  [93m⚠ Skipping Demand Forecast training.[0m
+
+[1m[96m────────────────────────────────────────────────────────────[0m
+[1m[96m  TRAINING: Crop Vision / Grading (MobileNetV2, 5 epochs)[0m
+[1m[96m────────────────────────────────────────────────────────────[0m
+[Vision] Dataset summary: {'grade_a': 50, 'grade_b': 50, 'grade_c': 50} | Total: 150
+[Vision] Training MobileNetV2 for 5 epochs on cuda:0...
+  Train samples: 120  |  Val samples: 30
+------------------------------------------------------------
+  Epoch 01/5 | Train Loss=1.1166 Acc=0.367 | Val Loss=1.1100 Acc=0.333
+    ✓ New best val acc: 0.3333 — saved.
+  Epoch 02/5 | Train Loss=0.8932 Acc=0.675 | Val Loss=0.9336 Acc=0.633
+    ✓ New best val acc: 0.6333 — saved.
+  Epoch 03/5 | Train Loss=0.8395 Acc=0.733 | Val Loss=0.8122 Acc=0.967
+    ✓ New best val acc: 0.9667 — saved.
+  Epoch 04/5 | Train Loss=0.7404 Acc=0.875 | Val Loss=0.7451 Acc=1.000
+    ✓ New best val acc: 1.0000 — saved.
+  Epoch 05/5 | Train Loss=0.7008 Acc=0.858 | Val Loss=0.7202 Acc=1.000
+------------------------------------------------------------
+[Vision] Model saved → D:\My Version\IntelliReviewAI1.0\mandi-mcp\data\quality_vision_model.pth
+[Vision] Metrics saved → D:\My Version\IntelliReviewAI1.0\mandi-mcp\data\vision_model_metrics.json
+[Vision] Best val accuracy: 100.00%  |  Per-class: {'grade_a': 1.0, 'grade_b': 1.0, 'grade_c': 1.0}
+  [92m✓ Trained in 7.0s[0m
+    Best Val Accuracy : 100.0%
+    Per-class Accuracy: {'grade_a': 100.0, 'grade_b': 100.0, 'grade_c': 100.0}
+
+[1m[96m────────────────────────────────────────────────────────────[0m
+[1m[96m  TRAINING COMPLETE — SUMMARY[0m
+[1m[96m────────────────────────────────────────────────────────────[0m
+  vision_grading            → [92mPASSED[0m
+
+  Run 'python scripts/evaluate_all_models.py' to benchmark all models.
+
