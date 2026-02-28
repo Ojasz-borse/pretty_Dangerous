@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LocationProvider } from "@/context/LocationContext";
+import { AuthProvider } from "@/context/AuthContext";
+
 
 export const metadata: Metadata = {
     title: "KrishiSetu — Smart Agricultural Marketplace",
@@ -21,10 +23,13 @@ export default function RootLayout({
             </head>
             <body>
                 <div className="tricolor-bar"></div>
-                <LocationProvider>
-                    {children}
-                </LocationProvider>
+                <AuthProvider>
+                    <LocationProvider>
+                        {children}
+                    </LocationProvider>
+                </AuthProvider>
             </body>
+
         </html>
     );
 }

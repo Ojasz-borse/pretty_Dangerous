@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { mockMarkets } from '@/data/mockMandiData';
@@ -17,79 +17,100 @@ import {
     Shield,
     Zap,
     Users,
-    ChevronRight
+    ChevronRight,
+    Sparkles,
+    CheckCircle2
 } from 'lucide-react';
 
 const features = [
-    { href: '/prices', icon: DollarSign, color: 'bg-green-500', bg: 'bg-green-50', border: 'border-green-200', title: 'Market Prices', desc: 'Real-time mandi prices from Agmarknet with stock-market style charts and price comparisons across markets.' },
-    { href: '/prediction', icon: TrendingUp, color: 'bg-blue-500', bg: 'bg-blue-50', border: 'border-blue-200', title: 'Price Forecast', desc: 'AI-powered 7-day price prediction using historical data, weather patterns, and market trends.' },
-    { href: '/sell-advice', icon: Lightbulb, color: 'bg-amber-500', bg: 'bg-amber-50', border: 'border-amber-200', title: 'Sell or Wait', desc: 'Smart recommendation engine telling you the best time to sell based on demand, price forecast, and storage costs.' },
-    { href: '/demand', icon: BarChart3, color: 'bg-purple-500', bg: 'bg-purple-50', border: 'border-purple-200', title: 'Demand Insights', desc: 'Regional demand analysis with Google Trends data, festival impacts, and crop-wise demand scores.' },
-    { href: '/crop-detect', icon: Camera, color: 'bg-orange-500', bg: 'bg-orange-50', border: 'border-orange-200', title: 'Crop Detection AI', desc: 'Upload crop images for AI identification, quality grading, health assessment, and harvest recommendations.' },
-    { href: '/trust-score', icon: Star, color: 'bg-yellow-500', bg: 'bg-yellow-50', border: 'border-yellow-200', title: 'Trust Score', desc: 'Your reliability rating based on delivery history, quality, and buyer reviews — build trust with buyers.' },
-    { href: '/logistics', icon: Truck, color: 'bg-indigo-500', bg: 'bg-indigo-50', border: 'border-indigo-200', title: 'Logistics Calculator', desc: 'Calculate transport costs, compare vehicle options, and see net profit estimates for different delivery routes.' },
+    { href: '/prices', icon: DollarSign, color: 'bg-green-600', bg: 'bg-green-50', border: 'border-green-200', title: 'Market Prices', desc: 'Real-time mandi prices from Agmarknet with stock-market style charts and price comparisons across markets.' },
+    { href: '/prediction', icon: TrendingUp, color: 'bg-blue-600', bg: 'bg-blue-50', border: 'border-blue-200', title: 'Price Forecast', desc: 'AI-powered 7-day price prediction using historical data, weather patterns, and market trends.' },
+    { href: '/sell-advice', icon: Lightbulb, color: 'bg-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', title: 'Sell or Wait', desc: 'Smart recommendation engine telling you the best time to sell based on demand, price forecast, and storage costs.' },
+    { href: '/demand', icon: BarChart3, color: 'bg-purple-600', bg: 'bg-purple-50', border: 'border-purple-200', title: 'Demand Insights', desc: 'Regional demand analysis with Google Trends data, festival impacts, and crop-wise demand scores.' },
+    { href: '/crop-detect', icon: Camera, color: 'bg-orange-600', bg: 'bg-orange-50', border: 'border-orange-200', title: 'Crop Detection AI', desc: 'Upload crop images for AI identification, quality grading, health assessment, and harvest recommendations.' },
+    { href: '/trust-score', icon: Star, color: 'bg-yellow-600', bg: 'bg-yellow-50', border: 'border-yellow-200', title: 'Trust Score', desc: 'Your reliability rating based on delivery history, quality, and buyer reviews — build trust with buyers.' },
 ];
 
 const allItems = mockMarkets.flatMap(m => m.items.map(i => ({ ...i, market: m.name })));
 
 export default function Home() {
+    const mainRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scroll-visible');
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+        );
+
+        const elements = document.querySelectorAll('.scroll-reveal');
+        elements.forEach(el => observer.observe(el));
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <>
+        <div className="min-h-screen bg-slate-50/30">
             <Navbar />
 
-
-
-            <main className="bg-white">
-                {/* ===== HERO ===== */}
-                <section className="relative min-h-[600px] lg:min-h-[750px] flex items-center justify-center overflow-hidden">
-                    {/* Background Image - Full Big */}
-                    <img
-                        src="/farmer_corner_banner (1).jpg"
-                        alt="Indian farmers working"
-                        className="absolute inset-0 w-full h-full object-cover"
-                    />
-                    {/* Sophisticated Dark Overlay */}
-                    <div className="absolute inset-0 bg-black/40"></div>
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60"></div>
+            <main className="overflow-hidden" ref={mainRef}>
+                {/* ===== PREMIUM HERO ===== */}
+                <section className="relative min-h-[700px] lg:min-h-[850px] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0">
+                        <img
+                            src="/farmer_corner_banner (1).jpg"
+                            alt="Indian farmers working"
+                            className="w-full h-full object-cover scale-105 animate-slow-zoom"
+                        />
+                        <div className="absolute inset-0 bg-slate-950/50 backdrop-blur-[0.5px]"></div>
+                        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-transparent to-slate-950/20"></div>
+                    </div>
 
                     <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-20 lg:py-32">
-                        {/* Left Aligned Content (No Box) */}
-                        <div className="max-w-3xl lg:text-left text-center text-white animate-fade-in">
-                            <span className="inline-flex items-center gap-1.5 bg-green-500/20 backdrop-blur-md text-green-300 px-4 py-1.5 rounded-full text-sm font-bold mb-8 border border-green-500/30">
-                                <Leaf className="w-4 h-4" /> Government of India Initiative
-                            </span>
-                            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black leading-[1.1] mb-8 tracking-tight drop-shadow-2xl">
-                                The Future of <span className="text-green-400 font-black">Indian Farming</span> <br className="hidden lg:block" /> is here.
+                        <div className="max-w-4xl lg:text-left text-center">
+                            <div className="inline-flex items-center gap-2 bg-green-500/20 backdrop-blur-xl text-green-300 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-10 border border-green-500/30 animate-fade-in shadow-2xl shadow-green-500/20">
+                                <Sparkles className="w-4 h-4 icon-glow" /> Digital India Initiative
+                            </div>
+                            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black leading-[1.05] mb-10 tracking-tight text-white animate-slide-up stagger-1">
+                                Empowering the <br />
+                                <span className="gradient-text">Future of Farming.</span>
                             </h1>
-                            <p className="text-white/90 text-lg sm:text-xl mb-12 max-w-2xl lg:mx-0 mx-auto leading-relaxed drop-shadow-md font-medium">
-                                Real-time mandi prices, AI-driven predictions, and smart logistics. Join 50,000+ farmers maximizing their income every month.
+                            <p className="text-white/80 text-lg sm:text-2xl mb-14 max-w-2xl lg:mx-0 mx-auto leading-relaxed font-medium animate-slide-up stagger-2 drop-shadow-md">
+                                The all-in-one AI platform for Indian farmers. Real-time Mandi prices, deep-learning crop diagnostics, and smart market logistics.
                             </p>
-                            <div className="flex flex-wrap lg:justify-start justify-center gap-4">
-                                <Link href="/prices" className="inline-flex items-center gap-2 bg-green-500 text-white font-bold px-10 py-4 rounded-2xl hover:bg-green-600 transition-all no-underline shadow-xl shadow-green-500/20 hover:-translate-y-1 text-base">
-                                    <DollarSign className="w-5 h-5" /> Live Market Prices
+                            <div className="flex flex-wrap lg:justify-start justify-center gap-6 animate-slide-up stagger-3">
+                                <Link href="/prices" className="group inline-flex items-center gap-3 bg-green-600 text-white font-black px-12 py-5 rounded-[2rem] hover:bg-green-700 transition-all no-underline shadow-2xl shadow-green-600/30 hover:-translate-y-2 text-sm uppercase tracking-widest pulse-glow">
+                                    <DollarSign className="w-5 h-5" /> Start Trading <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                                 </Link>
-                                <Link href="/prediction" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white font-bold px-10 py-4 rounded-2xl hover:bg-white/20 transition-all no-underline border border-white/20 hover:-translate-y-1 text-base">
-                                    <TrendingUp className="w-5 h-5 text-blue-400" /> AI Forecast
+                                <Link href="/login" className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-2xl text-white font-black px-12 py-5 rounded-[2rem] hover:bg-white/20 transition-all no-underline border border-white/20 hover:-translate-y-2 text-sm uppercase tracking-widest">
+                                    <Users className="w-5 h-5" /> Join KrishiSetu
                                 </Link>
                             </div>
                         </div>
                     </div>
 
-                    {/* Ticker Overlay at Bottom of Big Hero */}
-                    <div className="absolute bottom-0 left-0 right-0 z-20 bg-black/20 backdrop-blur-lg border-t border-white/10">
-                        <div className="max-w-7xl mx-auto py-4">
-                            <div className="overflow-hidden whitespace-nowrap">
+                    {/* Live Ticker Area */}
+                    <div className="absolute bottom-12 left-0 right-0 z-20 overflow-hidden">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                            <div className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-6 shadow-2xl overflow-hidden">
                                 <div className="ticker-inner">
                                     {[...allItems, ...allItems].map((item, i) => (
-                                        <span key={i} className="inline-flex items-center gap-2 mx-8 text-sm">
-                                            <span className="text-xl">{item.imageIcon}</span>
-                                            <span className="font-bold text-white">{item.name}</span>
-                                            <span className="text-white/80 font-medium">₹{item.pricePerKg}/kg</span>
-                                            <span className={item.trend === 'up' ? 'text-green-400' : item.trend === 'down' ? 'text-red-400' : 'text-slate-400'}>
-                                                {item.trend === 'up' ? '▲' : item.trend === 'down' ? '▼' : '—'} {item.trendPercentage}%
-                                            </span>
-                                            <span className="text-white/10">|</span>
-                                        </span>
+                                        <div key={i} className="inline-flex items-center gap-4 mx-10">
+                                            <span className="text-3xl filter drop-shadow-md">{item.imageIcon}</span>
+                                            <div className="flex flex-col">
+                                                <span className="font-black text-white text-sm uppercase tracking-tight">{item.name}</span>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-green-400 font-bold text-xs">₹{item.pricePerKg}/kg</span>
+                                                    <span className={`text-[10px] font-black ${item.trend === 'up' ? 'text-green-400' : 'text-red-400'}`}>
+                                                        {item.trend === 'up' ? '▲' : '▼'} {item.trendPercentage}%
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
@@ -97,154 +118,156 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* ===== FEATURE GRID ===== */}
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20 bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 my-10 border border-slate-100">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-                        <div className="max-w-2xl">
-                            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Smart Tools for <span className="text-green-600 underline decoration-green-200 decoration-8 underline-offset-4">Modern Farming</span></h2>
-                            <p className="text-slate-500 text-lg">Integrated digital solutions to help you monitor markets, predict trends, and manage logistics seamlessly.</p>
-                        </div>
-                        <Link href="/prices" className="inline-flex items-center gap-2 text-green-600 font-bold hover:gap-3 transition-all whitespace-nowrap bg-green-50 px-6 py-3 rounded-xl border border-green-100">
-                            Explore All Tools <ArrowRight className="w-5 h-5" />
-                        </Link>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {features.map((f, i) => (
-                            <Link key={i} href={f.href} className="group relative bg-slate-50/50 p-8 rounded-[2.5rem] border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-green-100 hover:border-green-200 transition-all duration-500 no-underline overflow-hidden">
-                                {/* Subtle pattern */}
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full -mr-16 -mt-16 group-hover:bg-green-500/10 transition-colors"></div>
-
-                                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500 ${f.color}`}>
-                                    <f.icon className="w-8 h-8 text-white" />
-                                </div>
-
-                                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-green-700 transition-colors">{f.title}</h3>
-                                <p className="text-slate-500 leading-relaxed text-sm mb-6">{f.desc}</p>
-
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-200/50">
-                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-green-600 transition-colors">Free Service</span>
-                                    <div className="w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center group-hover:bg-green-600 group-hover:border-green-600 transition-all">
-                                        <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                </section>
-
-                {/* ===== IMMERSIVE FIELD BANNER ===== */}
-                <section className="relative min-h-[400px] sm:min-h-[500px] flex items-center overflow-hidden my-20">
-                    <img src="/347052-field-77087361280.avif" alt="Agricultural fields" className="absolute inset-0 w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-green-900/60 transition-opacity duration-500"></div>
-                    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-20">
-                        {/* Content directly on overlay, no blur box */}
-                        <div className="max-w-2xl text-white animate-fade-in">
-                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-6 leading-tight tracking-tight drop-shadow-lg">
-                                The Backbone of <span className="text-green-400">Indian Economy</span>
-                            </h2>
-                            <p className="text-white/90 text-lg sm:text-xl leading-relaxed mb-8 drop-shadow-md font-medium">
-                                Every harvest tells a story of hard work. We're here to ensure that story ends with fair rewards and a prosperous future for every farmer.
-                            </p>
-                            <div className="flex flex-wrap gap-8 text-sm font-bold uppercase tracking-widest text-green-300">
-                                <div className="flex items-center gap-2"><span className="w-3 h-3 bg-green-400 rounded-full shadow-[0_0_10px_rgba(74,222,128,0.5)]"></span> Live Market Data</div>
-                                <div className="flex items-center gap-2"><span className="w-3 h-3 bg-blue-400 rounded-full shadow-[0_0_10px_rgba(96,165,250,0.5)]"></span> AI Predictions</div>
-                                <div className="flex items-center gap-2"><span className="w-3 h-3 bg-amber-400 rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)]"></span> Smart Advice</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-
-                {/* ===== HOW IT WORKS ===== */}
-                <section className="bg-white border-y border-slate-200 py-12 sm:py-16">
+                {/* ===== FEATURE SHOWCASE ===== */}
+                <section className="relative py-32 bg-slate-50 rounded-[4rem] -mt-20 z-30 shadow-2xl shadow-slate-200/40 border-t border-white/10">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                        <div className="text-center mb-10">
-                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-2">How KrishiSetu Works</h2>
-                            <p className="text-slate-500">Simple 3-step process to maximize your earnings</p>
+                        <div className="flex flex-col lg:flex-row items-end justify-between mb-20 gap-10">
+                            <div className="max-w-3xl scroll-reveal">
+                                <span className="text-green-600 font-black tracking-[0.3em] uppercase text-xs mb-4 block">Our Ecosystem</span>
+                                <h2 className="text-4xl sm:text-6xl font-black text-slate-900 leading-tight tracking-tighter">
+                                    Everything you need to <br />
+                                    <span className="text-green-600 underline decoration-green-100 decoration-[12px] underline-offset-[12px]">scale your harvest.</span>
+                                </h2>
+                            </div>
+                            <p className="text-slate-500 text-lg sm:text-xl font-medium max-w-md lg:text-right scroll-reveal">
+                                Integrated digital solutions designed specifically for the Indian agricultural landscape.
+                            </p>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {[
-                                { step: '01', title: 'Check Prices', desc: 'View real-time mandi prices across markets with stock-market style analysis.', icon: DollarSign, color: 'bg-green-500' },
-                                { step: '02', title: 'Get AI Insights', desc: 'Use AI prediction, demand forecast, and sell/wait recommendations.', icon: Zap, color: 'bg-blue-500' },
-                                { step: '03', title: 'Plan & Deliver', desc: 'Calculate logistics costs, find transport, and maximize your net profit.', icon: Truck, color: 'bg-purple-500' },
-                            ].map((s, i) => (
-                                <div key={i} className="text-center">
-                                    <div className={`w-16 h-16 ${s.color} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}>
-                                        <s.icon className="w-8 h-8 text-white" />
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                            {features.map((f, i) => (
+                                <Link key={i} href={f.href} className={`scroll-reveal group relative bg-slate-50 p-10 rounded-[4rem] border border-slate-100 hover:bg-white hover:shadow-[0_40px_100px_-20px_rgba(22,163,74,0.15)] hover:border-green-200 transition-all duration-700 no-underline overflow-hidden card-3d`} style={{ transitionDelay: `${i * 100}ms` }}>
+                                    <div className={`w-20 h-20 rounded-3xl ${f.color} flex items-center justify-center mb-8 shadow-2xl shadow-current/30 group-hover:scale-110 transition-transform duration-700`}>
+                                        <f.icon className="w-10 h-10 text-white" />
                                     </div>
-                                    <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Step {s.step}</span>
-                                    <h3 className="text-lg font-bold text-slate-800 mt-1 mb-2">{s.title}</h3>
-                                    <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
-                                </div>
+                                    <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-green-700 transition-colors">{f.title}</h3>
+                                    <p className="text-slate-500 leading-relaxed font-medium mb-10">{f.desc}</p>
+                                    <div className="flex items-center justify-between pt-6 border-t border-slate-200/50">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Govt. Verified</span>
+                                        </div>
+                                        <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center group-hover:bg-green-600 group-hover:border-green-600 transition-all duration-500 shadow-lg">
+                                            <ArrowRight className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
+                                        </div>
+                                    </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* ===== MANDI PRICES PREVIEW ===== */}
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-                    <div className="flex items-center justify-between mb-6">
-                        <div>
-                            <h2 className="text-xl sm:text-2xl font-bold text-slate-800">Today's Mandi Prices</h2>
-                            <p className="text-sm text-slate-500">Live prices from {mockMarkets[0].name}</p>
-                        </div>
-                        <Link href="/prices" className="btn-primary text-sm no-underline">
-                            View All <ChevronRight className="w-4 h-4" />
-                        </Link>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {mockMarkets[0].items.map((item) => (
-                            <div key={item.id} className="card p-4 flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <span className="text-3xl">{item.imageIcon}</span>
+                {/* ===== TRUST BANNER ===== */}
+                <section className="scroll-reveal py-32 overflow-hidden bg-slate-50">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                        <div className="grid lg:grid-cols-2 gap-20 items-center">
+                            <div className="relative scroll-reveal">
+                                <div className="absolute -top-10 -left-10 w-40 h-40 bg-green-200/30 rounded-full blur-3xl"></div>
+                                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-200/30 rounded-full blur-3xl"></div>
+                                <img src="/347052-field-77087361280.avif" alt="Field" className="relative rounded-[5rem] shadow-2xl border-[12px] border-white z-10 w-full object-cover aspect-[4/3]" />
+                                <div className="absolute -bottom-8 -left-8 bg-white p-8 rounded-[3rem] shadow-2xl z-20 border border-slate-100 flex items-center gap-6 animate-float">
+                                    <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
+                                        <Star className="w-8 h-8 text-green-600" />
+                                    </div>
                                     <div>
-                                        <p className="font-bold text-slate-800">{item.name}</p>
-                                        <p className="text-xs text-slate-400">{item.hindiName} · {item.quality}</p>
+                                        <p className="text-3xl font-black text-slate-900">4.9/5</p>
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Farmer Rating</p>
                                     </div>
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-xl font-bold text-slate-800">₹{item.pricePerKg}<span className="text-xs text-slate-400 font-medium">/kg</span></p>
-                                    <span className={item.trend === 'up' ? 'price-badge-up' : item.trend === 'down' ? 'price-badge-down' : 'price-badge-stable'}>
-                                        {item.trend === 'up' ? '▲' : item.trend === 'down' ? '▼' : '—'} {item.trendPercentage}%
-                                    </span>
+                            </div>
+                            <div className="scroll-reveal delay-200">
+                                <h2 className="text-4xl sm:text-6xl font-black text-slate-900 mb-10 leading-[1.1] tracking-tight">
+                                    Building trust in <br />
+                                    <span className="text-green-600">every grain sold.</span>
+                                </h2>
+                                <p className="text-slate-500 text-xl leading-relaxed mb-12 font-medium">
+                                    We bridge the gap between hard-working farmers and honest buyers. Our platform ensures transparency, prompt payments, and logistical excellence.
+                                </p>
+                                <div className="space-y-6">
+                                    {[
+                                        'Secure direct payments via platform escrows',
+                                        'Verified buyer network with trust scores',
+                                        'Real-time price auditing using ML models',
+                                        'Transparent quality inspection reports'
+                                    ].map((text, i) => (
+                                        <div key={i} className="flex items-center gap-4 bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                                            <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                                <CheckCircle2 className="w-5 h-5 text-green-600" />
+                                            </div>
+                                            <span className="font-bold text-slate-700">{text}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        ))}
+                        </div>
                     </div>
                 </section>
 
-                {/* ===== DATA SOURCES ===== */}
-                <section className="bg-white border-t border-slate-200 py-8">
+                {/* ===== CALL TO ACTION ===== */}
+                <section className="scroll-reveal max-w-7xl mx-auto px-4 sm:px-6 py-20">
+                    <div className="relative bg-slate-900 rounded-[5rem] p-12 lg:p-24 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-green-600/20 to-transparent"></div>
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-500/10 rounded-full -mr-64 -mt-64 blur-[100px]"></div>
+
+                        <div className="relative z-10 text-center">
+                            <h2 className="text-4xl sm:text-7xl font-black text-white mb-10 tracking-tight leading-none"> Ready to transform <br /><span className="text-green-400">your business?</span></h2>
+                            <p className="text-white/60 text-xl mb-14 max-w-2xl mx-auto font-medium">Join thousands of Indian farmers and buyers already using KrishiSetu to find better deals and better crops.</p>
+                            <div className="flex flex-wrap justify-center gap-6">
+                                <Link href="/signup" className="px-12 py-5 bg-white text-slate-950 font-black rounded-[2rem] hover:bg-slate-100 transition-all hover:scale-105 shadow-2xl text-sm uppercase tracking-widest no-underline">
+                                    Create Free Account
+                                </Link>
+                                <Link href="/prices" className="px-12 py-5 bg-green-600 text-white font-black rounded-[2rem] hover:bg-green-700 transition-all hover:scale-105 shadow-2xl text-sm uppercase tracking-widest no-underline">
+                                    Browse Mandis Now
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ===== SYSTEM STATS ===== */}
+                <section className="scroll-reveal bg-white py-20 border-t border-slate-100">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                        <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-slate-400">
-                            <span className="font-medium">Data Sources:</span>
-                            {['Agmarknet', 'OpenWeather API', 'Google Trends', 'AI Vision'].map((src) => (
-                                <span key={src} className="badge-gray">{src}</span>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
+                            {[
+                                { label: 'Farmers Joined', value: '50k+', color: 'text-green-600' },
+                                { label: 'Tonnes Traded', value: '1.2M', color: 'text-blue-600' },
+                                { label: 'Mandi Coverage', value: '800+', color: 'text-purple-600' },
+                                { label: 'Verified Buyers', value: '12k', color: 'text-amber-600' },
+                            ].map((stat, i) => (
+                                <div key={i} className="text-center scroll-reveal" style={{ transitionDelay: `${i * 100}ms` }}>
+                                    <p className={`text-4xl sm:text-6xl font-black mb-2 ${stat.color}`}>{stat.value}</p>
+                                    <p className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">{stat.label}</p>
+                                </div>
                             ))}
                         </div>
                     </div>
                 </section>
             </main>
 
-            {/* ===== FOOTER ===== */}
-            <footer className="footer py-8">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center">
-                                <Leaf className="w-4 h-4 text-white" />
-                            </div>
-                            <p className="text-sm">© 2024 KrishiSetu — AI-Powered Agricultural Intelligence Platform</p>
+            <footer className="bg-slate-950 py-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+                    <div className="flex items-center justify-center gap-4 mb-8">
+                        <div className="w-12 h-12 rounded-2xl bg-green-600 flex items-center justify-center shadow-2xl shadow-green-600/20">
+                            <Leaf className="w-6 h-6 text-white" />
                         </div>
-                        <div className="flex items-center gap-3 text-xs text-slate-500">
-                            <span>Ministry of Agriculture & Farmers Welfare</span>
-                            <span>·</span>
-                            <span>Government of India</span>
+                        <h2 className="text-2xl font-black text-white tracking-tighter">KrishiSetu</h2>
+                    </div>
+                    <p className="text-white/40 text-sm max-w-lg mx-auto mb-10 leading-relaxed font-medium">A unified digital platform empowering the Indian agricultural community through AI, transparency, and logical connectivity.</p>
+                    <div className="flex flex-wrap justify-center gap-8 mb-16 text-xs font-black uppercase tracking-widest text-white/60">
+                        {['Digital Markets', 'AI Diagnostics', 'Smart Logistics', 'Farmer Trust'].map(link => (
+                            <span key={link} className="hover:text-green-400 cursor-pointer transition-colors">{link}</span>
+                        ))}
+                    </div>
+                    <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">© 2024 KRISHISETU TECHNOLOGY PVT LTD</p>
+                        <div className="flex items-center gap-6 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">
+                            <span>Privacy Policy</span>
+                            <span>Terms of Service</span>
+                            <span>Support Center</span>
                         </div>
                     </div>
                 </div>
             </footer>
-        </>
+        </div>
     );
 }
