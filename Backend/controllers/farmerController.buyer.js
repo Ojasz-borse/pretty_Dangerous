@@ -6,9 +6,14 @@ exports.createCrop = async (req, res) => {
   try {
     const {
       cropName,
+      variety,
       quantity,
       unit,
       expectedPrice,
+      quality,
+      description,
+      image,
+      location,
       harvestDate,
       availability
     } = req.body;
@@ -16,9 +21,14 @@ exports.createCrop = async (req, res) => {
     const crop = await Crop.create({
       farmer: req.user.id,
       cropName,
+      variety,
       quantity,
       unit,
       expectedPrice,
+      quality,
+      description,
+      image,
+      location,
       harvestDate,
       availability
     });

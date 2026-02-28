@@ -1,169 +1,123 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Sparkles, Loader2, TrendingUp, BarChart3, Target } from 'lucide-react';
-import { AreaChart, Area, BarChart, Bar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { useLocation } from '@/context/LocationContext';
-
-interface InsightsData {
-    priceTrends: any[];
-    demandSupply: any[];
-    qualityScores: any[];
-    summary: string;
-}
+import React from 'react';
+import { Sparkles, Globe2, Zap, BrainCircuit, Rocket, Leaf, TrendingUp, ArrowRight } from 'lucide-react';
 
 export default function InnovationPanel() {
-    const { district } = useLocation();
-    const [data, setData] = useState<InsightsData | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [source, setSource] = useState('');
-
-    useEffect(() => {
-        const fetchInsights = async () => {
-            setLoading(true);
-            try {
-                const loc = district || 'Sirsa';
-                const res = await fetch(`/api/farmer/gemini?type=market-insights&district=${encodeURIComponent(loc)}`);
-                const json = await res.json();
-                if (json.success) {
-                    setData(json.data);
-                    setSource(json.source);
-                }
-            } catch (e) {
-                console.error('Insights error:', e);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchInsights();
-    }, [district]);
-
-    if (loading) return (
-        <div className="card p-12 flex flex-col items-center justify-center gap-3">
-            <Loader2 className="w-10 h-10 text-amber-500 animate-spin" />
-            <p className="text-slate-500 font-medium">Loading AI insights...</p>
-        </div>
-    );
-
-    if (!data) return null;
-
     return (
         <div className="space-y-6 animate-fade-in">
-            {/* Header */}
-            <div className="card card-3d p-6">
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-amber-500 rounded-2xl flex items-center justify-center shadow-lg animate-float">
-                            <Sparkles className="w-6 h-6 text-white" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                {/* AI Demand Pulse */}
+                <div className="feature-card group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full -mr-16 -mt-16 group-hover:bg-amber-500/10 transition-colors"></div>
+                    <div className="relative z-10">
+                        <div className="w-14 h-14 rounded-2xl bg-amber-500 flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                            <Sparkles className="w-7 h-7 text-white" />
                         </div>
-                        <div>
-                            <h2 className="text-2xl font-extrabold text-slate-800">
-                                AI Market <span className="gradient-text">Intelligence</span>
-                            </h2>
-                            <p className="text-xs text-slate-400">
-                                {source === 'gemini' ? '✨ Powered by Gemini AI' : 'Market analytics for smart procurement'}
-                            </p>
+                        <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-amber-700 transition-colors">AI Demand Pulse</h3>
+                        <p className="text-sm text-slate-500 leading-relaxed mb-6">Real-time prediction of crop demand spikes across 500+ urban centers using neural analysis.</p>
+
+                        <div className="flex items-center gap-6 mb-6">
+                            <div className="text-center">
+                                <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Growth</p>
+                                <p className="text-2xl font-bold text-amber-600">14.2%</p>
+                            </div>
+                            <div className="w-px h-10 bg-slate-200"></div>
+                            <div className="text-center">
+                                <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Accuracy</p>
+                                <p className="text-2xl font-bold text-blue-600">98.5%</p>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-4 border-t border-slate-200/50">
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-amber-600 transition-colors">Launch Pulse</span>
+                            <div className="w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center group-hover:bg-amber-500 group-hover:border-amber-500 transition-all">
+                                <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+                            </div>
                         </div>
                     </div>
-                    {source === 'gemini' && (
-                        <span className="badge-green text-xs font-bold px-3 py-1 rounded-full pulse-glow">✨ Live Gemini Data</span>
-                    )}
+                </div>
+
+                {/* Global Trade Analyzer */}
+                <div className="feature-card group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full -mr-16 -mt-16 group-hover:bg-blue-500/10 transition-colors"></div>
+                    <div className="relative z-10">
+                        <div className="w-14 h-14 rounded-2xl bg-blue-500 flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                            <Globe2 className="w-7 h-7 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-blue-700 transition-colors">Global Trade AI</h3>
+                        <p className="text-xs text-blue-600 font-bold uppercase tracking-wider mb-5">Export Intelligence</p>
+
+                        <div className="space-y-2 mb-6">
+                            {[
+                                { label: 'Top Destination', val: 'UAE' },
+                                { label: 'Hot Commodity', val: 'Spices' },
+                                { label: 'Avg Tariff', val: '4.2%' }
+                            ].map((row, i) => (
+                                <div key={i} className="flex justify-between items-center text-xs font-medium text-slate-500 px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-100">
+                                    <span>{row.label}</span>
+                                    <span className="text-blue-700 font-bold">{row.val}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="flex items-center justify-between pt-4 border-t border-slate-200/50">
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors">Analyze Markets</span>
+                            <div className="w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:border-blue-600 transition-all">
+                                <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Smart Contracts */}
+                <div className="feature-card group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full -mr-16 -mt-16 group-hover:bg-purple-500/10 transition-colors"></div>
+                    <div className="absolute top-4 right-4 animate-bounce">
+                        <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
+                    </div>
+                    <div className="relative z-10">
+                        <div className="w-14 h-14 rounded-2xl bg-purple-500 flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                            <Rocket className="w-7 h-7 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-purple-700 transition-colors">Smart Contracts</h3>
+                        <p className="text-sm text-slate-500 leading-relaxed mb-6">
+                            Instant settlements, autonomous quality audits, and transparent ledger tracking for every purchase.
+                        </p>
+
+                        <div className="flex items-center justify-between pt-4 border-t border-slate-200/50">
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-purple-600 transition-colors">Setup Automation</span>
+                            <div className="w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center group-hover:bg-purple-600 group-hover:border-purple-600 transition-all">
+                                <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* Summary Banner */}
-            <div className="hero-banner p-6">
-                <div className="relative z-10">
-                    <p className="text-xs font-bold text-green-300 uppercase tracking-widest mb-2">📊 Market Summary</p>
-                    <p className="text-white/90 text-sm leading-relaxed font-medium">{data.summary}</p>
-                </div>
-            </div>
-
-            {/* Charts Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Area Chart - Price Trends */}
-                <div className="card card-3d p-6 animate-slide-in-left">
-                    <div className="flex items-center gap-2 mb-4">
-                        <TrendingUp className="w-5 h-5 text-green-600" />
-                        <h3 className="font-bold text-slate-800">Price Trends (6 Months)</h3>
+            {/* AI Banner - matching farmer's hero-banner style */}
+            <div className="hero-banner p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="relative z-10 flex items-center gap-6">
+                    <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                        <BrainCircuit className="w-8 h-8 text-green-300 animate-pulse" />
                     </div>
-                    <ResponsiveContainer width="100%" height={280}>
-                        <AreaChart data={data.priceTrends}>
-                            <defs>
-                                <linearGradient id="wheatGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#16a34a" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#16a34a" stopOpacity={0} />
-                                </linearGradient>
-                                <linearGradient id="riceGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
-                                </linearGradient>
-                                <linearGradient id="cottonGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                            <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#94a3b8' }} />
-                            <YAxis tick={{ fontSize: 12, fill: '#94a3b8' }} />
-                            <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                            <Legend />
-                            <Area type="monotone" dataKey="wheat" stroke="#16a34a" fill="url(#wheatGrad)" strokeWidth={2.5} name="Wheat (₹/qtl)" />
-                            <Area type="monotone" dataKey="rice" stroke="#2563eb" fill="url(#riceGrad)" strokeWidth={2.5} name="Rice (₹/qtl)" />
-                            <Area type="monotone" dataKey="cotton" stroke="#7c3aed" fill="url(#cottonGrad)" strokeWidth={2.5} name="Cotton (₹/qtl)" />
-                        </AreaChart>
-                    </ResponsiveContainer>
-                </div>
-
-                {/* Radar Chart - Quality Scores */}
-                <div className="card card-3d p-6 animate-slide-in-right">
-                    <div className="flex items-center gap-2 mb-4">
-                        <Target className="w-5 h-5 text-purple-600" />
-                        <h3 className="font-bold text-slate-800">Regional Quality Scores</h3>
+                    <div>
+                        <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 tracking-tight">Cerebro <span className="text-green-300">Trading Engine</span></h2>
+                        <p className="text-white/80 font-medium text-sm max-w-lg">
+                            Our primary AI core that manages matching, logistics, and fair pricing simultaneously.
+                        </p>
                     </div>
-                    <ResponsiveContainer width="100%" height={280}>
-                        <RadarChart data={data.qualityScores}>
-                            <PolarGrid stroke="#e2e8f0" />
-                            <PolarAngleAxis dataKey="subject" tick={{ fontSize: 11, fill: '#64748b' }} />
-                            <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fontSize: 10, fill: '#94a3b8' }} />
-                            <Radar name="Quality" dataKey="value" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.25} strokeWidth={2} />
-                        </RadarChart>
-                    </ResponsiveContainer>
                 </div>
-
-                {/* Bar Chart - Demand vs Supply */}
-                <div className="card card-3d p-6 lg:col-span-2 animate-slide-up">
-                    <div className="flex items-center gap-2 mb-4">
-                        <BarChart3 className="w-5 h-5 text-blue-600" />
-                        <h3 className="font-bold text-slate-800">Demand vs Supply Analysis</h3>
+                <div className="relative z-10 flex items-center gap-4">
+                    <div className="text-right hidden sm:block">
+                        <p className="text-xs font-bold text-green-300 uppercase tracking-widest mb-1">Engine Load</p>
+                        <p className="text-2xl font-bold text-white">42% Optimal</p>
                     </div>
-                    <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={data.demandSupply} barCategoryGap="20%">
-                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                            <XAxis dataKey="crop" tick={{ fontSize: 12, fill: '#64748b' }} />
-                            <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} />
-                            <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                            <Legend />
-                            <Bar dataKey="demand" fill="#16a34a" radius={[8, 8, 0, 0]} name="Demand %" />
-                            <Bar dataKey="supply" fill="#3b82f6" radius={[8, 8, 0, 0]} name="Supply %" />
-                        </BarChart>
-                    </ResponsiveContainer>
+                    <button className="btn-primary bg-white text-green-800 hover:bg-green-50">
+                        Enter Core
+                    </button>
                 </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                    { label: 'Most In-Demand', value: data.demandSupply.sort((a: any, b: any) => b.demand - a.demand)[0]?.crop || 'Wheat', color: 'text-green-600', bg: 'bg-green-50 card-green' },
-                    { label: 'Supply Shortage', value: data.demandSupply.filter((d: any) => d.demand > d.supply).length + ' crops', color: 'text-red-600', bg: 'bg-red-50 card-red' },
-                    { label: 'Quality Score', value: Math.round(data.qualityScores.reduce((s: number, q: any) => s + q.value, 0) / data.qualityScores.length) + '/100', color: 'text-purple-600', bg: 'bg-purple-50 card-purple' },
-                    { label: 'Price Trend', value: '↑ Rising', color: 'text-blue-600', bg: 'bg-blue-50 card-blue' },
-                ].map((stat, i) => (
-                    <div key={i} className={`stat-card card-3d ${stat.bg} animate-slide-up stagger-${i + 1}`}>
-                        <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">{stat.label}</p>
-                        <p className={`text-xl font-extrabold ${stat.color}`}>{stat.value}</p>
-                    </div>
-                ))}
             </div>
         </div>
     );
