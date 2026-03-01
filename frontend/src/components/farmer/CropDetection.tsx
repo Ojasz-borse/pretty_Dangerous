@@ -216,7 +216,7 @@ export default function CropDetection() {
                         <p className="text-white/40 text-xs font-bold uppercase tracking-widest mt-0.5">Scan · Analyze · List for Buyers</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-3 px-4 py-2 bg-slate-800 border-slate-700 rounded-2xl">
+                <div className="flex items-center gap-3 px-4 py-2 bg-emerald-900 border-emerald-800 rounded-2xl">
                     <MapPin className="w-4 h-4 text-emerald-400" />
                     <span className="text-xs font-black text-white/60 uppercase tracking-widest">{district || 'Your District'}, {state || 'Your State'}</span>
                 </div>
@@ -226,7 +226,7 @@ export default function CropDetection() {
 
                 {/* ===== LEFT: AI SCANNER ===== */}
                 <div className="space-y-8">
-                    <div className="relative p-8 bg-[#131b2f] border border-slate-700 shadow-2xl rounded-[2.5rem] overflow-hidden group">
+                    <div className="relative p-8 bg-emerald-950 border border-emerald-800 shadow-2xl rounded-[2.5rem] overflow-hidden group">
                         <div className="absolute top-0 right-0 w-72 h-72 bg-orange-500/10 rounded-full -mr-36 -mt-36 blur-3xl group-hover:bg-orange-500/20 transition-all duration-700"></div>
                         <div className="absolute bottom-0 left-0 w-48 h-48 bg-green-500/10 rounded-full -ml-24 -mb-24 blur-3xl"></div>
 
@@ -240,7 +240,7 @@ export default function CropDetection() {
                             </div>
 
                             <div
-                                className={`relative aspect-video rounded-3xl border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center overflow-hidden cursor-pointer ${preview ? 'border-green-500 bg-[#0f172a]' : 'border-slate-600 hover:border-slate-500 bg-[#0f172a]'}`}
+                                className={`relative aspect-video rounded-3xl border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center overflow-hidden cursor-pointer ${preview ? 'border-green-500 bg-emerald-950' : 'border-emerald-700 hover:border-emerald-600 bg-emerald-950'}`}
                                 onClick={() => !preview && fileInputRef.current?.click()}
                             >
                                 {preview ? (
@@ -260,7 +260,7 @@ export default function CropDetection() {
                                     </>
                                 ) : (
                                     <div className="flex flex-col items-center justify-center p-12">
-                                        <div className="w-20 h-20 bg-slate-800 border-slate-700 rounded-3xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                                        <div className="w-20 h-20 bg-emerald-900 border-emerald-800 rounded-3xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                                             <ImagePlus className="w-10 h-10 text-white/30" />
                                         </div>
                                         <span className="text-white/80 font-black text-sm mb-1">Upload Crop Photo</span>
@@ -282,7 +282,7 @@ export default function CropDetection() {
 
                     {/* ===== AI RESULT PANEL ===== */}
                     {result && (
-                        <div className="bg-[#131b2f] p-7 rounded-[2.5rem] border border-slate-700 shadow-2xl animate-scale-in">
+                        <div className="bg-emerald-950 p-7 rounded-[2.5rem] border border-emerald-800 shadow-2xl animate-scale-in">
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-black text-white flex items-center gap-2 uppercase tracking-tight">
                                     <Star className="w-5 h-5 text-amber-400" /> AI Analysis
@@ -296,7 +296,7 @@ export default function CropDetection() {
                                     { label: 'Health', val: result.health, icon: CheckCircle2 },
                                     { label: 'Yield Est.', val: result.estimatedYield, icon: BarChart4 },
                                 ].map((item, i) => (
-                                    <div key={i} className="bg-slate-800 border-slate-700 p-4 rounded-2xl hover:bg-white/10 transition-all">
+                                    <div key={i} className="bg-emerald-900 border-emerald-800 p-4 rounded-2xl hover:bg-white/10 transition-all">
                                         <item.icon className="w-4 h-4 text-emerald-400 mb-2" />
                                         <p className="text-[9px] text-white/40 font-bold uppercase tracking-widest mb-1">{item.label}</p>
                                         <p className="text-sm font-black text-white">{item.val}</p>
@@ -310,7 +310,7 @@ export default function CropDetection() {
                 {/* ===== RIGHT: LISTING FORM + INVENTORY ===== */}
                 <div className="space-y-8">
                     {showForm ? (
-                        <div className="bg-[#131b2f] p-8 rounded-[2.5rem] border border-slate-700 shadow-2xl animate-fade-in">
+                        <div className="bg-emerald-950 p-8 rounded-[2.5rem] border border-emerald-800 shadow-2xl animate-fade-in">
                             {submitSuccess ? (
                                 <div className="text-center py-12 animate-scale-in">
                                     <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -358,16 +358,16 @@ export default function CropDetection() {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
                                                 <label className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1.5 block">Crop Name *</label>
-                                                <select required className="w-full bg-slate-800 border-slate-700 rounded-2xl py-3.5 px-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none" value={formData.cropName} onChange={e => setFormData({ ...formData, cropName: e.target.value })}>
-                                                    <option value="" className="bg-slate-900">Select Crop</option>
+                                                <select required className="w-full bg-emerald-900 border-emerald-800 rounded-2xl py-3.5 px-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none" value={formData.cropName} onChange={e => setFormData({ ...formData, cropName: e.target.value })}>
+                                                    <option value="" className="bg-emerald-950">Select Crop</option>
                                                     {['Wheat', 'Rice', 'Cotton', 'Mustard', 'Maize', 'Onion', 'Soybean', 'Sugarcane', 'Bajra', 'Jowar'].map(c => (
-                                                        <option key={c} value={c} className="bg-slate-900">{c}</option>
+                                                        <option key={c} value={c} className="bg-emerald-950">{c}</option>
                                                     ))}
                                                 </select>
                                             </div>
                                             <div>
                                                 <label className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1.5 block">Variety</label>
-                                                <input className="w-full bg-slate-800 border-slate-700 rounded-2xl py-3.5 px-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-white/20" placeholder="e.g. Sharbati, 1121..." value={formData.variety} onChange={e => setFormData({ ...formData, variety: e.target.value })} />
+                                                <input className="w-full bg-emerald-900 border-emerald-800 rounded-2xl py-3.5 px-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-white/20" placeholder="e.g. Sharbati, 1121..." value={formData.variety} onChange={e => setFormData({ ...formData, variety: e.target.value })} />
                                             </div>
                                         </div>
 
@@ -376,15 +376,15 @@ export default function CropDetection() {
                                                 <label className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1.5 block">Quantity *</label>
                                                 <div className="relative">
                                                     <Package className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400" />
-                                                    <input required type="number" className="w-full bg-slate-800 border-slate-700 rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-white/20" placeholder="500" value={formData.quantity} onChange={e => setFormData({ ...formData, quantity: e.target.value })} />
+                                                    <input required type="number" className="w-full bg-emerald-900 border-emerald-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-white/20" placeholder="500" value={formData.quantity} onChange={e => setFormData({ ...formData, quantity: e.target.value })} />
                                                 </div>
                                             </div>
                                             <div>
                                                 <label className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1.5 block">Unit</label>
-                                                <select className="w-full bg-slate-800 border-slate-700 rounded-2xl py-3.5 px-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none" value={formData.unit} onChange={e => setFormData({ ...formData, unit: e.target.value })}>
-                                                    <option value="kg" className="bg-slate-900">Kilograms (kg)</option>
-                                                    <option value="quintal" className="bg-slate-900">Quintals (q)</option>
-                                                    <option value="ton" className="bg-slate-900">Tons (t)</option>
+                                                <select className="w-full bg-emerald-900 border-emerald-800 rounded-2xl py-3.5 px-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none" value={formData.unit} onChange={e => setFormData({ ...formData, unit: e.target.value })}>
+                                                    <option value="kg" className="bg-emerald-950">Kilograms (kg)</option>
+                                                    <option value="quintal" className="bg-emerald-950">Quintals (q)</option>
+                                                    <option value="ton" className="bg-emerald-950">Tons (t)</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -394,14 +394,14 @@ export default function CropDetection() {
                                                 <label className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1.5 block">Price per Unit (₹) *</label>
                                                 <div className="relative">
                                                     <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400" />
-                                                    <input required type="number" className="w-full bg-slate-800 border-slate-700 rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-white/20" placeholder="2450" value={formData.expectedPrice} onChange={e => setFormData({ ...formData, expectedPrice: e.target.value })} />
+                                                    <input required type="number" className="w-full bg-emerald-900 border-emerald-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-white/20" placeholder="2450" value={formData.expectedPrice} onChange={e => setFormData({ ...formData, expectedPrice: e.target.value })} />
                                                 </div>
                                             </div>
                                             <div>
                                                 <label className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1.5 block">Quality Grade</label>
-                                                <select className="w-full bg-slate-800 border-slate-700 rounded-2xl py-3.5 px-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none" value={formData.quality} onChange={e => setFormData({ ...formData, quality: e.target.value })}>
+                                                <select className="w-full bg-emerald-900 border-emerald-800 rounded-2xl py-3.5 px-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none" value={formData.quality} onChange={e => setFormData({ ...formData, quality: e.target.value })}>
                                                     {['Premium', 'A Grade', 'B Grade', 'C Grade'].map(q => (
-                                                        <option key={q} value={q} className="bg-slate-900">{q}</option>
+                                                        <option key={q} value={q} className="bg-emerald-950">{q}</option>
                                                     ))}
                                                 </select>
                                             </div>
@@ -411,7 +411,7 @@ export default function CropDetection() {
                                             <label className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1.5 block">Description for Buyers</label>
                                             <div className="relative">
                                                 <FileText className="absolute left-4 top-4 w-4 h-4 text-emerald-400" />
-                                                <textarea className="w-full bg-slate-800 border-slate-700 rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-white/20 resize-none h-20" placeholder="Organic, freshly harvested, no pesticides..." value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                                                <textarea className="w-full bg-emerald-900 border-emerald-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all placeholder:text-white/20 resize-none h-20" placeholder="Organic, freshly harvested, no pesticides..." value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
                                             </div>
                                         </div>
 
@@ -429,7 +429,7 @@ export default function CropDetection() {
                     ) : (
                         <div className="space-y-6">
                             {/* ===== DIRECT ADD CROP SECTION ===== */}
-                            <div className="p-7 bg-slate-800 rounded-[2.5rem] border border-slate-700 relative overflow-hidden group">
+                            <div className="p-7 bg-emerald-900 rounded-[2.5rem] border border-emerald-800 relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl -mr-24 -mt-24 group-hover:bg-emerald-500/20 transition-all duration-1000"></div>
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-3 mb-3">
@@ -470,7 +470,7 @@ export default function CropDetection() {
                                     </div>
                                 ) : (
                                     listings.map((item) => (
-                                        <div key={item._id} className="group bg-slate-800 rounded-[2rem] border border-slate-700 shadow-sm hover:shadow-2xl hover:border-emerald-500/20 transition-all overflow-hidden">
+                                        <div key={item._id} className="group bg-emerald-900 rounded-[2rem] border border-emerald-800 shadow-sm hover:shadow-2xl hover:border-emerald-500/20 transition-all overflow-hidden">
                                             {/* Image Banner */}
                                             {item.image && (
                                                 <div className="relative h-32 overflow-hidden">
@@ -536,7 +536,7 @@ export default function CropDetection() {
                     )}
 
                     {/* ===== MARKETPLACE INFO CARD ===== */}
-                    <div className="p-7 bg-slate-800 rounded-[2.5rem] border border-slate-700 relative overflow-hidden group">
+                    <div className="p-7 bg-emerald-900 rounded-[2.5rem] border border-emerald-800 relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl -mr-24 -mt-24 group-hover:bg-emerald-500/20 transition-all duration-1000"></div>
                         <div className="relative z-10">
                             <div className="flex items-center justify-between mb-3">

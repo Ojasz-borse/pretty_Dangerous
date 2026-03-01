@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
     TrendingUp,
-    DollarSign,
+    IndianRupee,
     BarChart3,
     Lightbulb,
     Target,
@@ -27,7 +27,7 @@ import ConnectPanel from '@/components/shared/ConnectPanel';
 import AddCropListing from './AddCropListing';
 
 const modules = [
-    { id: 'price', label: 'Market Price', icon: DollarSign, gradient: 'from-emerald-400 to-green-500' },
+    { id: 'price', label: 'Market Price', icon: IndianRupee, gradient: 'from-emerald-400 to-green-500' },
     { id: 'prediction', label: 'Price Forecast', icon: TrendingUp, gradient: 'from-blue-400 to-cyan-500' },
     { id: 'sell', label: 'Sell or Wait', icon: Lightbulb, gradient: 'from-amber-400 to-yellow-500' },
     { id: 'list-crop', label: 'List Crops', icon: Target, gradient: 'from-teal-400 to-emerald-500' },
@@ -142,7 +142,7 @@ export default function FarmerDashboard() {
                 {/* ===== HERO STAT CARDS ===== */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
-                        { label: "Today's Best Price", value: '2,250', prefix: '₹', sub: '/Quintal', icon: DollarSign, glow: 'glow-green', gradient: 'from-emerald-400 to-green-500', delay: 'stagger-1' },
+                        { label: "Today's Best Price", value: '2,250', prefix: '₹', sub: '/Quintal', icon: IndianRupee, glow: 'glow-green', gradient: 'from-emerald-400 to-green-500', delay: 'stagger-1' },
                         { label: 'Market Outlook', value: '+8.5%', prefix: '', sub: 'Rising Demand', icon: TrendingUp, glow: 'glow-blue', gradient: 'from-blue-400 to-cyan-500', delay: 'stagger-2' },
                         { label: 'Demand Index', value: 'High', prefix: '', sub: 'Strong Volume', icon: Target, glow: 'glow-purple', gradient: 'from-purple-400 to-violet-500', delay: 'stagger-3' },
                         { label: 'Your Trust Rating', value: '82', prefix: '', sub: 'Verified Producer', icon: Star, glow: 'glow-amber', gradient: 'from-amber-400 to-yellow-500', delay: 'stagger-4' },

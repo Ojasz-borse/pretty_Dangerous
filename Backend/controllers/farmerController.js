@@ -1,4 +1,5 @@
 const Crop = require("../models/Crop");
+const User = require("../models/User");
 
 
 // 🌾 Create Crop Listing
@@ -18,6 +19,19 @@ exports.createCrop = async (req, res) => {
       availability
     } = req.body;
 
+    let finalLocation = location;
+
+    // Fallback to farmer's location if not provided
+    if (!finalLocation || !finalLocation.state || !finalLocation.district) {
+      const farmerUser = await User.findById(req.user.id);
+      if (farmerUser && farmerUser.location) {
+        finalLocation = {
+          district: finalLocation?.district || farmerUser.location.district || 'Unknown',
+          state: finalLocation?.state || farmerUser.location.state || 'Unknown'
+        };
+      }
+    }
+
     const crop = await Crop.create({
       farmer: req.user.id,
       cropName,
@@ -28,7 +42,7 @@ exports.createCrop = async (req, res) => {
       quality,
       description,
       image,
-      location,
+      location: finalLocation,
       harvestDate,
       availability
     });

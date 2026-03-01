@@ -11,7 +11,7 @@ import {
     Tooltip
 } from 'recharts';
 import {
-    DollarSign,
+    IndianRupee,
     TrendingUp,
     TrendingDown,
     Minus,

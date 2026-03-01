@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DollarSign, TrendingUp, TrendingDown, Minus, Scale, Loader2, Sparkles, CheckCircle2 } from 'lucide-react';
+import { IndianRupee, TrendingUp, TrendingDown, Minus, Scale, Loader2, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useLocation } from '@/context/LocationContext';
 
 interface FairPriceData {

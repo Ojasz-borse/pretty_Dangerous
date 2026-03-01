@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-    Leaf, Home, DollarSign, TrendingUp, Lightbulb, BarChart3,
+    Leaf, Home, IndianRupee, TrendingUp, Lightbulb, BarChart3,
     Camera, Star, Truck, Menu, X, MapPin, Users, ChevronDown,
     Check, LogOut, Search, Sparkles, Box
 } from 'lucide-react';
@@ -14,7 +14,7 @@ import { locationData } from '@/data/locationData';
 
 const farmerNav = [
     { href: '/', label: 'Home', icon: Home },
-    { href: '/prices', label: 'Market Prices', icon: DollarSign },
+    { href: '/prices', label: 'Market Prices', icon: IndianRupee },
     { href: '/prediction', label: 'Price Forecast', icon: TrendingUp },
     { href: '/sell-advice', label: 'Sell Advice', icon: Lightbulb },
     { href: '/demand', label: 'Demand', icon: BarChart3 },
@@ -25,7 +25,7 @@ const farmerNav = [
 
 const buyerNav = [
     { href: '/buyer', label: 'Marketplace', icon: Search },
-    { href: '/buyer/prices', label: 'Fair Prices', icon: DollarSign },
+    { href: '/buyer/prices', label: 'Fair Prices', icon: IndianRupee },
     { href: '/buyer/insights', label: 'AI Insights', icon: Sparkles },
     { href: '/buyer/logistics', label: 'Logistics', icon: Truck },
     { href: '/buyer/orders', label: 'My Orders', icon: Box },

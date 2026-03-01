@@ -1,7 +1,7 @@
 'use client';
 import Navbar from '@/components/Navbar';
 import RealTimePrice from '@/components/farmer/RealTimePrice';
-import { DollarSign } from 'lucide-react';
+import { IndianRupee } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useLocation } from '@/context/LocationContext';
@@ -23,7 +23,7 @@ export default function PricesPage() {
                     <div className="max-w-xl text-center sm:text-left text-white animate-fade-in">
                         <div className="flex items-center justify-center sm:justify-start gap-3 mb-4">
                             <div className="section-icon bg-green-500 shadow-lg shadow-green-500/20">
-                                <DollarSign className="w-5 h-5 text-white" />
+                                <IndianRupee className="w-5 h-5 text-white" />
                             </div>
                             <span className="text-green-400 font-black tracking-widest text-xs uppercase drop-shadow-md">Live Market Data</span>
                         </div>

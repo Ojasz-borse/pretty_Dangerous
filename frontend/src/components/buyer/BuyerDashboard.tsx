@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
     ShoppingCart,
     Search,
-    DollarSign,
+    IndianRupee,
     Truck,
     Sparkles,
     Leaf,
@@ -26,7 +26,7 @@ import ConnectPanel from '@/components/shared/ConnectPanel';
 
 const modules = [
     { id: 'search', label: 'Find Crops', icon: Search, color: 'bg-blue-600', desc: 'Browse verified farmer listings' },
-    { id: 'fair-price', label: 'Fair Price', icon: DollarSign, color: 'bg-green-600', desc: 'AI-powered market value check' },
+    { id: 'fair-price', label: 'Fair Price', icon: IndianRupee, color: 'bg-green-600', desc: 'AI-powered market value check' },
     { id: 'connect', label: 'Find Farmers', icon: Users, color: 'bg-indigo-600', desc: 'Connect directly with growers' },
     { id: 'logistics', label: 'Logistics', icon: Truck, color: 'bg-purple-600', desc: 'Optimize delivery routes' },
     { id: 'innovation', label: 'AI Insights', icon: Sparkles, color: 'bg-amber-600', desc: 'Analyze deep market trends' },

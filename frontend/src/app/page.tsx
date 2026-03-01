@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { mockMarkets } from '@/data/mockMandiData';
 import {
-    DollarSign,
+    IndianRupee,
     TrendingUp,
     Lightbulb,
     BarChart3,
@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 const features = [
-    { href: '/prices', icon: DollarSign, color: 'bg-green-600', bg: 'bg-green-50', border: 'border-green-200', title: 'Market Prices', desc: 'Real-time mandi prices from Agmarknet with stock-market style charts and price comparisons across markets.' },
+    { href: '/prices', icon: IndianRupee, color: 'bg-green-600', bg: 'bg-green-50', border: 'border-green-200', title: 'Market Prices', desc: 'Real-time mandi prices from Agmarknet with stock-market style charts and price comparisons across markets.' },
     { href: '/prediction', icon: TrendingUp, color: 'bg-blue-600', bg: 'bg-blue-50', border: 'border-blue-200', title: 'Price Forecast', desc: 'AI-powered 7-day price prediction using historical data, weather patterns, and market trends.' },
     { href: '/sell-advice', icon: Lightbulb, color: 'bg-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', title: 'Sell or Wait', desc: 'Smart recommendation engine telling you the best time to sell based on demand, price forecast, and storage costs.' },
     { href: '/demand', icon: BarChart3, color: 'bg-purple-600', bg: 'bg-purple-50', border: 'border-purple-200', title: 'Demand Insights', desc: 'Regional demand analysis with Google Trends data, festival impacts, and crop-wise demand scores.' },
@@ -84,7 +84,7 @@ export default function Home() {
                             </p>
                             <div className="flex flex-wrap lg:justify-start justify-center gap-6 animate-slide-up stagger-3">
                                 <Link href="/prices" className="group inline-flex items-center gap-3 bg-green-600 text-white font-black px-12 py-5 rounded-[2rem] hover:bg-green-700 transition-all no-underline shadow-2xl shadow-green-600/30 hover:-translate-y-2 text-sm uppercase tracking-widest pulse-glow">
-                                    <DollarSign className="w-5 h-5" /> Start Trading <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                                    <IndianRupee className="w-5 h-5" /> Start Trading <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                                 </Link>
                                 <Link href="/login" className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-2xl text-white font-black px-12 py-5 rounded-[2rem] hover:bg-white/20 transition-all no-underline border border-white/20 hover:-translate-y-2 text-sm uppercase tracking-widest">
                                     <Users className="w-5 h-5" /> Join KrishiSetu
