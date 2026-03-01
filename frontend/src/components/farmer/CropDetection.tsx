@@ -77,7 +77,7 @@ export default function CropDetection() {
                     onDragOver={(e) => e.preventDefault()}
                     onClick={() => !selectedFile && fileInputRef.current?.click()}
                 >
-                    <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
+                    <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" suppressHydrationWarning />
                     {previewUrl ? (
                         <div className="space-y-3">
                             <img src={previewUrl} alt="Preview" className="max-h-56 mx-auto rounded-xl shadow-md border border-slate-200" />
