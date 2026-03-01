@@ -109,48 +109,46 @@ export default function SmartSearch({ onSelectListing, selectedListing }: SmartS
     return (
         <div className="p-8 space-y-10 animate-fade-in">
             {/* ====== ELITE SEARCH PANEL ====== */}
-            <div className="bg-white rounded-[3rem] p-8 border border-slate-200 shadow-2xl shadow-slate-200/50">
-                <div className="flex flex-col lg:flex-row gap-6 mb-8">
+            <div className="bg-white rounded-[2.5rem] p-6 border border-slate-200 shadow-xl shadow-slate-200/40">
+                <div className="flex flex-col lg:flex-row gap-4 mb-6">
                     <div className="flex-1 relative group">
-                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
                         <input
                             type="text"
-                            placeholder="Search harvests, farmers, or varieties..."
+                            placeholder="Find crops or varieties..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-slate-50 border border-transparent rounded-[2rem] py-5 pl-16 pr-8 text-sm font-bold text-slate-800 focus:bg-white focus:border-green-500 transition-all outline-none placeholder:text-slate-400 shadow-inner"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-800 focus:bg-white focus:border-green-500 transition-all outline-none placeholder:text-slate-400"
                         />
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex gap-3">
                         <select
-                            className="bg-slate-50 border-none rounded-2xl px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-600 outline-none focus:ring-2 ring-green-500/20"
+                            className="bg-slate-50 border border-slate-100 rounded-xl px-5 py-3 text-[10px] font-black uppercase tracking-widest text-slate-600 outline-none focus:ring-2 ring-green-500/20"
                             value={cropFilter}
                             onChange={e => setCropFilter(e.target.value)}
                         >
                             {cropOptions.map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
-                        <button onClick={handleClear} className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors">
+                        <button onClick={handleClear} className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors">
                             Reset
                         </button>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4">State Territory</label>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="flex flex-col gap-1.5">
                         <select
-                            className="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 text-xs font-bold text-slate-700 outline-none focus:ring-2 ring-green-500/20"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-3 text-xs font-bold text-slate-700 outline-none focus:ring-2 ring-green-500/20 appearance-none"
                             value={filterState}
                             onChange={e => { setFilterState(e.target.value); setFilterDistrict(''); }}
                         >
-                            <option value="">All Regions</option>
+                            <option value="">All States</option>
                             {locationData.map(s => <option key={s.code} value={s.name}>{s.name}</option>)}
                         </select>
                     </div>
-                    <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4">District / Hub</label>
+                    <div className="flex flex-col gap-1.5">
                         <select
-                            className="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 text-xs font-bold text-slate-700 outline-none focus:ring-2 ring-green-500/20"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-3 text-xs font-bold text-slate-700 outline-none focus:ring-2 ring-green-500/20 appearance-none"
                             value={filterDistrict}
                             onChange={e => setFilterDistrict(e.target.value)}
                             disabled={!filterState}
@@ -159,14 +157,9 @@ export default function SmartSearch({ onSelectListing, selectedListing }: SmartS
                             {locationData.find(s => s.name === filterState)?.districts.map(d => <option key={d.name} value={d.name}>{d.name}</option>)}
                         </select>
                     </div>
-                    <div className="flex items-end">
-                        <div className="w-full bg-green-50 border border-green-100 rounded-2xl px-6 py-4 flex items-center justify-between">
-                            <span className="text-[10px] font-black text-green-600 uppercase tracking-widest">Active Markets</span>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                                <span className="text-sm font-black text-slate-900">{filteredListings.length}</span>
-                            </div>
-                        </div>
+                    <div className="flex items-center gap-3 px-5 py-3 bg-green-50/50 border border-green-100 rounded-xl">
+                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="text-[10px] font-black text-green-700 uppercase tracking-widest">{filteredListings.length} Active Listings</span>
                     </div>
                 </div>
             </div>
@@ -189,7 +182,7 @@ export default function SmartSearch({ onSelectListing, selectedListing }: SmartS
                             {/* Image Header */}
                             <div className="relative h-64 overflow-hidden">
                                 <img src={listing.image} alt={listing.crop} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
 
                                 <div className="absolute top-6 left-6 flex flex-col gap-2">
                                     <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-[9px] font-black text-white uppercase tracking-widest shadow-xl">
@@ -254,9 +247,9 @@ export default function SmartSearch({ onSelectListing, selectedListing }: SmartS
                             <div className="p-8 pt-4">
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setPaymentListing(listing); }}
-                                    className="w-full bg-slate-900 py-6 rounded-[2rem] text-[11px] font-black text-white uppercase tracking-[0.2em] border border-slate-800 hover:bg-green-600 hover:border-green-500 transition-all duration-300 shadow-xl shadow-slate-900/20 active:scale-[0.98]"
+                                    className="w-full bg-slate-900 py-5 rounded-2xl text-[10px] font-black text-white uppercase tracking-[0.2em] hover:bg-green-600 transition-all duration-300 shadow-xl shadow-slate-900/10 active:scale-[0.98] flex items-center justify-center gap-3"
                                 >
-                                    Secure Trade <ShoppingCart className="ml-2 w-4 h-4 inline-block -mt-1" />
+                                    Proceed to Trade <ArrowRight className="w-4 h-4" />
                                 </button>
                             </div>
                         </div>

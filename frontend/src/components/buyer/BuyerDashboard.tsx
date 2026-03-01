@@ -166,54 +166,30 @@ export default function BuyerDashboard() {
                 <section className="relative min-h-[500px] flex items-center overflow-hidden">
                     <div className="absolute inset-0">
                         <img src="/1.jpeg" alt="Background" className="w-full h-full object-cover" />
-                        <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-[2px]"></div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-transparent"></div>
+                        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]"></div>
+                        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-50"></div>
                     </div>
 
                     <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-24">
-                        <div className="flex flex-col lg:flex-row items-center gap-16">
-                            <div className="flex-1 text-center lg:text-left">
-                                <span className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 backdrop-blur-md text-green-300 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-green-500/30 animate-fade-in">
+                        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+                            <div className="w-full">
+                                <span className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 backdrop-blur-md text-green-300 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-green-500/30 animate-fade-in shadow-2xl shadow-green-500/20">
                                     <Sparkles className="w-3.5 h-3.5" /> Direct Farmer Connectivity
                                 </span>
-                                <h1 className="text-4xl sm:text-6xl font-black text-white leading-[1.1] mb-6 tracking-tight animate-slide-up stagger-1">
+                                <h1 className="text-5xl sm:text-7xl font-black text-white leading-[1.05] mb-8 tracking-tight animate-slide-up stagger-1">
                                     Quality Produce. <br />
-                                    <span className="text-green-400">Direct From Source.</span>
+                                    <span className="gradient-text">Direct From Source.</span>
                                 </h1>
-                                <p className="text-white/70 text-lg leading-relaxed mb-10 max-w-xl lg:mx-0 mx-auto animate-slide-up stagger-2">
+                                <p className="text-white/80 text-xl leading-relaxed mb-12 max-w-2xl mx-auto animate-slide-up stagger-2 drop-shadow-lg">
                                     Empower your supply chain with AI-verified listings, fair price auditing, and seamless logistics. Source the freshest harvest from India's most reliable farmers.
                                 </p>
-                                <div className="flex flex-wrap lg:justify-start justify-center gap-4 animate-slide-up stagger-3">
-                                    <button onClick={() => setActiveTab('search')} className="px-8 py-4 bg-green-600 text-white font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-green-700 transition-all hover:-translate-y-1 shadow-2xl shadow-green-600/20">
+                                <div className="flex flex-wrap justify-center gap-6 animate-slide-up stagger-3">
+                                    <button onClick={() => setActiveTab('search')} className="group px-10 py-5 bg-green-600 text-white font-black text-sm uppercase tracking-widest rounded-[2rem] hover:bg-green-700 transition-all hover:-translate-y-2 shadow-2xl shadow-green-600/30 pulse-glow">
                                         Browse Inventory
                                     </button>
-                                    <button onClick={() => setActiveTab('innovation')} className="px-8 py-4 bg-white/10 backdrop-blur-md text-white border border-white/20 font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-white/20 transition-all hover:-translate-y-1">
+                                    <button onClick={() => setActiveTab('innovation')} className="px-10 py-5 bg-white/10 backdrop-blur-2xl text-white border border-white/20 font-black text-sm uppercase tracking-widest rounded-[2rem] hover:bg-white/20 transition-all hover:-translate-y-2">
                                         Market Analysis
                                     </button>
-                                </div>
-                            </div>
-
-                            {/* Visual Image Grid */}
-                            <div className="hidden lg:grid grid-cols-2 gap-4 w-full max-w-lg animate-fade-in-right">
-                                <div className="space-y-4 pt-8">
-                                    <div className="relative group">
-                                        <img src="/2.jpeg" alt="Crop 1" className="w-full h-48 object-cover rounded-[32px] border-2 border-white/10 shadow-2xl group-hover:scale-[1.02] transition-transform duration-500" />
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors rounded-[32px]"></div>
-                                    </div>
-                                    <div className="relative group">
-                                        <img src="/3.jpeg" alt="Crop 2" className="w-full h-64 object-cover rounded-[32px] border-2 border-white/10 shadow-2xl group-hover:scale-[1.02] transition-transform duration-500" />
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors rounded-[32px]"></div>
-                                    </div>
-                                </div>
-                                <div className="space-y-4">
-                                    <div className="relative group">
-                                        <img src="/4.jpeg" alt="Crop 3" className="w-full h-64 object-cover rounded-[32px] border-2 border-white/10 shadow-2xl group-hover:scale-[1.02] transition-transform duration-500" />
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors rounded-[32px]"></div>
-                                    </div>
-                                    <div className="relative group">
-                                        <img src="/5.jpeg" alt="Crop 4" className="w-full h-48 object-cover rounded-[32px] border-2 border-white/10 shadow-2xl group-hover:scale-[1.02] transition-transform duration-500" />
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors rounded-[32px]"></div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
