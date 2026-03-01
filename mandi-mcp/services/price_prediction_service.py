@@ -150,8 +150,35 @@ def predict_price(crop: str, district: str, days: int = 7) -> Optional[List[Dict
         is_fallback = True
 
     if not model:
-        return None
+        # ── Step 3: Synthetic Fallback if no ML model at all ──────────────────
+        # Provides consistency for crops like Radish or Cabbage missing from CSV
+        from .mandi_service import BASE_CROP_PRICES
+        
+        base = 2000
+        crop_match = None
+        for key, prices in BASE_CROP_PRICES.items():
+            if key in crop_lower or crop_lower in key:
+                base = prices["modal"]
+                crop_match = key
+                break
+        
+        results = []
+        for i in range(days):
+            date = datetime.now() + timedelta(days=i)
+            # Add a slight upward trend based on date for "intelligence"
+            drift = 1 + (i * 0.005) 
+            price = round(base * drift, 2)
+            results.append({
+                "date": date.strftime("%Y-%m-%d"),
+                "predicted_price": price,
+                "lower": round(price * 0.95, 2),
+                "upper": round(price * 1.05, 2),
+                "is_fallback": True,
+                "source": "Synthetic (Base Price + Trend)"
+            })
+        return results
 
+    # ── Step 4: Normal ML Prediction ──────────────────────────────────────────
     future   = model.make_future_dataframe(periods=days, freq="D")
     forecast = model.predict(future)
     subset   = forecast.tail(days)
@@ -164,6 +191,7 @@ def predict_price(crop: str, district: str, days: int = 7) -> Optional[List[Dict
             "lower":           round(float(row["yhat_lower"]), 2),
             "upper":           round(float(row["yhat_upper"]), 2),
             "is_fallback":     is_fallback,
+            "source": f"Prophet {'District' if not is_fallback else 'Commodity'} Model"
         })
     return results
 

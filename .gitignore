@@ -42,3 +42,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+ 
+# Dataset
+data/Vegetable Images/
+**/__pycache__/
+vision_ai/temp_*

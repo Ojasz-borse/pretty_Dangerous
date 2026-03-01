@@ -8,7 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { ApiResponse, CropDetectionResult, HealthIndicator } from '@/types/farmer';
 
-const AI_BACKEND_URL = process.env.AI_BACKEND_URL || 'http://localhost:8000';
+const AI_BACKEND_URL = process.env.VISION_AI_URL || 'http://localhost:9000';
 
 // Allowed image MIME types
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/bmp'];
@@ -16,61 +16,16 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'im
 // Maximum file size: 10 MB
 const MAX_SIZE_BYTES = 10 * 1024 * 1024;
 
-// Map AI backend grade result to health indicators
-function buildHealthIndicators(grade: string, confidence: number): HealthIndicator[] {
-    const isA = grade === 'A';
-    const isB = grade === 'B';
-
-    return [
-        {
-            name: 'Color Quality',
-            value: isA ? 'Excellent' : isB ? 'Good' : 'Fair',
-            status: isA ? 'good' : isB ? 'good' : 'warning',
-        },
-        {
-            name: 'Size Uniformity',
-            value: isA ? '92%' : isB ? '78%' : '61%',
-            status: isA ? 'good' : isB ? 'good' : 'warning',
-        },
-        {
-            name: 'Moisture Level',
-            value: isA ? '14%' : isB ? '16%' : '19%',
-            status: isA ? 'good' : 'warning',
-        },
-        {
-            name: 'Pest Damage',
-            value: isA ? '0%' : isB ? '5%' : '14%',
-            status: isA ? 'good' : isB ? 'good' : 'critical',
-        },
-        {
-            name: 'Maturity',
-            value: isA ? 'Fully Mature' : isB ? 'Near Mature' : 'Early Stage',
-            status: 'good',
-        },
-        {
-            name: 'AI Confidence',
-            value: `${confidence.toFixed(1)}%`,
-            status: confidence >= 70 ? 'good' : confidence >= 50 ? 'warning' : 'critical',
-        },
-    ];
-}
-
-// Recommendations based on grade
-function buildRecommendations(grade: string, confidence: number): string[] {
+// Map AI backend results to recommendations
+function buildRecommendations(crop: string, recommendation: string, confidence: number): string[] {
     const recs: string[] = [];
 
-    if (grade === 'A') {
-        recs.push('Excellent quality! Suitable for premium markets and direct export.');
-        recs.push('Can fetch 10–15% higher price in organized retail chains.');
-        recs.push('Store in cool, dry conditions to maintain Grade A status.');
-    } else if (grade === 'B') {
-        recs.push('Good quality produce. Suitable for local and regional markets.');
-        recs.push('Proper storage will help maintain current grade.');
-        recs.push('Consider packaging improvements to preserve freshness.');
+    if (recommendation === 'WAIT') {
+        recs.push(`AI suggests WAITING to sell your ${crop}. Market trends indicate a price increase.`);
+        recs.push('Ensure proper storage to maintain crop quality during the wait period.');
     } else {
-        recs.push('Below-average quality. Consider sorting to separate Grade A/B items.');
-        recs.push('Quick sale is recommended to minimize further degradation.');
-        recs.push('Evaluate storage conditions and apply appropriate treatment.');
+        recs.push(`AI suggests SELLING your ${crop} NOW. Current prices are optimal.`);
+        recs.push('Quick sale will help avoid potential price drops or storage losses.');
     }
 
     if (confidence < 70) {
@@ -84,150 +39,76 @@ export async function POST(request: NextRequest) {
     try {
         const formData = await request.formData();
         const imageFile = formData.get('image') as File | null;
+        const district = formData.get('district') as string || 'Sirsa';
 
-        // ── Validation 1: Image file must be provided ──────────────────────────
         if (!imageFile) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    error: 'No image provided. Please upload a crop image.',
-                    timestamp: new Date().toISOString(),
-                } as ApiResponse<null>,
-                { status: 400 }
-            );
+            return NextResponse.json({ success: false, error: 'No image provided.' }, { status: 400 });
         }
 
-        // ── Validation 2: Must be a real image MIME type ───────────────────────
-        if (!ALLOWED_TYPES.includes(imageFile.type)) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    error: `Invalid file type "${imageFile.type}". Only JPEG, PNG, WebP or BMP images are accepted.`,
-                    timestamp: new Date().toISOString(),
-                } as ApiResponse<null>,
-                { status: 400 }
-            );
-        }
-
-        // ── Validation 3: File size limit ──────────────────────────────────────
-        if (imageFile.size > MAX_SIZE_BYTES) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    error: `Image too large (${(imageFile.size / 1024 / 1024).toFixed(1)} MB). Maximum allowed size is 10 MB.`,
-                    timestamp: new Date().toISOString(),
-                } as ApiResponse<null>,
-                { status: 400 }
-            );
-        }
-
-        // ── Validation 4: Reject empty / corrupted files ───────────────────────
-        if (imageFile.size < 1024) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    error: 'Image file appears to be empty or corrupted. Please upload a valid crop photo.',
-                    timestamp: new Date().toISOString(),
-                } as ApiResponse<null>,
-                { status: 400 }
-            );
-        }
-
-        // ── Forward to FastAPI Vision Model ────────────────────────────────────
+        // ── Forward to Custom CNN Vision Model ────────────────────────────────────
         const aiFormData = new FormData();
         aiFormData.append('file', imageFile, imageFile.name);
 
         let aiResponse: Response;
         try {
-            aiResponse = await fetch(`${AI_BACKEND_URL}/grade-crop`, {
+            aiResponse = await fetch(`${AI_BACKEND_URL}/detect?district=${encodeURIComponent(district)}`, {
                 method: 'POST',
                 body: aiFormData,
-                signal: AbortSignal.timeout(30_000), // 30-second timeout
+                signal: AbortSignal.timeout(45_000),
             });
         } catch (fetchErr: unknown) {
-            const isTimeout =
-                fetchErr instanceof Error && fetchErr.name === 'TimeoutError';
             return NextResponse.json(
                 {
                     success: false,
-                    error: isTimeout
-                        ? 'AI backend timed out. Please try again with a smaller image.'
-                        : 'AI backend is not reachable. Please ensure the FastAPI server is running on port 8000.',
+                    error: 'Vision AI server (port 9000) is not reachable.',
                     timestamp: new Date().toISOString(),
-                } as ApiResponse<null>,
+                },
                 { status: 503 }
             );
         }
 
-        // ── Handle AI backend errors ───────────────────────────────────────────
         if (!aiResponse.ok) {
-            const errBody = await aiResponse.json().catch(() => ({}));
-            const detail: string =
-                (errBody as { detail?: string }).detail ||
-                `AI backend returned HTTP ${aiResponse.status}`;
-
-            // 400 from AI backend = "Invalid file type" (already caught above,
-            // but forward gracefully if we somehow missed it)
-            return NextResponse.json(
-                {
-                    success: false,
-                    error: detail,
-                    timestamp: new Date().toISOString(),
-                } as ApiResponse<null>,
-                { status: aiResponse.status }
-            );
+            return NextResponse.json({ success: false, error: 'AI backend error.' }, { status: aiResponse.status });
         }
 
-        // ── Parse AI result ────────────────────────────────────────────────────
-        // vision_service.py returns:
-        // { crop_name, grade, confidence_percentage (0-100), reason, detail_scores,
-        //   detection_method, status }
         const aiResult = await aiResponse.json() as {
-            crop_name: string;              // real crop identified by Gemini/ImageNet
-            grade: string;
-            confidence_percentage: number;  // already 0–100
-            reason: string;                 // one-sentence explanation from AI
-            detail_scores: Record<string, number>;
-            detection_method: string;       // 'Gemini 1.5 Flash Vision' | 'ImageNet MobileNetV2'
-            status: string;
-            error?: string;
+            crop: string;
+            confidence: string;
+            market_insight: {
+                current_price: number;
+                predicted_price: number;
+                growth_percent: number;
+                demand_index: number;
+                recommendation: 'WAIT' | 'SELL';
+                reason: string;
+                risk_level: string;
+            }
         };
 
-        if (aiResult.status === 'failed' || !aiResult.grade) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    error: aiResult.error || 'AI model could not process the image. Please upload a clear crop photo.',
-                    timestamp: new Date().toISOString(),
-                } as ApiResponse<null>,
-                { status: 422 }
-            );
-        }
-
-        const grade = aiResult.grade as 'A' | 'B' | 'C';
-        const confidence = aiResult.confidence_percentage; // already 0–100
-        const cropName = aiResult.crop_name || 'Unknown Crop';
-        // Non-crop rejection is handled by the backend (HTTP 422) — no threshold needed here
-        const healthIndicators = buildHealthIndicators(grade, confidence);
-        const recommendations = buildRecommendations(grade, confidence);
-
-        // Quality score: A=90, B=70, C=50 baseline adjusted by confidence
-        const qualityScore = Math.round(
-            grade === 'A' ? 85 + confidence * 0.1 :
-                grade === 'B' ? 65 + confidence * 0.1 :
-                    45 + confidence * 0.1
-        );
+        const confidenceVal = parseFloat(aiResult.confidence);
+        const cropName = aiResult.crop || 'Unknown';
 
         const result: CropDetectionResult = {
             id: `crop_${Date.now()}`,
-            cropName: cropName,                // real crop name from Gemini / ImageNet
-            confidence: Math.round(confidence),
-            qualityGrade: grade,
-            qualityScore,
-            detectedVariety: aiResult.reason || undefined,   // reuse field for AI reason
-            estimatedWeight: undefined,
-            healthIndicators,
-            recommendations,
+            cropName: cropName.charAt(0).toUpperCase() + cropName.slice(1),
+            confidence: Math.round(confidenceVal),
+            qualityGrade: 'A', // Defaulting since custom CNN doesn't export grade yet
+            qualityScore: Math.round(confidenceVal),
+            healthIndicators: [
+                { name: 'AI Confidence', value: `${confidenceVal}%`, status: confidenceVal > 80 ? 'good' : 'warning' },
+                { name: 'Market Demand', value: `${aiResult.market_insight.demand_index}/100`, status: 'good' },
+                { name: 'Growth Potential', value: `${aiResult.market_insight.growth_percent}%`, status: 'good' }
+            ],
+            recommendations: buildRecommendations(cropName, aiResult.market_insight.recommendation, confidenceVal),
+            marketInsight: {
+                currentPrice: aiResult.market_insight.current_price,
+                predictedPrice: aiResult.market_insight.predicted_price,
+                growthPercent: aiResult.market_insight.growth_percent,
+                demandIndex: aiResult.market_insight.demand_index,
+                recommendation: aiResult.market_insight.recommendation,
+                reason: aiResult.market_insight.reason,
+                riskLevel: aiResult.market_insight.risk_level
+            },
             imageUrl: '',
             timestamp: new Date().toISOString(),
         };
@@ -235,20 +116,13 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
             success: true,
             data: result,
-            message: `${cropName} — Grade ${grade} (${Math.round(confidence)}% confidence via ${aiResult.detection_method})`,
+            message: `Detected ${cropName} with ${aiResult.market_insight.recommendation} advice.`,
             timestamp: new Date().toISOString(),
         } as ApiResponse<CropDetectionResult>);
 
     } catch (error) {
-        console.error('[detect-crop] Unexpected error:', error);
-        return NextResponse.json(
-            {
-                success: false,
-                error: 'An unexpected error occurred while analysing the image.',
-                timestamp: new Date().toISOString(),
-            } as ApiResponse<null>,
-            { status: 500 }
-        );
+        console.error('[detect-crop] Error:', error);
+        return NextResponse.json({ success: false, error: 'Analysis failed.' }, { status: 500 });
     }
 }
 

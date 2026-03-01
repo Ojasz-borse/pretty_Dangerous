@@ -82,6 +82,16 @@ export interface HealthIndicator {
     status: 'good' | 'warning' | 'critical';
 }
 
+export interface MarketInsight {
+    currentPrice: number;
+    predictedPrice: number;
+    growthPercent: number;
+    demandIndex: number;
+    recommendation: 'WAIT' | 'SELL';
+    reason?: string;
+    riskLevel?: string;
+}
+
 export interface CropDetectionResult {
     id: string;
     cropName: string;
@@ -92,6 +102,7 @@ export interface CropDetectionResult {
     estimatedWeight?: number;
     healthIndicators: HealthIndicator[];
     recommendations: string[];
+    marketInsight?: MarketInsight;
     imageUrl: string;
     timestamp: string;
 }
