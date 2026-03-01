@@ -27,7 +27,11 @@ export default function TrustScore() {
     };
 
     if (loading) return <div className="card p-12 flex items-center justify-center"><div className="w-8 h-8 border-3 border-slate-200 border-t-yellow-500 rounded-full animate-spin"></div></div>;
-    if (!trustData) return null;
+    if (!trustData) return (
+        <div className="card p-12 text-center text-slate-400 italic">
+            Authentic trust score and transaction history are currently unavailable.
+        </div>
+    );
 
     const sc = getScoreColor(trustData.overallScore);
 

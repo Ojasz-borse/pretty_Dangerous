@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "data": {
+    "id": "rec_1772326295979",
+    "cropName": "Wheat",
+    "currentPrice": 2138.84,
+    "predictedPrice": 2205.05,
+    "recommendation": "SELL_NOW",
+    "expectedGain": 6621.000000000004,
+    "reason": "Sell Now. Prices are expected to remain stable over the next 7 days.",
+    "storageCost": 0,
+    "demandIndex": 75,
+    "netProfit": 213884,
+    "riskLevel": "Medium",
+    "timestamp": "2026-03-01T00:51:35.979Z"
+  },
+  "message": "Sell recommendation for Wheat",
+  "timestamp": "2026-03-01T00:51:35.979Z"
+}

@@ -76,7 +76,6 @@ export default function CropHealthPanel() {
                         <h3 className="text-lg font-bold text-slate-800">Satellite Crop Health</h3>
                         <p className="text-xs text-slate-400">
                             Soil & weather for <span className="font-semibold text-green-600">{activeDistrict}</span>
-                            {isMock && <span className="ml-2 text-amber-500 font-semibold">(demo data)</span>}
                         </p>
                     </div>
                 </div>

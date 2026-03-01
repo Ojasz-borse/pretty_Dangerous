@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Camera, Upload, X, CheckCircle2, Loader2, Package, MapPin, IndianRupee, Wheat } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useLocation } from '@/context/LocationContext';
 
 export interface CropListing {
     _id: string;

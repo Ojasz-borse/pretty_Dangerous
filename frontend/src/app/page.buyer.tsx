@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import { mockMarkets } from '@/data/mockMandiData';
 import {
     DollarSign,
     TrendingUp,
@@ -31,7 +30,7 @@ const features = [
     { href: '/trust-score', icon: Star, color: 'bg-yellow-600', bg: 'bg-yellow-50', border: 'border-yellow-200', title: 'Trust Score', desc: 'Your reliability rating based on delivery history, quality, and buyer reviews — build trust with buyers.' },
 ];
 
-const allItems = mockMarkets.flatMap(m => m.items.map(i => ({ ...i, market: m.name })));
+
 
 export default function Home() {
     const mainRef = useRef<HTMLDivElement>(null);
@@ -97,21 +96,9 @@ export default function Home() {
                     <div className="absolute bottom-12 left-0 right-0 z-20 overflow-hidden">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6">
                             <div className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-6 shadow-2xl overflow-hidden">
-                                <div className="ticker-inner">
-                                    {[...allItems, ...allItems].map((item, i) => (
-                                        <div key={i} className="inline-flex items-center gap-4 mx-10">
-                                            <span className="text-3xl filter drop-shadow-md">{item.imageIcon}</span>
-                                            <div className="flex flex-col">
-                                                <span className="font-black text-white text-sm uppercase tracking-tight">{item.name}</span>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-green-400 font-bold text-xs">₹{item.pricePerKg}/kg</span>
-                                                    <span className={`text-[10px] font-black ${item.trend === 'up' ? 'text-green-400' : 'text-red-400'}`}>
-                                                        {item.trend === 'up' ? '▲' : '▼'} {item.trendPercentage}%
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
+                                <div className="flex items-center justify-center gap-3">
+                                    <span className="text-white/60 font-bold text-sm">Visit the Prices page for live mandi rates</span>
+                                    <ArrowRight className="w-4 h-4 text-green-400" />
                                 </div>
                             </div>
                         </div>

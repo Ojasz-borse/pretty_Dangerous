@@ -24,7 +24,7 @@ import CropDetection from './CropDetection';
 import TrustScore from './TrustScore';
 import LogisticsCalculator from './LogisticsCalculator';
 import ConnectPanel from '@/components/shared/ConnectPanel';
-import AddCropListing from './AddCropListing';
+import AddCropListing from './AddCropListing.buyer';
 
 const modules = [
     { id: 'price', label: 'Market Price', icon: DollarSign, gradient: 'from-emerald-400 to-green-500' },

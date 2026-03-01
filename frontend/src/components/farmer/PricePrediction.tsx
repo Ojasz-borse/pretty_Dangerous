@@ -145,9 +145,8 @@ export default function PricePrediction({ cropName, district }: PricePredictionP
                     </div>
                 </>
             ) : (
-                <div className="card p-12 text-center border-dashed">
-                    <Info className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                    <p className="text-slate-400">Select a crop to generate price prediction</p>
+                <div className="py-10 text-center text-slate-400 italic text-sm">
+                    No authentic prediction data available for this selection.
                 </div>
             )}
         </div>

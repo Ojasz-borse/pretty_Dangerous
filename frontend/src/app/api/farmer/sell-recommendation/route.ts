@@ -7,82 +7,79 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { ApiResponse, SellRecommendation, SellAnalysisInput } from '@/types/farmer';
 
-// Rule-based recommendation engine
-function generateRecommendation(input: SellAnalysisInput): SellRecommendation {
-    // Base prices for different crops
-    const basePrices: Record<string, number> = {
-        'Rice (Basmati)': 3500,
-        'Wheat': 2250,
-        'Tomato': 1000,
-        'Onion': 1750,
-        'Potato': 750,
-        'Cotton': 5850,
-        'Sugarcane': 375,
-        'Maize': 2000,
-        'Soybean': 4000,
-        'Groundnut': 5500,
-        'Mustard': 4800,
-        'Chilli': 12000,
-        'Turmeric': 8000,
-        'Garlic': 6000
-    };
+// Simple deterministic random based on crop name
+function getSeededValue(seed: string): number {
+    // Include current date to match Python implementation and ensure daily validity
+    const today = new Date().toISOString().split('T')[0];
+    const seedStr = `${seed}_${today}`;
 
-    const currentPrice = basePrices[input.cropName] || 2000;
-    const storageCostPerDay = input.storageCostPerDay || currentPrice * 0.005; // 0.5% per day default
+    let hash = 0;
+    for (let i = 0; i < seedStr.length; i++) {
+        hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
+        hash |= 0;
+    }
+    const x = Math.sin(hash) * 10000;
+    return x - Math.floor(x);
+}
 
-    // Simulate price prediction (would come from ML model)
-    const predictedChange = (Math.random() * 20 - 5); // -5% to +15%
-    const predictedPrice = currentPrice * (1 + predictedChange / 100);
+// Rule-based recommendation engine — NOW UPDATED TO USE REAL DATA
+async function generateRecommendation(input: SellAnalysisInput): Promise<SellRecommendation> {
+    const MANDI_API_URL = process.env.AI_BACKEND_URL || 'http://localhost:8000';
+    const district = 'Sirsa'; // Default or based on context
 
-    // Calculate optimal wait days
-    let waitDays = 0;
-    let expectedGain = 0;
+    try {
+        const response = await fetch(`${MANDI_API_URL}/predict?crop=${encodeURIComponent(input.cropName)}&district=${encodeURIComponent(district)}&days=7`);
+        const result = await response.json();
 
-    if (predictedChange > 5) {
-        // Price expected to rise significantly
-        waitDays = Math.min(Math.round(predictedChange / 2), 7);
-        expectedGain = predictedChange;
-    } else if (predictedChange > 2) {
-        // Moderate rise
-        waitDays = 3;
-        expectedGain = predictedChange;
-    } else if (predictedChange < -3) {
-        // Price expected to fall - sell now
-        waitDays = 0;
-        expectedGain = 0;
+        if (response.ok && result.forecast && result.forecast.length > 0) {
+            const forecast = result.forecast;
+            const sellAdvice = result.sell_advice;
+            const currentPrice = forecast[0].predicted_price;
+            const predictedPrice = forecast[forecast.length - 1].predicted_price;
+            const expectedGain = ((predictedPrice - currentPrice) / currentPrice) * 100;
+            const waitDays = sellAdvice.includes('Wait') ? 7 : 0;
+            const demandIndex = 75; // Logic placeholder
+
+            // Calculate profit
+            const grossAmount = currentPrice * input.quantity * (1 + (waitDays > 0 ? expectedGain / 100 : 0));
+            const storageCost = waitDays * (input.storageCostPerDay || 10) * input.quantity;
+            const netProfit = grossAmount - storageCost;
+
+            return {
+                id: `rec_${input.cropName.toLowerCase()}_${Date.now()}`,
+                cropName: input.cropName,
+                currentPrice,
+                predictedPrice: Math.round(predictedPrice),
+                recommendation: waitDays > 0 ? 'WAIT' : 'SELL_NOW',
+                waitDays: waitDays > 0 ? waitDays : undefined,
+                expectedGain: Math.round(expectedGain * 10) / 10,
+                reason: sellAdvice,
+                storageCost: Math.round(storageCost),
+                demandIndex,
+                netProfit: Math.round(netProfit),
+                riskLevel: 'Medium',
+                timestamp: new Date().toISOString()
+            };
+        }
+    } catch (err) {
+        console.error('Mandi API Error:', err);
     }
 
-    // Calculate demand index (0-100)
-    const demandIndex = Math.round(50 + Math.random() * 40);
-
-    // Calculate net profit
-    const grossAmount = currentPrice * input.quantity * (1 + expectedGain / 100);
-    const storageCost = waitDays * storageCostPerDay * input.quantity;
-    const netProfit = grossAmount - storageCost;
-
-    // Determine risk level
-    let riskLevel: 'Low' | 'Medium' | 'High' = 'Medium';
-    if (predictedChange > 8) riskLevel = 'High'; // High potential but risky
-    else if (predictedChange < 2) riskLevel = 'Low';
-
-    // Generate recommendation
-    const recommendation: SellRecommendation = {
-        id: `rec_${Date.now()}`,
+    // Fallback if API fails
+    return {
+        id: `rec_${input.cropName.toLowerCase()}_fallback`,
         cropName: input.cropName,
-        currentPrice,
-        predictedPrice: Math.round(predictedPrice),
-        recommendation: expectedGain > 3 ? 'WAIT' : 'SELL_NOW',
-        waitDays: expectedGain > 3 ? waitDays : undefined,
-        expectedGain: Math.round(expectedGain * 10) / 10,
-        reason: generateReason(expectedGain, demandIndex, riskLevel, input.cropName),
-        storageCost: Math.round(storageCost),
-        demandIndex,
-        netProfit: Math.round(netProfit),
-        riskLevel,
-        timestamp: new Date().toISOString()
+        currentPrice: 2000,
+        predictedPrice: 2000,
+        recommendation: 'SELL_NOW',
+        reason: 'Unable to fetch live market data. Prices shown are estimates.',
+        storageCost: 0,
+        demandIndex: 50,
+        netProfit: input.quantity * 2000,
+        riskLevel: 'Medium',
+        timestamp: new Date().toISOString(),
+        expectedGain: 0
     };
-
-    return recommendation;
 }
 
 function generateReason(gain: number, demand: number, risk: string, crop: string): string {
@@ -114,7 +111,7 @@ export async function GET(request: NextRequest) {
             storageCostPerDay
         };
 
-        const recommendation = generateRecommendation(input);
+        const recommendation = await generateRecommendation(input);
 
         const response: ApiResponse<SellRecommendation> = {
             success: true,
@@ -153,7 +150,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const recommendation = generateRecommendation(body);
+        const recommendation = await generateRecommendation(body);
 
         const response: ApiResponse<SellRecommendation> = {
             success: true,

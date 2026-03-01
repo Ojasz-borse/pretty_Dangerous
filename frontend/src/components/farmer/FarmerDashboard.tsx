@@ -118,10 +118,10 @@ export default function FarmerDashboard() {
                 {/* ===== HERO STAT CARDS ===== */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {[
-                        { label: "Today's Best Price", value: '₹2,250', sub: '/Quintal', icon: DollarSign, glow: 'glow-green', gradient: 'from-emerald-400 to-green-500', delay: '' },
-                        { label: 'Price Trend', value: '↑ 8.5%', sub: 'Last 7 days', icon: TrendingUp, glow: 'glow-blue', gradient: 'from-blue-400 to-cyan-500', delay: 'delay-100' },
-                        { label: 'Demand Index', value: 'High', sub: 'Strong Demand', icon: Target, glow: 'glow-purple', gradient: 'from-purple-400 to-violet-500', delay: 'delay-200' },
-                        { label: 'Trust Score', value: '82/100', sub: 'Reliable', icon: Star, glow: 'glow-amber', gradient: 'from-amber-400 to-yellow-500', delay: 'delay-300' },
+                        { label: "Today's Best Price", value: '--', sub: '/Quintal', icon: DollarSign, glow: 'glow-green', gradient: 'from-emerald-400 to-green-500', delay: '' },
+                        { label: 'Price Trend', value: '--', sub: 'Last 7 days', icon: TrendingUp, glow: 'glow-blue', gradient: 'from-blue-400 to-cyan-500', delay: 'delay-100' },
+                        { label: 'Demand Index', value: '--', sub: 'Calculated daily', icon: Target, glow: 'glow-purple', gradient: 'from-purple-400 to-violet-500', delay: 'delay-200' },
+                        { label: 'Trust Score', value: '--', sub: 'Farmer reputation', icon: Star, glow: 'glow-amber', gradient: 'from-amber-400 to-yellow-500', delay: 'delay-300' },
                     ].map((stat, i) => (
                         <div key={i} className={`stat-card-3d animate-fade-in-up ${stat.delay}`}>
                             <div className={`stat-card-inner ${stat.glow}`}>

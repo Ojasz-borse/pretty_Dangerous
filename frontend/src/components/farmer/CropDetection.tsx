@@ -160,6 +160,63 @@ export default function CropDetection() {
                             ))}
                         </ul>
                     </div>
+
+                    {/* AgriTrust AI - Market Intelligence */}
+                    {result.marketInsight && (
+                        <div className={`card overflow-hidden border-2 ${result.marketInsight.recommendation === 'WAIT' ? 'border-blue-500/30' : 'border-orange-500/30'}`}>
+                            <div className={`${result.marketInsight.recommendation === 'WAIT' ? 'bg-blue-600' : 'bg-orange-600'} p-4 text-white flex items-center justify-between`}>
+                                <div className="flex items-center gap-2">
+                                    <Scan className="w-5 h-5" />
+                                    <h3 className="font-black uppercase tracking-widest text-sm">Market Intelligence</h3>
+                                </div>
+                                <div className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold backdrop-blur-sm">
+                                    {result.marketInsight.recommendation === 'WAIT' ? '💰 PROFIT MAXIMIZATION' : '⚡ QUICK LIQUIDATION'}
+                                </div>
+                            </div>
+                            <div className="p-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                                    <div className="space-y-1">
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Current Price</p>
+                                        <p className="text-2xl font-black text-slate-800">₹{result.marketInsight.currentPrice}<span className="text-xs text-slate-400 ml-1">/kg</span></p>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Predicted Price</p>
+                                        <p className="text-2xl font-black text-green-600">₹{result.marketInsight.predictedPrice.toFixed(2)}<span className="text-xs text-slate-400 ml-1">/kg</span></p>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Growth</p>
+                                        <p className={`text-2xl font-black ${result.marketInsight.growthPercent > 0 ? 'text-blue-600' : 'text-slate-600'}`}>+{result.marketInsight.growthPercent}%</p>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Demand Index</p>
+                                        <p className="text-2xl font-black text-slate-800">{result.marketInsight.demandIndex}<span className="text-xs text-slate-400 ml-1">/100</span></p>
+                                    </div>
+                                </div>
+
+                                <div className={`p-6 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-6 ${result.marketInsight.recommendation === 'WAIT' ? 'bg-blue-50' : 'bg-orange-50'}`}>
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-16 h-16 rounded-full flex items-center justify-center ${result.marketInsight.recommendation === 'WAIT' ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'}`}>
+                                            {result.marketInsight.recommendation === 'WAIT' ? <Loader2 className="w-8 h-8 animate-spin" /> : <CheckCircle className="w-8 h-8" />}
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-500 uppercase">AI Recommendation</p>
+                                            <h4 className={`text-4xl font-black ${result.marketInsight.recommendation === 'WAIT' ? 'text-blue-700' : 'text-orange-700'}`}>
+                                                {result.marketInsight.recommendation}
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div className="text-center sm:text-right">
+                                        <p className="text-sm font-medium text-slate-600 max-w-xs leading-tight">
+                                            {result.marketInsight.reason || (result.marketInsight.recommendation === 'WAIT'
+                                                ? "Holding stock is advised as prices are expected to rise significantly."
+                                                : "Optimal market price reached. Selling now will maximize your immediate ROI.")
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

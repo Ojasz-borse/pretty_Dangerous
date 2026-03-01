@@ -16,23 +16,10 @@ interface ConnectUser {
     responseTime: string;
 }
 
-const mockBuyers: ConnectUser[] = [
-    { id: 'b1', name: 'Reliance Fresh', type: 'buyer', location: 'Mumbai, Maharashtra', trustScore: 96, totalDeals: 342, speciality: 'Wheat, Rice, Pulses', rating: 4.8, image: '/3.webp', responseTime: '< 2 hours' },
-    { id: 'b2', name: 'BigBasket Agri', type: 'buyer', location: 'Bangalore, Karnataka', trustScore: 93, totalDeals: 218, speciality: 'Vegetables, Fruits', rating: 4.7, image: '/3.webp', responseTime: '< 4 hours' },
-    { id: 'b3', name: 'ITC Agri Division', type: 'buyer', location: 'Hyderabad, Telangana', trustScore: 98, totalDeals: 567, speciality: 'Wheat, Spices, Cotton', rating: 4.9, image: '/3.webp', responseTime: '< 1 hour' },
-    { id: 'b4', name: 'Adani Wilmar', type: 'buyer', location: 'Ahmedabad, Gujarat', trustScore: 91, totalDeals: 156, speciality: 'Mustard, Soybean', rating: 4.5, image: '/3.webp', responseTime: '< 6 hours' },
-    { id: 'b5', name: 'Mother Dairy', type: 'buyer', location: 'Delhi', trustScore: 94, totalDeals: 280, speciality: 'Milk Products, Grains', rating: 4.6, image: '/3.webp', responseTime: '< 3 hours' },
-    { id: 'b6', name: 'Ninjacart', type: 'buyer', location: 'Chennai, Tamil Nadu', trustScore: 89, totalDeals: 145, speciality: 'Fresh Produce', rating: 4.4, image: '/3.webp', responseTime: '< 5 hours' },
-];
-
-const mockFarmers: ConnectUser[] = [
-    { id: 'f1', name: 'Rajesh Kumar', type: 'farmer', location: 'Sirsa, Haryana', trustScore: 92, totalDeals: 48, speciality: 'Wheat, Mustard', rating: 4.7, image: '/wheat.jpg', responseTime: '< 1 hour' },
-    { id: 'f2', name: 'Gurpreet Singh', type: 'farmer', location: 'Karnal, Punjab', trustScore: 88, totalDeals: 35, speciality: 'Basmati Rice', rating: 4.5, image: '/rice.jpg', responseTime: '< 2 hours' },
-    { id: 'f3', name: 'Amit Sharma', type: 'farmer', location: 'Bhatinda, Punjab', trustScore: 95, totalDeals: 62, speciality: 'Cotton, Wheat', rating: 4.9, image: '/cotton.jpg', responseTime: '< 30 min' },
-    { id: 'f4', name: 'Suresh Patil', type: 'farmer', location: 'Nashik, Maharashtra', trustScore: 87, totalDeals: 29, speciality: 'Onion, Grapes', rating: 4.4, image: '/onion.avif', responseTime: '< 4 hours' },
-    { id: 'f5', name: 'Ramesh Yadav', type: 'farmer', location: 'Hisar, Haryana', trustScore: 91, totalDeals: 41, speciality: 'Mustard, Wheat', rating: 4.6, image: '/mustard.jpg', responseTime: '< 2 hours' },
-    { id: 'f6', name: 'Harjinder Singh', type: 'farmer', location: 'Ludhiana, Punjab', trustScore: 89, totalDeals: 38, speciality: 'Maize, Rice', rating: 4.5, image: '/maize.jpeg', responseTime: '< 3 hours' },
-];
+// TODO: Fetch from MongoDB when marketplace is implemented
+// No mock data — show empty state until real users register
+const registeredBuyers: ConnectUser[] = [];
+const registeredFarmers: ConnectUser[] = [];
 
 interface ConnectPanelProps {
     userType: 'farmer' | 'buyer';
@@ -44,7 +31,7 @@ export default function ConnectPanel({ userType }: ConnectPanelProps) {
     const [contacted, setContacted] = useState<Set<string>>(new Set());
 
     // Farmer sees buyers, buyer sees farmers
-    const listings = userType === 'farmer' ? mockBuyers : mockFarmers;
+    const listings = userType === 'farmer' ? registeredBuyers : registeredFarmers;
     const otherLabel = userType === 'farmer' ? 'Buyers' : 'Farmers';
 
     const filtered = listings

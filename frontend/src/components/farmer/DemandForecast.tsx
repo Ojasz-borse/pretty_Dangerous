@@ -32,7 +32,11 @@ export default function DemandForecast({ district, state }: DemandForecastProps)
     };
 
     if (loading) return <div className="card p-12 flex items-center justify-center"><Loader2 className="w-8 h-8 text-purple-500 animate-spin" /></div>;
-    if (!forecast) return null;
+    if (!forecast) return (
+        <div className="card p-12 text-center text-slate-400 italic">
+            Authentic demand forecast data is currently unavailable.
+        </div>
+    );
 
     return (
         <div className="space-y-6">

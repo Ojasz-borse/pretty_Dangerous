@@ -11,6 +11,7 @@ import json
 import csv
 import httpx
 import asyncio
+import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 from dotenv import load_dotenv
@@ -106,63 +107,108 @@ async def fetch_from_data_gov(
         return None
 
 async def get_maharashtra_filters() -> Dict:
-    """Get available districts, markets, and commodities - merges live API with CSV"""
+    """Get available states, districts, markets, and commodities - merges live API with CSV"""
     
     # Check cache
     if CACHE["filters"] and CACHE["filters_timestamp"]:
         if (datetime.now() - CACHE["filters_timestamp"]).seconds < CACHE["cache_duration"]:
             return CACHE["filters"]
     
-    # First, load comprehensive data from CSV
+    # All 36 Districts of Maharashtra to ensure full coverage
+    MAHARASHTRA_DISTRICTS = [
+        "Ahmednagar", "Akola", "Amravati", "Beed", "Bhandara", "Buldhana", 
+        "Chandrapur", "Chhatrapati Sambhajinagar", "Dharashiv", "Dhule", 
+        "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", 
+        "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", 
+        "Nandurbar", "Nashik", "Palghar", "Parbhani", "Pune", "Raigad", 
+        "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", 
+        "Wardha", "Washim", "Yavatmal"
+    ]
+    
+    # Initialize tree: {state: {district: {market: [crops]}}}
+    filters = {"Maharashtra": {d: {} for d in MAHARASHTRA_DISTRICTS}}
+    
+    # Load base filters from CSV
     print("Loading base filters from CSV dataset...")
-    csv_filters = get_fallback_filters()
-    
+    # Update path to be more robust
+    csv_path = Path(__file__).parent.parent / "data" / "Dataset.csv"
+    if not csv_path.exists():
+        csv_path = Path("d:/My Version/data/Dataset.csv") # Absolute fallback
+
+    if csv_path.exists():
+        try:
+            with open(csv_path, mode='r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    normalized = {k.strip(): v.strip() if isinstance(v, str) else v for k, v in row.items()}
+                    state = normalized.get('State', 'Maharashtra').strip()
+                    district = normalized.get('District', '').strip()
+                    market = normalized.get('Market', '').strip()
+                    commodity = normalized.get('Commodity', '').strip()
+                    
+                    if not district or not market or not commodity:
+                        continue
+                    
+                    # Handle renaming
+                    if district == "Aurangabad": district = "Chhatrapati Sambhajinagar"
+                    if district == "Osmanabad": district = "Dharashiv"
+
+                    if state not in filters: filters[state] = {}
+                    if district not in filters[state]: filters[state][district] = {}
+                    if market not in filters[state][district]: filters[state][district][market] = set()
+                    filters[state][district][market].add(commodity)
+        except Exception as e:
+            print(f"CSV Error: {e}")
+
+    # Fetch fresh live data from data.gov.in
     print("Fetching fresh live data from data.gov.in...")
+    data = await fetch_from_data_gov(filters={}, limit=5000)
     
-    # Fetch live data - get ALL states for comprehensive coverage
-    data = await fetch_from_data_gov(
-        filters={},  # No filter - get all states
-        limit=5000
-    )
-    
-    # Start with CSV data as base (deep copy to avoid modifying sets)
-    filters = {}
-    for district, markets in csv_filters.items():
-        filters[district] = {}
-        for market, crops in markets.items():
-            filters[district][market] = set(crops) if isinstance(crops, list) else crops.copy()
-    
-    # Add live API data on top (if available)
     if data and "records" in data:
         print(f"Merging {len(data.get('records', []))} live records...")
         for record in data["records"]:
+            state = record.get("state", "").strip()
             district = record.get("district", "").strip()
             market = record.get("market", "").strip()
             commodity = record.get("commodity", "").strip()
             
-            if not district or not market or not commodity:
+            if not state or not district or not market or not commodity:
                 continue
+
+            # Map renamed districts back to our standard if necessary
+            if district == "Aurangabad": district = "Chhatrapati Sambhajinagar"
+            if district == "Osmanabad": district = "Dharashiv"
             
-            if district not in filters:
-                filters[district] = {}
-            if market not in filters[district]:
-                filters[district][market] = set()
-            filters[district][market].add(commodity)
-    else:
-        print("Live API failed, using CSV data only")
+            if state not in filters: filters[state] = {}
+            if district not in filters[state]: filters[state][district] = {}
+            if market not in filters[state][district]: filters[state][district][market] = set()
+            filters[state][district][market].add(commodity)
     
-    # Convert sets to sorted lists
-    for district in filters:
-        for market in filters[district]:
-            if isinstance(filters[district][market], set):
-                filters[district][market] = sorted(list(filters[district][market]))
+    # Prune empty districts/markets and convert sets to sorted lists
+    final_filters = {}
+    for state, districts in filters.items():
+        state_data = {}
+        for district, markets in districts.items():
+            if markets: # Only include if it has data
+                market_data = {}
+                for market, crops in markets.items():
+                    if crops:
+                        market_data[market] = sorted(list(crops))
+                if market_data:
+                    state_data[district] = market_data
+            elif state == "Maharashtra" and district in MAHARASHTRA_DISTRICTS:
+                # Keep it as an empty dict if it's one of the 36 districts? 
+                # Actually, the user wants them "in it", but if there's no data, 
+                # selecting it will result in no mandis. Better than nothing.
+                state_data[district] = {}
+        if state_data:
+            final_filters[state] = state_data
     
     # Update cache
-    CACHE["filters"] = filters
+    CACHE["filters"] = final_filters
     CACHE["filters_timestamp"] = datetime.now()
     
-    print(f"Total: {len(filters)} districts with {sum(len(m) for m in filters.values())} markets")
-    return filters
+    return final_filters
 
 def get_fallback_filters() -> Dict:
     """Fallback filters from CSV dataset - comprehensive data"""
@@ -330,9 +376,9 @@ async def get_historical_data(
         chart_data.sort(key=lambda x: x["date"])
         return chart_data[-days:] if len(chart_data) > days else chart_data
     
-    # Last resort: synthetic data
-    print(f"No history found for {crop}/{mandi}, generating synthetic")
-    return generate_synthetic_history(crop, days)
+    # Strictly no synthetic data as per user instructions
+    print(f"No authentic history found for {crop}/{mandi}")
+    return []
 
 def get_history_from_csv(crop: str, mandi: str = None, days: int = 30) -> List[Dict]:
     """Get historical data from CSV dataset"""
@@ -533,7 +579,8 @@ async def grade_crop_image(file: UploadFile = File(...)):
 
 @app.get("/data")
 async def get_unified_data(
-    district: str,
+    state: str = "Maharashtra",
+    district: str = "Pune",
     market: Optional[str] = None,
     crop: str = "Tomato"
 ):
@@ -542,7 +589,7 @@ async def get_unified_data(
     All data from LIVE APIs
     """
     # 1. Get current price from data.gov.in
-    filters = {"state": "Maharashtra", "district": district, "commodity": crop}
+    filters = {"state": state, "district": district, "commodity": crop}
     if market:
         filters["market"] = market
     
@@ -590,6 +637,112 @@ async def get_unified_data(
                 "max_price_kg": 0,
                 "source": "No data available"
             }
+
+@app.get("/price")
+async def get_price(
+    state: str = "Maharashtra",
+    district: str = "Pune",
+    market: Optional[str] = None,
+    crop: str = "Tomato"
+):
+    """Get current market price for specific selection"""
+    filters = {"state": state, "district": district, "commodity": crop}
+    if market:
+        filters["market"] = market
+    
+    data = await fetch_from_data_gov(filters=filters, limit=20)
+    
+    if data and "records" in data:
+        # Format records for frontend
+        formatted = []
+        for r in data["records"]:
+            formatted.append({
+                "id": str(uuid.uuid4()),
+                "cropName": r.get("commodity", ""),
+                "market": r.get("market", ""),
+                "minPrice": float(r.get("min_price", 0)),
+                "maxPrice": float(r.get("max_price", 0)),
+                "modalPrice": float(r.get("modal_price", 0)),
+                "unit": "Quintal",
+                "grade": r.get("grade", "Standard"),
+                "variety": r.get("variety", "Normal"),
+                "lastUpdated": r.get("arrival_date", "")
+            })
+        return {"success": True, "data": formatted}
+    
+    # Try fallback from CSV
+    print(f"No live price for {crop} in {market}, trying CSV fallback")
+    csv_data = get_history_from_csv(crop, market, 1)
+    if csv_data:
+        formatted = [{
+            "id": str(uuid.uuid4()),
+            "cropName": crop,
+            "market": market or district,
+            "minPrice": csv_data[0]["open"],
+            "maxPrice": csv_data[0]["high"],
+            "modalPrice": csv_data[0]["close"],
+            "unit": "Quintal",
+            "grade": "Standard",
+            "variety": "Normal",
+            "lastUpdated": csv_data[0]["date"]
+        }]
+        return {"success": True, "data": formatted}
+        
+    return {"success": False, "message": "No price data found for this selection"}
+
+@app.get("/history")
+async def get_price_history(
+    crop: str = Query(..., description="Crop name"),
+    mandi: Optional[str] = Query(None, description="Mandi/Market name"),
+    days: int = Query(30, description="Number of days")
+):
+    """
+    Returns historical price data for a specific crop and mandi.
+    Priority: Live API -> Local CSV -> Empty
+    """
+    # 1. Try to get from data.gov.in (limited history usually)
+    filters = {"commodity": crop}
+    if mandi: filters["market"] = mandi
+    
+    live_history = await fetch_from_data_gov(filters=filters, limit=days)
+    
+    chart_data = []
+    seen_dates = set()
+    
+    if live_history and "records" in live_history:
+        for r in live_history["records"]:
+            try:
+                date_str = r.get("arrival_date", "")
+                dt = datetime.strptime(date_str, "%d/%m/%Y")
+                iso_date = dt.strftime("%Y-%m-%d")
+                
+                if iso_date not in seen_dates:
+                    chart_data.append({
+                        "date": iso_date,
+                        "open": float(r.get("min_price", 0)),
+                        "high": float(r.get("max_price", 0)),
+                        "low": float(r.get("min_price", 0)),
+                        "close": float(r.get("modal_price", 0)),
+                        "market": r.get("market", ""),
+                        "source": "live"
+                    })
+                    seen_dates.add(iso_date)
+            except Exception:
+                continue
+
+    # 2. Augment with CSV data
+    csv_history = get_history_from_csv(crop, mandi, days)
+    for point in csv_history:
+        if point["date"] not in seen_dates:
+            seen_dates.add(point["date"])
+            chart_data.append(point)
+    
+    # Sort and limit
+    if len(chart_data) > 0:
+        chart_data.sort(key=lambda x: x["date"])
+        return chart_data[-days:] if len(chart_data) > days else chart_data
+    
+    return []
     
     # 2. Get weather from Open-Meteo API
     lat, lon = DISTRICT_COORDS.get(district, (19.0760, 72.8777))

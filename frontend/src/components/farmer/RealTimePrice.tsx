@@ -30,161 +30,207 @@ interface RealTimePriceProps {
 }
 
 export default function RealTimePrice({ selectedCrop, setSelectedCrop }: RealTimePriceProps) {
-    const { state, district, mandi, setState, setDistrict, setMandi } = useLocation();
+    const [fullFilterTree, setFullFilterTree] = useState<any>(null);
+    const [priceData, setPriceData] = useState<CropPrice | null>(null);
+    const [historyData, setHistoryData] = useState<any[]>([]); // Real historical data
 
-    const [prices, setPrices] = useState<CropPrice[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [cropFilter, setCropFilter] = useState('All Crops');
-    const [searchTerm, setSearchTerm] = useState('');
+    // Initialise local filter state
+    const [filterState, setFilterState] = useState('');
+    const [filterDistrict, setFilterDistrict] = useState('');
+    const [filterMandi, setFilterMandi] = useState('');
+    const [filterCrop, setFilterCrop] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    // Local filter state — initialise from context
-    const [filterState, setFilterState] = useState(state);
-    const [filterDistrict, setFilterDistrict] = useState(district);
-    const [filterMandi, setFilterMandi] = useState(mandi);
+    useEffect(() => {
+        const fetchFilters = async () => {
+            try {
+                const res = await fetch('/api/filters');
+                const json = await res.json();
+                if (json.success) setFullFilterTree(json.data);
+            } catch (err) {
+                console.error("Failed to load filters", err);
+            }
+        };
+        fetchFilters();
+    }, []);
 
-    // Keep local filters in sync with context when context changes
-    useEffect(() => { setFilterState(state); }, [state]);
-    useEffect(() => { setFilterDistrict(district); }, [district]);
-    useEffect(() => { setFilterMandi(mandi); }, [mandi]);
+    const fetchSelectedPriceAndHistory = async () => {
+        if (!filterState || !filterDistrict || !filterMandi || !filterCrop) return;
 
-    useEffect(() => { fetchPrices(); }, []);
-
-    const fetchPrices = async () => {
+        setLoading(true);
         try {
-            const response = await fetch('/api/farmer/price');
-            const data: ApiResponse<CropPrice[]> = await response.json();
-            if (data.success && data.data) setPrices(data.data);
-        } catch (error) {
-            console.error('Error:', error);
+            // 1. Fetch current price
+            const priceUrl = `/api/farmer/price?state=${encodeURIComponent(filterState)}&district=${encodeURIComponent(filterDistrict)}&market=${encodeURIComponent(filterMandi)}&cropName=${encodeURIComponent(filterCrop)}`;
+            const priceRes = await fetch(priceUrl);
+            const priceJson = await priceRes.json();
+
+            if (priceJson.success && priceJson.data && priceJson.data.length > 0) {
+                setPriceData(priceJson.data[0]);
+                setSelectedCrop(filterCrop);
+            } else {
+                setPriceData(null);
+            }
+
+            // 2. Fetch history for trend graph
+            const historyUrl = `/api/farmer/history?crop=${encodeURIComponent(filterCrop)}&mandi=${encodeURIComponent(filterMandi)}&days=30`;
+            const historyRes = await fetch(historyUrl);
+            const historyJson = await historyRes.json();
+
+            if (historyJson.success && historyJson.data) {
+                // Map to format suitable for Recharts area chart
+                const formattedHistory = historyJson.data.map((item: any) => ({
+                    day: new Date(item.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
+                    price: item.close || item.modalPrice || 0,
+                    rawDate: item.date
+                }));
+                setHistoryData(formattedHistory);
+            } else {
+                setHistoryData([]);
+            }
+        } catch (err) {
+            console.error("Data fetch failed", err);
+            setPriceData(null);
+            setHistoryData([]);
         } finally {
             setLoading(false);
         }
     };
 
-    const applyFilters = () => {
-        // Sync local filter state back to context
-        setState(filterState);
-        setDistrict(filterDistrict);
-        setMandi(filterMandi);
-    };
+    // Note: Removed automatic fetch on filter change to satisfy "Fetch Data" button requirement
+    // but we can still show a placeholder if no data is fetched yet.
 
-    // Generate mock stock chart data for selected crop
-    const chartData = Array.from({ length: 30 }, (_, i) => {
-        const base = prices.find(p => p.cropName === selectedCrop)?.modalPrice || 2250;
-        const variation = Math.sin(i * 0.5) * 200 + Math.random() * 150 - 75;
-        return {
-            day: `Day ${i + 1}`,
-            price: Math.round(base + variation),
-        };
-    });
+    // Helpers to get curated options
+    const stateOptions = fullFilterTree ? Object.keys(fullFilterTree).sort() : [];
+    const districtOptions = (fullFilterTree && filterState) ? Object.keys(fullFilterTree[filterState] || {}).sort() : [];
+    const mandiOptions = (fullFilterTree && filterState && filterDistrict) ? Object.keys(fullFilterTree[filterState][filterDistrict] || {}).sort() : [];
+    const curatedCrops = (fullFilterTree && filterState && filterDistrict && filterMandi) ? (fullFilterTree[filterState][filterDistrict][filterMandi] || []).sort() : [];
 
-    const selectedPrice = prices.find(p => p.cropName === selectedCrop);
-    const filteredPrices = prices.filter(p => {
-        const matchCrop = cropFilter === 'All Crops' || p.cropName.toLowerCase().includes(cropFilter.toLowerCase());
-        const matchSearch = !searchTerm || p.cropName.toLowerCase().includes(searchTerm.toLowerCase()) || p.market?.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchCrop && matchSearch;
-    });
-
-    const selectedStateData = locationData.find(s => s.name === filterState);
-    const selectedDistrictData = selectedStateData?.districts.find(d => d.name === filterDistrict);
+    const filteredPrices = priceData ? [priceData] : [];
+    const selectedPrice = priceData;
 
     return (
         <div className="space-y-6">
-            {/* ===== 4-FILTER ROW ===== */}
+            {/* ===== SEQUENTIAL 4-FILTER ROW ===== */}
             <div className="card p-5">
                 <div className="flex items-center gap-2 mb-4">
                     <Filter className="w-4 h-4 text-green-600" />
-                    <span className="text-sm font-bold text-slate-700">Filter Market Prices</span>
-                    <span className="text-xs text-slate-400">(select any combination)</span>
+                    <span className="text-sm font-bold text-slate-700">Market Price Selection</span>
+                    <span className="text-xs text-slate-400">(Select in order: State → District → Mandi → Crop)</span>
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Crop */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {/* 1. State */}
                     <div>
-                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Crop</label>
-                        <select
-                            value={cropFilter}
-                            onChange={e => { setCropFilter(e.target.value); setSelectedCrop(e.target.value === 'All Crops' ? selectedCrop : e.target.value); }}
-                            className="select-field w-full"
-                        >
-                            {cropOptions.map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
-                    </div>
-
-                    {/* State */}
-                    <div>
-                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">State</label>
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">1. State</label>
                         <select
                             value={filterState}
-                            onChange={e => { setFilterState(e.target.value); setFilterDistrict(''); setFilterMandi(''); }}
+                            onChange={e => {
+                                setFilterState(e.target.value);
+                                setFilterDistrict('');
+                                setFilterMandi('');
+                                setFilterCrop('');
+                            }}
                             className="select-field w-full"
                         >
-                            <option value="">All States</option>
-                            {locationData.map(s => <option key={s.code} value={s.name}>{s.name}</option>)}
+                            <option value="">Select State</option>
+                            {stateOptions.map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
                     </div>
 
-                    {/* District */}
+                    {/* 2. District */}
                     <div>
-                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">District</label>
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">2. District</label>
                         <select
                             value={filterDistrict}
-                            onChange={e => { setFilterDistrict(e.target.value); setFilterMandi(''); }}
+                            onChange={e => {
+                                setFilterDistrict(e.target.value);
+                                setFilterMandi('');
+                                setFilterCrop('');
+                            }}
                             className="select-field w-full"
                             disabled={!filterState}
                         >
-                            <option value="">All Districts</option>
-                            {selectedStateData?.districts.map(d => <option key={d.name} value={d.name}>{d.name}</option>)}
+                            <option value="">Select District</option>
+                            {districtOptions.map(d => <option key={d} value={d}>{d}</option>)}
                         </select>
                     </div>
 
-                    {/* Mandi */}
+                    {/* 3. Mandi */}
                     <div>
-                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Mandi</label>
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">3. Mandi</label>
                         <select
                             value={filterMandi}
-                            onChange={e => setFilterMandi(e.target.value)}
+                            onChange={e => {
+                                setFilterMandi(e.target.value);
+                                setFilterCrop('');
+                            }}
                             className="select-field w-full"
                             disabled={!filterDistrict}
                         >
-                            <option value="">All Mandis</option>
-                            {selectedDistrictData?.mandis.map(m => <option key={m.code} value={m.name}>{m.name}</option>)}
+                            <option value="">Select Mandi</option>
+                            {mandiOptions.map(m => <option key={m} value={m}>{m}</option>)}
+                        </select>
+                    </div>
+
+                    {/* 4. Crop */}
+                    <div>
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">4. Crop</label>
+                        <select
+                            value={filterCrop}
+                            onChange={e => setFilterCrop(e.target.value)}
+                            className="select-field w-full"
+                            disabled={!filterMandi}
+                        >
+                            <option value="">Select Crop</option>
+                            {curatedCrops.map((c: string) => <option key={c} value={c}>{c}</option>)}
                         </select>
                     </div>
                 </div>
 
-                {/* Search + Apply row */}
-                <div className="flex flex-col sm:flex-row gap-3 mt-4">
-                    <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                        <input
-                            type="text"
-                            placeholder="Search by crop name or market..."
-                            value={searchTerm}
-                            onChange={e => setSearchTerm(e.target.value)}
-                            className="input-field pl-9"
-                        />
+                {/* Fetch Button & Status Row */}
+                <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-100">
+                    <div className="flex items-center gap-3">
+                        <div className={`w-2 h-2 rounded-full ${(!filterState || !filterDistrict || !filterMandi || !filterCrop)
+                                ? 'bg-amber-400 animate-pulse'
+                                : 'bg-green-500'
+                            }`} />
+                        <p className="text-sm text-slate-500 font-medium">
+                            {(!filterState || !filterDistrict || !filterMandi || !filterCrop)
+                                ? `Waiting for: ${!filterState ? 'State' : !filterDistrict ? 'District' : !filterMandi ? 'Mandi' : 'Crop'}`
+                                : "Selection complete! Fetch the latest data."}
+                        </p>
                     </div>
-                    <button onClick={applyFilters} className="btn-primary whitespace-nowrap">
-                        <Filter className="w-4 h-4" /> Apply Filters
+
+                    <button
+                        onClick={fetchSelectedPriceAndHistory}
+                        disabled={loading || !filterState || !filterDistrict || !filterMandi || !filterCrop}
+                        className={`px-8 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 shadow-sm hover:shadow-md ${loading || !filterState || !filterDistrict || !filterMandi || !filterCrop
+                                ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                                : 'bg-green-600 text-white hover:bg-green-700 active:scale-95'
+                            }`}
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                                <span>Fetching...</span>
+                            </>
+                        ) : (
+                            <>
+                                <TrendingUp className="w-4 h-4" />
+                                <span>Fetch Price & Trend</span>
+                            </>
+                        )}
                     </button>
                 </div>
-
-                {/* Active filter chips */}
-                {(filterState || filterDistrict || filterMandi || cropFilter !== 'All Crops') && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                        {cropFilter !== 'All Crops' && <span className="badge-green text-xs">🌾 {cropFilter}</span>}
-                        {filterState && <span className="badge-blue text-xs">📍 {filterState}</span>}
-                        {filterDistrict && <span className="badge-blue text-xs">🏘 {filterDistrict}</span>}
-                        {filterMandi && <span className="badge-green text-xs">🏪 {filterMandi}</span>}
-                    </div>
-                )}
             </div>
 
             {loading ? (
                 <div className="card p-12 flex items-center justify-center">
-                    <Loader2 className="w-8 h-8 text-green-500 animate-spin" />
+                    <div className="text-center">
+                        <Loader2 className="w-8 h-8 text-green-500 animate-spin mx-auto mb-2" />
+                        <p className="text-sm text-slate-500">Fetching verified market data...</p>
+                    </div>
                 </div>
-            ) : (
+            ) : filterCrop && priceData ? (
                 <>
                     {/* Stock Market Chart */}
                     {selectedPrice && (
@@ -209,21 +255,21 @@ export default function RealTimePrice({ selectedCrop, setSelectedCrop }: RealTim
                             </div>
                             <div className="h-[300px]">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <AreaChart data={chartData}>
+                                    <AreaChart data={historyData.length > 0 ? historyData : []}>
                                         <defs>
                                             <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
                                                 <stop offset="5%" stopColor="#16a34a" stopOpacity={0.15} />
                                                 <stop offset="95%" stopColor="#16a34a" stopOpacity={0} />
                                             </linearGradient>
                                         </defs>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                                        <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#94a3b8' }} stroke="#e2e8f0" />
-                                        <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} tickFormatter={(v) => `₹${v}`} stroke="#e2e8f0" />
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                                        <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748B' }} dy={10} />
+                                        <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748B' }} tickFormatter={(v) => `₹${v}`} />
                                         <Tooltip
                                             formatter={(value: any) => [`₹${value}`, 'Price']}
-                                            contentStyle={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+                                            contentStyle={{ background: '#fff', border: 'none', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
                                         />
-                                        <Area type="monotone" dataKey="price" stroke="#16a34a" strokeWidth={2} fill="url(#priceGradient)" />
+                                        <Area type="monotone" dataKey="price" stroke="#16a34a" strokeWidth={3} fillOpacity={1} fill="url(#priceGradient)" animationDuration={1000} />
                                     </AreaChart>
                                 </ResponsiveContainer>
                             </div>
@@ -297,6 +343,16 @@ export default function RealTimePrice({ selectedCrop, setSelectedCrop }: RealTim
                         </div>
                     </div>
                 </>
+            ) : (
+                <div className="card p-12 flex flex-col items-center justify-center text-center bg-slate-50/50 border-dashed">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4">
+                        <TrendingUp className="w-8 h-8 text-slate-300" />
+                    </div>
+                    <h4 className="text-slate-800 font-bold mb-1">No Data Selected</h4>
+                    <p className="text-sm text-slate-500 max-w-xs mx-auto">
+                        Complete the 4-step selection above to view verified real-time market prices and trends.
+                    </p>
+                </div>
             )}
         </div>
     );

@@ -151,7 +151,10 @@ export default function LogisticsCalculator({ cropName, pickupDistrict, pickupSt
                     </div>
                 </>
             ) : (
-                <div className="card p-12 text-center border-dashed"><Truck className="w-12 h-12 text-slate-300 mx-auto mb-3" /><p className="text-slate-400">Enter details to calculate logistics</p></div>
+                <div className="card p-12 text-center border-dashed">
+                    <Truck className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+                    <p className="text-slate-400 italic">Real-time logistics data is currently unavailable for this route.</p>
+                </div>
             )}
         </div>
     );
