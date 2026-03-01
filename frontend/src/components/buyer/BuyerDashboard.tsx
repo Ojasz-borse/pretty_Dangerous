@@ -99,6 +99,7 @@ export default function BuyerDashboard() {
                                 <button
                                     key={mod.id}
                                     onClick={() => setActiveTab(mod.id)}
+                                    suppressHydrationWarning
                                     className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 ${activeTab === mod.id
                                         ? 'bg-slate-900 text-white shadow-xl shadow-slate-900/10'
                                         : 'text-slate-500 hover:bg-slate-100'
@@ -184,10 +185,10 @@ export default function BuyerDashboard() {
                                     Empower your supply chain with AI-verified listings, fair price auditing, and seamless logistics. Source the freshest harvest from India's most reliable farmers.
                                 </p>
                                 <div className="flex flex-wrap justify-center gap-6 animate-slide-up stagger-3">
-                                    <button onClick={() => setActiveTab('search')} className="group px-10 py-5 bg-green-600 text-white font-black text-sm uppercase tracking-widest rounded-[2rem] hover:bg-green-700 transition-all hover:-translate-y-2 shadow-2xl shadow-green-600/30 pulse-glow">
+                                    <button onClick={() => setActiveTab('search')} suppressHydrationWarning className="group px-10 py-5 bg-green-600 text-white font-black text-sm uppercase tracking-widest rounded-[2rem] hover:bg-green-700 transition-all hover:-translate-y-2 shadow-2xl shadow-green-600/30 pulse-glow">
                                         Browse Inventory
                                     </button>
-                                    <button onClick={() => setActiveTab('innovation')} className="px-10 py-5 bg-white/10 backdrop-blur-2xl text-white border border-white/20 font-black text-sm uppercase tracking-widest rounded-[2rem] hover:bg-white/20 transition-all hover:-translate-y-2">
+                                    <button onClick={() => setActiveTab('innovation')} suppressHydrationWarning className="px-10 py-5 bg-white/10 backdrop-blur-2xl text-white border border-white/20 font-black text-sm uppercase tracking-widest rounded-[2rem] hover:bg-white/20 transition-all hover:-translate-y-2">
                                         Market Analysis
                                     </button>
                                 </div>
